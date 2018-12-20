@@ -10,8 +10,4 @@ import java.util.Properties;
 public interface LoadResource {
 
     Properties loadParam(String[] args) throws IOException;
-
-    boolean isTerminal();
-
-    boolean isConfig();
 }

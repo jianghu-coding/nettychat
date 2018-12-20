@@ -25,14 +25,4 @@ public class LoadTerminal implements LoadResource {
         });
         return properties;
     }
-
-    @Override
-    public boolean isTerminal() {
-        return true;
-    }
-
-    @Override
-    public boolean isConfig() {
-        return false;
-    }
 }

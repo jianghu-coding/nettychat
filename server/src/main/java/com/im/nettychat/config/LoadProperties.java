@@ -24,14 +24,4 @@ public class LoadProperties implements LoadResource {
         }
         return properties;
     }
-
-    @Override
-    public boolean isTerminal() {
-        return false;
-    }
-
-    @Override
-    public boolean isConfig() {
-        return false;
-    }
 }
