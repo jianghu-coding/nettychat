@@ -19,12 +19,17 @@ import lombok.Data;
 /**
  * @author hejianglong
  * @Desc
- * @date 2018/12/20 下午9:12
+ * @date 2018/12/20 下午10:44
  */
 @Data
-public abstract class ResponsePacket extends Packet {
+public abstract class Packet {
+    /**
+     * 协议版本
+     */
+    @JSONField(deserialize = false, serialize = false)
+    private Byte version = 1;
 
-    protected boolean error;
 
-    protected String errorInfo;
+    @JSONField(serialize = false)
+    public abstract Byte getCommand();
 }

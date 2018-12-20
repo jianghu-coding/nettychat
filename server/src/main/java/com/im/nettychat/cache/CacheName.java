@@ -8,6 +8,8 @@ public enum CacheName {
 
     USER_INFO(CacheType.V, 0),
 
+    USER_ID(CacheType.V, 0),
+
     USERNAME_ID(CacheType.H, 0);
 
     /**

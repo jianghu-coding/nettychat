@@ -16,6 +16,8 @@ import static com.im.nettychat.service.UserService.userService;
 @ChannelHandler.Sharable
 public class LoginHandler extends SimpleChannelInboundHandler<LoginRequest> {
 
+    public static final LoginHandler INSTANCE = new LoginHandler();
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequest msg) throws Exception {
         userService.login(ctx, msg);

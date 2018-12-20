@@ -1,5 +1,5 @@
 /*
- * Project: com.im.nettychat.protocol
+ * Project: com.im.nettychat.protocol.request
  * 
  * File Created at 2018/12/20
  * 
@@ -11,20 +11,28 @@
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license.
  */
-package com.im.nettychat.protocol;
+package com.im.nettychat.protocol.request;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.im.nettychat.common.Command;
+import com.im.nettychat.protocol.RequestPacket;
 import lombok.Data;
 
 /**
  * @author hejianglong
  * @Desc
- * @date 2018/12/20 下午9:12
+ * @date 2018/12/20 下午9:33
  */
 @Data
-public abstract class ResponsePacket extends Packet {
+public class RegisterRequest extends RequestPacket {
 
-    protected boolean error;
+    private String name;
 
-    protected String errorInfo;
+    private String username;
+
+    private String password;
+
+    @Override
+    public Byte getCommand() {
+        return Command.REGISTER;
+    }
 }

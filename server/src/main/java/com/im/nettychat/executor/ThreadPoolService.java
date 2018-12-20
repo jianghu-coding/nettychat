@@ -15,4 +15,8 @@ public class ThreadPoolService {
     public static void execute(Runnable task) {
         executorService.execute(task);
     }
+
+    public static ExecutorService getExecutorService() {
+        return executorService;
+    }
 }

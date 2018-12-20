@@ -1,5 +1,5 @@
 /*
- * Project: com.im.nettychat.protocol
+ * Project: com.im.nettychat.common
  * 
  * File Created at 2018/12/20
  * 
@@ -11,20 +11,19 @@
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license.
  */
-package com.im.nettychat.protocol;
+package com.im.nettychat.common;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import lombok.Data;
+import static com.im.nettychat.cache.CacheName.USER_ID;
+import static com.im.nettychat.service.RedisService.redisService;
 
 /**
  * @author hejianglong
  * @Desc
- * @date 2018/12/20 下午9:12
+ * @date 2018/12/20 下午9:43
  */
-@Data
-public abstract class ResponsePacket extends Packet {
+public class GenerateID {
 
-    protected boolean error;
-
-    protected String errorInfo;
+    public static Long generateID() {
+        return redisService.vIncr(USER_ID);
+    }
 }
