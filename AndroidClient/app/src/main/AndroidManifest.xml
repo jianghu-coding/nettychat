@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".mvvm.view.activity.LoginActivity"></activity>
+        <activity android:name=".mvvm.view.activity.LoginActivity"
+            android:theme="@style/fullscreen"
+            ></activity>
         <activity android:name=".mvvm.view.activity.MainActivity"></activity>
     </application>
 
