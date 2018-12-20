@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.chat.androidclient.mvvm.view.activity.MainActivity">
+        <activity android:name=".mvvm.view.activity.SplashAvtivity"
+            android:theme="@style/splashTheme"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".mvvm.view.activity.LoginActivity"></activity>
+        <activity android:name=".mvvm.view.activity.MainActivity"></activity>
     </application>
 
 </manifest>
