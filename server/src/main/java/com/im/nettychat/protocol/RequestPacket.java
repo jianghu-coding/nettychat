@@ -8,7 +8,7 @@ import lombok.Data;
  * @date 2018/12/20.
  */
 @Data
-public abstract class Packet {
+public abstract class RequestPacket {
     /**
      * 协议版本
      */

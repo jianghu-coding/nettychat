@@ -2,9 +2,12 @@ package com.im.nettychat.handler;
 
 import com.im.nettychat.executor.ThreadPoolService;
 import com.im.nettychat.protocol.request.LoginRequest;
+import com.im.nettychat.service.UserService;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+
+import static com.im.nettychat.service.UserService.userService;
 
 /**
  * @author hejianglong
@@ -15,14 +18,6 @@ public class LoginHandler extends SimpleChannelInboundHandler<LoginRequest> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequest msg) throws Exception {
-        execute(ctx, msg);
-    }
-
-    private void execute(ChannelHandlerContext ctx, LoginRequest msg) {
-        ThreadPoolService.execute(new Runnable() {
-            @Override
-            public void run() {
-            }
-        });
+        userService.login(ctx, msg);
     }
 }

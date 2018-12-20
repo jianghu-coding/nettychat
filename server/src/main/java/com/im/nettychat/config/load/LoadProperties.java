@@ -1,4 +1,4 @@
-package com.im.nettychat.config;
+package com.im.nettychat.config.load;
 
 import java.io.IOException;
 import java.io.InputStream;

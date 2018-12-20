@@ -1,6 +1,6 @@
 package com.im.nettychat.boot;
 
-import com.im.nettychat.config.ConfigProperties;
+import com.im.nettychat.config.load.ConfigProperties;
 import com.im.nettychat.config.ServerConfig;
 import com.im.nettychat.util.DateUtil;
 import io.netty.bootstrap.ServerBootstrap;

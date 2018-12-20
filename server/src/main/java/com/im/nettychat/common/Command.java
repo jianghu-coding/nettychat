@@ -9,4 +9,6 @@ public interface Command {
     Byte LOGIN = 1;
 
     Byte SEND_MESSAGE = 2;
+
+    Byte LOGIN_RESPONSE = 3;
 }

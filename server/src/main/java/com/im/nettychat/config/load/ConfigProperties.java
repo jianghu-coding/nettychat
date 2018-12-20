@@ -1,4 +1,4 @@
-package com.im.nettychat.config;
+package com.im.nettychat.config.load;
 
 import com.im.nettychat.util.CollectionUtils;
 import java.io.IOException;
@@ -12,11 +12,14 @@ public class ConfigProperties {
 
     public static Properties SERVER_PROPERTIES;
 
+    public static Properties ERROR_PROPERTIES;
+
     public static void initParam(String[] args) throws IOException {
-        loadConfig();
+        SERVER_PROPERTIES = loadConfig("server.properties");
         if (CollectionUtils.isNotNullOrEmpty(args)) {
             loadTerminalParam(args);
         }
+        ERROR_PROPERTIES = loadConfig("error.properties");
     }
 
     private static void loadTerminalParam(String[] args) {
@@ -28,8 +31,8 @@ public class ConfigProperties {
         });
     }
 
-    private static void loadConfig() throws IOException {
+    private static Properties loadConfig(String resource) throws IOException {
         LoadProperties loadProperties = new LoadProperties();
-        SERVER_PROPERTIES = loadProperties.loadParam(new String[]{"server.properties"});
+        return loadProperties.loadParam(new String[]{resource});
     }
 }

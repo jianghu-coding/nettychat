@@ -27,11 +27,24 @@ public class RedisService {
 
     private static final HashOperations<String, String, Object> hashOps = getHashOps();
 
-
     public Object vGet(CacheName cacheName, String key) {
         if (cacheName.getType() != CacheType.V) {
             throw new IllegalArgumentException("expected V found " + cacheName.getType());
         }
         return valueOps.get(cacheName.getPrefix().concat(key));
+    }
+
+    public Boolean sExist(CacheName cacheName, String username) {
+        if (cacheName.getType() != CacheType.S) {
+            throw new IllegalArgumentException("expected V found " + cacheName.getType());
+        }
+        return setOps.isMember(cacheName.name(), username);
+    }
+
+    public Object hGet(CacheName cacheName, String username) {
+        if (cacheName.getType() != CacheType.S) {
+            throw new IllegalArgumentException("expected V found " + cacheName.getType());
+        }
+        return hashOps.get(cacheName.name(), username);
     }
 }

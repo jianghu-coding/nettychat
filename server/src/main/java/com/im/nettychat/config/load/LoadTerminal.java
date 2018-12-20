@@ -1,4 +1,4 @@
-package com.im.nettychat.config;
+package com.im.nettychat.config.load;
 
 import com.im.nettychat.util.CollectionUtils;
 import java.util.Arrays;

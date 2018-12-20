@@ -1,6 +1,6 @@
 package com.im.nettychat.protocol.request;
 
-import com.im.nettychat.protocol.Packet;
+import com.im.nettychat.protocol.RequestPacket;
 import lombok.Data;
 import static com.im.nettychat.common.Command.SEND_MESSAGE;
 
@@ -9,7 +9,7 @@ import static com.im.nettychat.common.Command.SEND_MESSAGE;
  * @date 2018/12/20.
  */
 @Data
-public class MessageRequest extends Packet {
+public class MessageRequest extends RequestPacket {
 
     private String toUserId;
 

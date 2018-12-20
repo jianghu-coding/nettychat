@@ -1,6 +1,6 @@
 package com.im.nettychat.config;
 
-import static com.im.nettychat.config.ConfigProperties.SERVER_PROPERTIES;
+import static com.im.nettychat.config.load.ConfigProperties.SERVER_PROPERTIES;
 
 /**
  * @author hejianglong
