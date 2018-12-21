@@ -26,6 +26,7 @@ import com.im.nettychat.protocol.response.LoginResponse;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.util.StringUtils;
 
+import static com.im.nettychat.common.ConstantError.NEED_USERNAME_PASSWORD;
 import static com.im.nettychat.service.RedisService.redisService;
 
 /**
@@ -67,11 +68,11 @@ public class UserService {
                 LoginResponse response = new LoginResponse();
                 if (StringUtils.isEmpty(msg.getUsername()) || StringUtils.isEmpty(msg.getPassword())) {
                     response.setError(true);
-                    response.setErrorInfo("请输入用户名和密码");
+                    response.setErrorInfo(NEED_USERNAME_PASSWORD);
                     ctx.writeAndFlush(response);
                     return;
                 }
-                Long userId = GenerateID.generateID();
+                Long userId = GenerateID.generateUserID();
                 User user = new User();
                 user.setId(userId);
                 user.setName(msg.getName());
