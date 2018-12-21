@@ -1,6 +1,6 @@
 # nettychat
 基于netty的聊天工具, 某些场景需要并发事务控制, 现在没有做
-后续会提取出来，主要在以下几个点
+后续会提取出来做处理，主要在以下几个点
 1. 注册的时候
 
 # server config
@@ -34,6 +34,10 @@
 
 # 接口
 ## 错误处理
+每个返回对象都包含2个字段
+
+    error: true, errorInfo: "xxx" // 如果error为true, errorInfo展示错误信息
+    
 ### 注册
 request 内容
     
