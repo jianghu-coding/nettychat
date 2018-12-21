@@ -1,6 +1,8 @@
 package com.chat.androidclient.mvvm.view.activity
 
+import android.graphics.Color
 import android.view.View
+import com.blankj.utilcode.util.BarUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivitySignUpBinding
 import com.chat.androidclient.mvvm.viewmodel.SignUpVM

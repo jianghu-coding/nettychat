@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NettyChat</string>
+    <string name="base_url">NettyChat</string>
 </resources>

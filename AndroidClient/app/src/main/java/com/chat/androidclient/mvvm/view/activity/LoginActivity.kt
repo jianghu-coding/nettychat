@@ -18,6 +18,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding,LoginVM>() {
             }
             R.id.loginbtn->{
                 //todo 登陆
+                showMsg("正在开发")
             }
         }
     }
