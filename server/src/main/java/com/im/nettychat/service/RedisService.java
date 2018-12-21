@@ -45,6 +45,17 @@ public class RedisService {
         if (cacheName.getType() != CacheType.V) {
             throw new IllegalArgumentException("expected V found " + cacheName.getType());
         }
-        jedis.set(cacheName.getPrefix().concat(key).getBytes(), Serializer.DEFAULT.serialize(obj));
+        if (cacheName.getExpiration() > 0) {
+            jedis.psetex(cacheName.getPrefix().concat(key).getBytes(), cacheName.getExpiration(), Serializer.DEFAULT.serialize(obj));
+        } else {
+            jedis.set(cacheName.getPrefix().concat(key).getBytes(), Serializer.DEFAULT.serialize(obj));
+        }
+    }
+
+    public void hSet(CacheName cacheName, String username, String val) {
+        if (cacheName.getType() != CacheType.H) {
+            throw new IllegalArgumentException("expected V found " + cacheName.getType());
+        }
+        jedis.hset(cacheName.name(), username, val);
     }
 }

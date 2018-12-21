@@ -23,6 +23,7 @@ import com.im.nettychat.model.User;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.response.LoginResponse;
+import com.im.nettychat.protocol.response.RegisterResponse;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.util.StringUtils;
 
@@ -65,11 +66,19 @@ public class UserService {
         ThreadPoolService.execute(new Runnable() {
             @Override
             public void run() {
-                LoginResponse response = new LoginResponse();
+                RegisterResponse response = new RegisterResponse();
                 if (StringUtils.isEmpty(msg.getUsername()) || StringUtils.isEmpty(msg.getPassword())) {
                     response.setError(true);
                     response.setErrorInfo(NEED_USERNAME_PASSWORD);
                     ctx.writeAndFlush(response);
+                    return;
+                }
+                Object obj = redisService.hGet(CacheName.USERNAME_ID, msg.getUsername());
+                if (obj != null) {
+                    response.setError(true);
+                    response.setErrorInfo(ErrorConfig.getError(ConstantError.USER_ALREADY_EXIST));
+                    ctx.writeAndFlush(response);
+                    ctx.fireChannelReadComplete();
                     return;
                 }
                 Long userId = GenerateID.generateUserID();
@@ -79,7 +88,7 @@ public class UserService {
                 user.setUsername(msg.getUsername());
                 user.setPassword(msg.getPassword());
                 redisService.vSet(CacheName.USER_INFO, String.valueOf(userId), user);
-
+                redisService.hSet(CacheName.USERNAME_ID, msg.getUsername(), String.valueOf(userId));
                 response.setUserId(userId);
                 response.setName(user.getName());
                 ctx.writeAndFlush(response);

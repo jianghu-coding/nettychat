@@ -2,6 +2,7 @@ package com.im.nettychat.config.load;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
@@ -16,7 +17,7 @@ public class LoadProperties implements LoadResource {
         InputStream inputStream = null;
         try {
             inputStream = LoadProperties.class.getClassLoader().getResourceAsStream(args[0]);
-            properties.load(inputStream);
+            properties.load(new InputStreamReader(inputStream, "utf-8"));
         } finally {
             if (inputStream != null) {
                 inputStream.close();

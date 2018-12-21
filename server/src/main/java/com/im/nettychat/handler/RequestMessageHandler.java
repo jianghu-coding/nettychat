@@ -16,6 +16,6 @@ public class RequestMessageHandler extends SimpleChannelInboundHandler<MessageRe
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequest msg) throws Exception {
-
+        System.out.println("");
     }
 }

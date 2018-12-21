@@ -23,4 +23,6 @@ public interface ConstantError {
     String USER_NOT_FOUND = "userNotFound";
 
     String NEED_USERNAME_PASSWORD  = "needUsernamePassword";
+
+    String USER_ALREADY_EXIST = "userAlreadyExist";
 }

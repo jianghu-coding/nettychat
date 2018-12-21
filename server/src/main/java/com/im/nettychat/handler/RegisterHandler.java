@@ -14,6 +14,7 @@
 package com.im.nettychat.handler;
 
 import com.im.nettychat.protocol.request.RegisterRequest;
+import com.im.nettychat.protocol.response.RegisterResponse;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

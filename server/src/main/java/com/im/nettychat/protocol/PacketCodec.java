@@ -4,6 +4,8 @@ import com.im.nettychat.common.Command;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
+import com.im.nettychat.protocol.response.LoginResponse;
+import com.im.nettychat.protocol.response.RegisterResponse;
 import com.im.nettychat.serialize.Serializer;
 import com.im.nettychat.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -25,17 +27,21 @@ public class PacketCodec {
         packetTypeMap.put(Command.REGISTER, RegisterRequest.class);
         packetTypeMap.put(Command.SEND_MESSAGE, MessageRequest.class);
 
-
+        test();
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
         serializerMap.put(serializer.getSerializerAlgorithm(), serializer);
     }
 
+    // TODO - wait remove, add response for decode
+    private void test() {
+        packetTypeMap.put(Command.REGISTER_RESPONSE, RegisterResponse.class);
+        packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponse.class);
+    }
+
     public void encode(ByteBuf byteBuf, Packet packet) {
-        // 1. 序列化 java 对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
-        // 2. 实际编码过程
         byteBuf.writeInt(MAGIC_NUMBER);
         byteBuf.writeByte(packet.getVersion());
         byteBuf.writeByte(Serializer.DEFAULT.getSerializerAlgorithm());

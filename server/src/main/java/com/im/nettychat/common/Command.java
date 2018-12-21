@@ -6,11 +6,16 @@ package com.im.nettychat.common;
  */
 public interface Command {
 
+    // request
     Byte LOGIN = 1;
 
     Byte SEND_MESSAGE = 2;
 
+    Byte REGISTER = 4;
+
+    // response
     Byte LOGIN_RESPONSE = 3;
 
-    Byte REGISTER = 4;
+    Byte REGISTER_RESPONSE = 5;
+
 }
