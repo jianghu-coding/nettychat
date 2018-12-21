@@ -16,12 +16,6 @@ public class ServerConfig {
 
     private final static String REDIS_PORT = "redis.port";
 
-    private final static String SERVER_NUM = "redis.server.num";
-
-    private final static String SERVER_CURRENT = "redis.server.current";
-
-
-
     public static int getPort() {
         return Integer.parseInt(SERVER_PROPERTIES.getProperty(PORT));
     }
@@ -36,13 +30,5 @@ public class ServerConfig {
 
     public static int getRedisPort() {
         return Integer.parseInt(SERVER_PROPERTIES.getProperty(REDIS_PORT, "3306"));
-    }
-
-    public static int getRedisServerNum() {
-        return Integer.parseInt(SERVER_PROPERTIES.getProperty(SERVER_NUM, "10"));
-    }
-
-    public static int getRedisServerCurrent() {
-        return Integer.parseInt(SERVER_PROPERTIES.getProperty(SERVER_CURRENT));
     }
 }

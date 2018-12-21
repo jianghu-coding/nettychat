@@ -21,4 +21,6 @@ package com.im.nettychat.common;
 public interface ConstantError {
 
     String USER_NOT_FOUND = "userNotFound";
+
+    String NEED_USERNAME_PASSWORD  = "needUsernamePassword";
 }
