@@ -1,13 +1,11 @@
 package com.im.nettychat.handler;
 
-import com.im.nettychat.executor.ThreadPoolService;
 import com.im.nettychat.protocol.request.LoginRequest;
-import com.im.nettychat.service.UserService;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import static com.im.nettychat.service.impl.UserServiceImpl.userService;
 
-import static com.im.nettychat.service.UserService.userService;
 
 /**
  * @author hejianglong

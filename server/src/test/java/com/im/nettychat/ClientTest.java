@@ -73,14 +73,14 @@ public class ClientTest {
             // 发起注册
             register(channel);
         });
-        //channelFuture.sync().channel().closeFuture().sync();
+        channelFuture.sync().channel().closeFuture().sync();
 
     }
 
     private void register(Channel channel) {
         RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setName("hejianglong-2");
-        registerRequest.setUsername("17628003419-2");
+        registerRequest.setName("hejianglong");
+        registerRequest.setUsername("17628003419");
         registerRequest.setPassword("1238765");
         ByteBuf byteBuf = channel.alloc().buffer();
         PacketCodec.INSTANCE.encode(byteBuf, registerRequest);

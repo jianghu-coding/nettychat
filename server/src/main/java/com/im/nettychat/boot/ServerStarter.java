@@ -5,6 +5,7 @@ import com.im.nettychat.codec.PacketCodecHandler;
 import com.im.nettychat.config.load.ConfigProperties;
 import com.im.nettychat.config.ServerConfig;
 import com.im.nettychat.executor.ThreadPoolService;
+import com.im.nettychat.handler.IMHandler;
 import com.im.nettychat.handler.LoginHandler;
 import com.im.nettychat.handler.RegisterHandler;
 import com.im.nettychat.handler.RequestMessageHandler;
@@ -19,7 +20,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import java.io.IOException;
-import java.util.concurrent.Future;
 
 /**
  * @author hejianglong
@@ -53,6 +53,7 @@ public class ServerStarter {
                             ch.pipeline().addLast(RegisterHandler.INSTANCE);
                             ch.pipeline().addLast(LoginHandler.INSTANCE);
                             ch.pipeline().addLast(RequestMessageHandler.INSTANCE);
+                            ch.pipeline().addLast(IMHandler.INSTANCE);
                         }
                     });
             ChannelFuture channelFuture = serverBootstrap.bind(ServerConfig.getPort()).sync();

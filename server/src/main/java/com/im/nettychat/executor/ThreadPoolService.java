@@ -1,8 +1,10 @@
 package com.im.nettychat.executor;
 
 import com.im.nettychat.config.ServerConfig;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author hejianglong
@@ -14,6 +16,10 @@ public class ThreadPoolService {
 
     public static void execute(Runnable task) {
         executorService.execute(task);
+    }
+
+    public static Future submit(Callable task) {
+        return executorService.submit(task);
     }
 
     public static ExecutorService getExecutorService() {
