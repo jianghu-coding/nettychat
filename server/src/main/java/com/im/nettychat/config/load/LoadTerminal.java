@@ -1,4 +1,4 @@
-package com.im.nettychat.config;
+package com.im.nettychat.config.load;
 
 import com.im.nettychat.util.CollectionUtils;
 import java.util.Arrays;
@@ -24,15 +24,5 @@ public class LoadTerminal implements LoadResource {
             });
         });
         return properties;
-    }
-
-    @Override
-    public boolean isTerminal() {
-        return true;
-    }
-
-    @Override
-    public boolean isConfig() {
-        return false;
     }
 }

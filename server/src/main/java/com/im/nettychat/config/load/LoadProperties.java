@@ -1,4 +1,4 @@
-package com.im.nettychat.config;
+package com.im.nettychat.config.load;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,15 +23,5 @@ public class LoadProperties implements LoadResource {
             }
         }
         return properties;
-    }
-
-    @Override
-    public boolean isTerminal() {
-        return false;
-    }
-
-    @Override
-    public boolean isConfig() {
-        return false;
     }
 }
