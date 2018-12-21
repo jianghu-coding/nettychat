@@ -8,19 +8,23 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvvm.view.activity.SplashAvtivity"
-            android:theme="@style/splashTheme"
-            >
+        <activity
+            android:name=".mvvm.view.activity.SplashAvtivity"
+            android:theme="@style/splashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".mvvm.view.activity.LoginActivity"
-            android:theme="@style/fullscreen"
-            ></activity>
-        <activity android:name=".mvvm.view.activity.MainActivity"></activity>
+        <activity
+            android:name=".mvvm.view.activity.LoginActivity"
+            android:theme="@style/fullscreen"/>
+        <activity android:name=".mvvm.view.activity.MainActivity"/>
+        <activity android:name=".mvvm.view.activity.BaseActivity">
+        </activity>
+        <activity android:name=".mvvm.view.activity.SignUpActivity">
+        </activity>
     </application>
 
 </manifest>

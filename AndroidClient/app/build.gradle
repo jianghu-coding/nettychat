@@ -36,6 +36,18 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     kapt "com.android.databinding:compiler:$android_plugin_version"
     implementation dependencies.utilcode
+    implementation dependencies.recyclerView
+    implementation dependencies.retrofit
+    implementation dependencies.retrofitConverterGson
+    implementation dependencies.retrofitAdapterRxJava2
+    implementation dependencies.rxAndroid2
+    implementation dependencies.rxJava2
+    implementation dependencies.rxbinding2
+    implementation dependencies.glide
+    implementation dependencies.rxlifecycle2
+    implementation dependencies.rxlifecycle_component
+    implementation dependencies.rxpermissions2
+
 }
 repositories {
     mavenCentral()

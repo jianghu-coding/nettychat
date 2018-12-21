@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorffffff"
@@ -78,6 +79,7 @@
             android:layout_toRightOf="@+id/tv_pass"
             android:background="@null"
             android:hint="请填写密码"
+            android:inputType="textPassword"
             android:textColor="@color/color000000"
             android:textSize="16sp"
             />
@@ -93,6 +95,7 @@
         android:layout_width="match_parent"
         android:text="登录"
         android:id="@+id/loginbtn"
+        android:onClick="onClick"
         android:textSize="18sp"
         android:textStyle="bold"
         android:background="@drawable/shape_login_btn"
@@ -105,6 +108,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:text="忘记密码？"
+        android:id="@+id/forgetpass"
+        android:onClick="onClick"
         android:textSize="16sp"
         android:textColor="@color/color41c5f6"
         android:layout_height="105pt"
@@ -114,7 +119,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:text="新用户注册"
+        android:id="@+id/signuptv"
         android:textSize="16sp"
+        android:onClick="onClick"
         android:textColor="@color/color41c5f6"
         android:layout_height="105pt"
         android:layout_marginTop="50pt"
@@ -143,3 +150,4 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 </RelativeLayout>
+</layout>
