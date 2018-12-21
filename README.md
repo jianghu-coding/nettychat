@@ -3,6 +3,17 @@
 后续会提取出来做处理，主要在以下几个点
 1. 注册的时候
 
+# init server project
+    1. jdk >= 1.8
+    2. 安装配置redis
+    3. 配置server.properties
+    4. mvn clean install -Dmaven.test.skip=true
+       mvn assembly:assembly -Dmaven.test.skip=true
+    5. java -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
+
+# test
+    run ClientTest.java register
+
 # server config
     ip: 114.115.248.101
     port: 8080

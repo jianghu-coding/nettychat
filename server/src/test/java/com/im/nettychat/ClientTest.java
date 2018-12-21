@@ -67,12 +67,13 @@ public class ClientTest {
                     ch.pipeline().addLast(new ResponseHandler());
                 }
             });
-        bootstrap.connect("127.0.0.1", 8080).addListener(future -> {
+        ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).addListener(future -> {
             // 建立连接成功后发起登录请求或者注册请求
             Channel channel = ((ChannelFuture) future).channel();
             // 发起注册
             register(channel);
-        }).channel().closeFuture().sync();
+        });
+        //channelFuture.sync().channel().closeFuture().sync();
 
     }
 
