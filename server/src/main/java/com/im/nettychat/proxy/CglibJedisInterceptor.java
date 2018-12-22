@@ -35,7 +35,6 @@ public class CglibJedisInterceptor implements MethodInterceptor {
         // 便于其它地方使用和使用结束后统一关闭
         Jedis jedis = LOCAL_JEDIS.get();
         if (jedis == null) {
-            System.out.println("设置jedis了啊我曹");
             LOCAL_JEDIS.set(RedisPool.getJedis());
         }
         return methodProxy.invokeSuper(obj, args);

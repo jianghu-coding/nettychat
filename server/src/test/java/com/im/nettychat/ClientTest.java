@@ -136,7 +136,7 @@ public class ClientTest {
     private void register(Channel channel) {
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.setName("along");
-        registerRequest.setUsername("18828198762");
+        registerRequest.setUsername("12038321");
         registerRequest.setPassword("1238765");
         ByteBuf byteBuf = channel.alloc().buffer();
         PacketCodec.INSTANCE.encode(byteBuf, registerRequest);

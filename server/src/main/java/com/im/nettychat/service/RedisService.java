@@ -65,9 +65,7 @@ public class RedisService {
         if (cacheName.getType() != CacheType.V) {
             throw new IllegalArgumentException("expected V found " + cacheName.getType());
         }
-        System.out.println(cacheName.name() + "--" + val);
         long success = getJedis().setnx(cacheName.name(), val);
-        System.out.println("success? :" + success);
         if (cacheName.getExpiration() > 0 && success > 0) {
             getJedis().expire(cacheName.name(), (int) cacheName.getExpiration());
         }
