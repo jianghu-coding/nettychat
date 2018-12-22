@@ -6,6 +6,8 @@ package com.im.nettychat.cache;
  */
 public enum CacheName {
 
+    REGISTER_LOCK(CacheType.V, 5),
+
     USER_INFO(CacheType.V, 0),
 
     USER_ID(CacheType.V, 0),

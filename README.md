@@ -1,7 +1,4 @@
 # nettychat
-基于netty的聊天工具, 某些场景需要并发事务控制, 现在没有做
-后续会提取出来做处理，主要在以下几个点
-1. 注册的时候
 
 # init server project
     1. jdk >= 1.8
@@ -9,7 +6,7 @@
     3. 配置server.properties
     4. mvn clean install -Dmaven.test.skip=true
        mvn assembly:assembly -Dmaven.test.skip=true
-    5. java -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
+    5. nohup java -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
 
 # test
     run ClientTest.java register

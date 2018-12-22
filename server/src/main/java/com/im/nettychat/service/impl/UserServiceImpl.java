@@ -1,23 +1,10 @@
-/*
- * Project: com.im.nettychat.service.impl
- * 
- * File Created at 2018/12/21
- * 
- * Copyright 2018 CMCC Corporation Limited.
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * ZYHY Company. ("Confidential Information").  You shall not
- * disclose such Confidential Information and shall use it only in
- * accordance with the terms of the license.
- */
 package com.im.nettychat.service.impl;
 
 import com.im.nettychat.cache.CacheName;
 import com.im.nettychat.common.ConstantError;
 import com.im.nettychat.common.GenerateID;
 import com.im.nettychat.config.ErrorConfig;
-import com.im.nettychat.executor.proxy.CglibServiceInterceptor;
+import com.im.nettychat.proxy.CglibServiceInterceptor;
 import com.im.nettychat.model.UID;
 import com.im.nettychat.model.User;
 import com.im.nettychat.protocol.request.LoginRequest;
@@ -25,6 +12,7 @@ import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.RegisterResponse;
 import com.im.nettychat.service.UserService;
+import com.im.nettychat.util.LockUtil;
 import com.im.nettychat.util.StringUtils;
 import io.netty.channel.ChannelHandlerContext;
 import static com.im.nettychat.common.ConstantError.NEED_USERNAME_PASSWORD;
@@ -54,6 +42,7 @@ public class UserServiceImpl implements UserService {
         response.setName(user.getName());
         response.setDesc(user.getDesc());
         response.setIcon(user.getIcon());
+        ctx.writeAndFlush(response);
     }
 
     public void register(ChannelHandlerContext ctx, RegisterRequest msg) {
@@ -64,24 +53,31 @@ public class UserServiceImpl implements UserService {
             ctx.writeAndFlush(response);
             return;
         }
-        Object obj = redisService.hGet(CacheName.USERNAME_ID, msg.getUsername());
-        if (obj != null) {
-            response.setError(true);
-            response.setErrorInfo(ErrorConfig.getError(ConstantError.USER_ALREADY_EXIST));
+        LockUtil.lock(CacheName.REGISTER_LOCK);
+        try {
+            // 检测用户是否已经被注册了
+            Object obj = redisService.hGet(CacheName.USERNAME_ID, msg.getUsername());
+            if (obj != null) {
+                response.setError(true);
+                response.setErrorInfo(ErrorConfig.getError(ConstantError.USER_ALREADY_EXIST));
+                ctx.writeAndFlush(response);
+                ctx.fireChannelReadComplete();
+                return;
+            }
+            Long userId = GenerateID.generateUserID();
+            User user = new User();
+            user.setId(userId);
+            user.setName(msg.getName());
+            user.setUsername(msg.getUsername());
+            user.setPassword(msg.getPassword());
+            redisService.vSet(CacheName.USER_INFO, String.valueOf(userId), user);
+            redisService.hSet(CacheName.USERNAME_ID, msg.getUsername(), String.valueOf(userId));
+            response.setUserId(userId);
+            response.setName(user.getName());
             ctx.writeAndFlush(response);
-            ctx.fireChannelReadComplete();
-            return;
+        } finally {
+            LockUtil.unLock(CacheName.REGISTER_LOCK);
         }
-        Long userId = GenerateID.generateUserID();
-        User user = new User();
-        user.setId(userId);
-        user.setName(msg.getName());
-        user.setUsername(msg.getUsername());
-        user.setPassword(msg.getPassword());
-        redisService.vSet(CacheName.USER_INFO, String.valueOf(userId), user);
-        redisService.hSet(CacheName.USERNAME_ID, msg.getUsername(), String.valueOf(userId));
-        response.setUserId(userId);
-        response.setName(user.getName());
-        ctx.writeAndFlush(response);
     }
+
 }

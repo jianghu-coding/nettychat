@@ -1,25 +1,14 @@
-/*
- * Project: com.im.nettychat.executor.proxy
- * 
- * File Created at 2018/12/21
- * 
- * Copyright 2018 CMCC Corporation Limited.
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * ZYHY Company. ("Confidential Information").  You shall not
- * disclose such Confidential Information and shall use it only in
- * accordance with the terms of the license.
- */
-package com.im.nettychat.executor.proxy;
+package com.im.nettychat.proxy;
 
 import com.im.nettychat.executor.ThreadPoolService;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import redis.clients.jedis.Jedis;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import static com.im.nettychat.cache.LocalRSession.LOCAL_JEDIS;
 
 /**
  * @author hejianglong
@@ -28,7 +17,7 @@ import java.util.concurrent.Future;
  */
 public class CglibServiceInterceptor implements MethodInterceptor {
 
-    private static CglibServiceInterceptor cglibServiceInterceptor = new CglibServiceInterceptor();
+    private final static CglibServiceInterceptor cglibServiceInterceptor = new CglibServiceInterceptor();
 
     private CglibServiceInterceptor() {}
 
@@ -52,6 +41,12 @@ public class CglibServiceInterceptor implements MethodInterceptor {
                     result = methodProxy.invokeSuper(obj, args);
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
+                } finally {
+                    Jedis jedis = LOCAL_JEDIS.get();
+                    if (jedis != null) {
+                        LOCAL_JEDIS.remove();
+                        jedis.close();
+                    }
                 }
                 return result;
             }
