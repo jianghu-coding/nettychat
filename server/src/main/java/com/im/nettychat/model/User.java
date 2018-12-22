@@ -1,5 +1,6 @@
 package com.im.nettychat.model;
 
+import com.im.nettychat.util.Util;
 import lombok.Data;
 
 /**
@@ -20,4 +21,8 @@ public class User {
     private String icon;
 
     private String desc;
+
+    public boolean isValidPassword(String password) {
+        return Util.isValidPassword(password, this.password);
+    }
 }

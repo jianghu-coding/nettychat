@@ -1,16 +1,3 @@
-/*
- * Project: com.im.nettychat.common
- * 
- * File Created at 2018/12/20
- * 
- * Copyright 2018 CMCC Corporation Limited.
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * ZYHY Company. ("Confidential Information").  You shall not
- * disclose such Confidential Information and shall use it only in
- * accordance with the terms of the license.
- */
 package com.im.nettychat.common;
 
 /**
@@ -25,4 +12,6 @@ public interface ConstantError {
     String NEED_USERNAME_PASSWORD  = "needUsernamePassword";
 
     String USER_ALREADY_EXIST = "userAlreadyExist";
+
+    String PASSWORD_ERROR = "passwordError";
 }

@@ -15,25 +15,52 @@ public class RedisService {
 
     public static final RedisService redisService = (RedisService) CglibJedisInterceptor.getCglibProxy(RedisService.class);
 
-    public Object vGet(CacheName cacheName, String key) {
+    public <T> T vGetObject(CacheName cacheName, String key, Class<T> cassClass) {
         if (cacheName.getType() != CacheType.V) {
             throw new IllegalArgumentException("expected V found " + cacheName.getType());
         }
-        return getJedis().get(cacheName.getPrefix().concat(key));
+        byte[] bytes = getJedis().get(cacheName.getPrefix().concat(key).getBytes());
+        if (bytes != null && bytes.length > 0) {
+            return Serializer.DEFAULT.deserialize(cassClass, bytes);
+        }
+        return null;
     }
 
     public Boolean sExist(CacheName cacheName, String username) {
         if (cacheName.getType() != CacheType.S) {
-            throw new IllegalArgumentException("expected V found " + cacheName.getType());
+            throw new IllegalArgumentException("expected S found " + cacheName.getType());
         }
         return getJedis().sismember(cacheName.name(), username);
     }
 
-    public Object hGet(CacheName cacheName, String username) {
+
+    public void hSet(CacheName cacheName, String username, String val) {
         if (cacheName.getType() != CacheType.H) {
             throw new IllegalArgumentException("expected V found " + cacheName.getType());
         }
+        getJedis().hset(cacheName.name(), username, val);
+    }
+
+
+    public long hDel(CacheName cacheName) {
+        if (cacheName.getType() != CacheType.V) {
+            throw new IllegalArgumentException("expected V found " + cacheName.getType());
+        }
+        return getJedis().del(cacheName.name());
+    }
+
+    public String hGet(CacheName cacheName, String username) {
+        if (cacheName.getType() != CacheType.H) {
+            throw new IllegalArgumentException("expected H found " + cacheName.getType());
+        }
         return getJedis().hget(cacheName.name(), username);
+    }
+
+    public Object vGetString(CacheName cacheName, String key) {
+        if (cacheName.getType() != CacheType.V) {
+            throw new IllegalArgumentException("expected V found " + cacheName.getType());
+        }
+        return getJedis().get(cacheName.getPrefix().concat(key));
     }
 
     public Long vIncr(CacheName cacheName) {
@@ -43,7 +70,7 @@ public class RedisService {
         return getJedis().incr(cacheName.name());
     }
 
-    public void vSet(CacheName cacheName, String key, Object obj) {
+    public void vSetObject(CacheName cacheName, String key, Object obj) {
         if (cacheName.getType() != CacheType.V) {
             throw new IllegalArgumentException("expected V found " + cacheName.getType());
         }
@@ -54,11 +81,15 @@ public class RedisService {
         }
     }
 
-    public void hSet(CacheName cacheName, String username, String val) {
-        if (cacheName.getType() != CacheType.H) {
+    public void vSetString(CacheName cacheName, String key, String val) {
+        if (cacheName.getType() != CacheType.V) {
             throw new IllegalArgumentException("expected V found " + cacheName.getType());
         }
-        getJedis().hset(cacheName.name(), username, val);
+        if (cacheName.getExpiration() > 0) {
+            getJedis().psetex(cacheName.getPrefix().concat(key), cacheName.getExpiration(), val);
+        } else {
+            getJedis().set(cacheName.getPrefix().concat(key), val);
+        }
     }
 
     public boolean vSetNx(CacheName cacheName, String val) {
@@ -70,13 +101,6 @@ public class RedisService {
             getJedis().expire(cacheName.name(), (int) cacheName.getExpiration());
         }
         return success > 0;
-    }
-
-    public long hDel(CacheName cacheName) {
-        if (cacheName.getType() != CacheType.V) {
-            throw new IllegalArgumentException("expected V found " + cacheName.getType());
-        }
-        return getJedis().del(cacheName.name());
     }
 
     private Jedis getJedis() {

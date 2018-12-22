@@ -15,8 +15,11 @@ package com.im.nettychat;
 
 import com.im.nettychat.common.Command;
 import com.im.nettychat.protocol.PacketCodec;
+import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
+import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.RegisterResponse;
+import com.im.nettychat.util.Util;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -64,7 +67,7 @@ public class ClientTest {
                 public void initChannel(SocketChannel ch) {
                     // 收到服务器返回来的消息
                     ch.pipeline().addLast(new PacketDecoder());
-                    ch.pipeline().addLast(new ResponseHandler());
+                    ch.pipeline().addLast(new RegisterResponseHandler());
                 }
             });
         ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).addListener(future -> {
@@ -72,6 +75,33 @@ public class ClientTest {
             Channel channel = ((ChannelFuture) future).channel();
             // 发起注册
             register(channel);
+        });
+        channelFuture.sync().channel().closeFuture().sync();
+    }
+
+    @Test
+    public void testLogin() throws InterruptedException {
+        Bootstrap bootstrap = new Bootstrap();
+        NioEventLoopGroup workerGroup = new NioEventLoopGroup();
+        bootstrap
+            .group(workerGroup)
+            .channel(NioSocketChannel.class)
+            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
+            .option(ChannelOption.SO_KEEPALIVE, true)
+            .option(ChannelOption.TCP_NODELAY, true)
+            .handler(new ChannelInitializer<SocketChannel>() {
+                @Override
+                public void initChannel(SocketChannel ch) {
+                    // 收到服务器返回来的消息
+                    ch.pipeline().addLast(new PacketDecoder());
+                    ch.pipeline().addLast(new LoginResponseHandler());
+                }
+            });
+        ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).addListener(future -> {
+            // 建立连接成功后发起登录请求或者注册请求
+            Channel channel = ((ChannelFuture) future).channel();
+            // 发起注册
+            login(channel);
         });
         channelFuture.sync().channel().closeFuture().sync();
     }
@@ -101,10 +131,11 @@ public class ClientTest {
                                 public void initChannel(SocketChannel ch) {
                                     // 收到服务器返回来的消息
                                     ch.pipeline().addLast(new PacketDecoder());
-                                    ch.pipeline().addLast(new ResponseHandler());
+                                    ch.pipeline().addLast(new RegisterResponseHandler());
+                                    ch.pipeline().addLast(new LoginResponseHandler());
                                 }
                             });
-                        ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).addListener(future -> {
+                        ChannelFuture channelFuture = bootstrap.connect("114.115.248.101", 8080).addListener(future -> {
                             if (future.isSuccess()) {
                                 // 建立连接成功后发起登录请求或者注册请求
                                 Channel channel = ((ChannelFuture) future).channel();
@@ -136,16 +167,33 @@ public class ClientTest {
     private void register(Channel channel) {
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.setName("along");
-        registerRequest.setUsername("12038321");
+        registerRequest.setUsername("1234567");
         registerRequest.setPassword("1238765");
         ByteBuf byteBuf = channel.alloc().buffer();
         PacketCodec.INSTANCE.encode(byteBuf, registerRequest);
         channel.writeAndFlush(byteBuf);
-        waitForLoginResponse();
+        waitForResponse();
+    }
+
+    private void login(Channel channel) {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("1234567");
+        loginRequest.setPassword("1238765");
+        ByteBuf byteBuf = channel.alloc().buffer();
+        PacketCodec.INSTANCE.encode(byteBuf, loginRequest);
+        channel.writeAndFlush(byteBuf);
+        waitForResponse();
+    }
+
+    @Test
+    public void login() {
+        String oldp = Util.hashPasswordAddingSalt("3683989");
+        boolean s = Util.isValidPassword("3683989", oldp);
+        System.out.println(s);
     }
 
 
-    private static void waitForLoginResponse() {
+    private static void waitForResponse() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ignored) {
@@ -153,7 +201,7 @@ public class ClientTest {
     }
 }
 
-class ResponseHandler extends SimpleChannelInboundHandler<RegisterResponse> {
+class RegisterResponseHandler extends SimpleChannelInboundHandler<RegisterResponse> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RegisterResponse msg) throws Exception {
@@ -170,6 +218,25 @@ class ResponseHandler extends SimpleChannelInboundHandler<RegisterResponse> {
         }
     }
 }
+
+class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponse> {
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, LoginResponse msg) throws Exception {
+        if (msg.getCommand() == Command.LOGIN_RESPONSE) {
+            // 如果是注册则返回注册响应指令
+            LoginResponse response = (LoginResponse) msg;
+            // 如果存在错误
+            if (response.isError()) {
+                System.out.println(response.getErrorInfo());
+            } else {
+                // 成功输出对象
+                System.out.println(response);
+            }
+        }
+    }
+}
+
 
 class PacketDecoder extends MessageToMessageDecoder<ByteBuf> {
 

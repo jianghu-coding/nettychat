@@ -5,6 +5,7 @@ import com.im.nettychat.codec.PacketCodecHandler;
 import com.im.nettychat.config.load.ConfigProperties;
 import com.im.nettychat.config.ServerConfig;
 import com.im.nettychat.executor.ThreadPoolService;
+import com.im.nettychat.handler.AuthHandler;
 import com.im.nettychat.handler.IMHandler;
 import com.im.nettychat.handler.LoginHandler;
 import com.im.nettychat.handler.RegisterHandler;
@@ -30,15 +31,16 @@ public class ServerStarter {
 
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(ServerStarter.class);
 
+    private static NioEventLoopGroup boosGroup = new NioEventLoopGroup();
+
+    private static NioEventLoopGroup workerGroup = new NioEventLoopGroup();
+
     public static void main(String[] args) throws IOException, InterruptedException {
         init(args);
         start();
     }
 
     private static void start() throws InterruptedException {
-        NioEventLoopGroup boosGroup = new NioEventLoopGroup();
-        NioEventLoopGroup workerGroup = new NioEventLoopGroup();
-
         try {
             final ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap
@@ -54,6 +56,8 @@ public class ServerStarter {
                             ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
                             ch.pipeline().addLast(RegisterHandler.INSTANCE);
                             ch.pipeline().addLast(LoginHandler.INSTANCE);
+                            // 后面的都必须登录后访问
+                            ch.pipeline().addLast(AuthHandler.INSTANCE);
                             ch.pipeline().addLast(RequestMessageHandler.INSTANCE);
                             ch.pipeline().addLast(IMHandler.INSTANCE);
                         }
