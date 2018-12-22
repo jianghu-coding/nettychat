@@ -27,11 +27,11 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         logger.error("server exception: ", cause);
-        ctx.close();
+        ctx.channel().close();
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        ctx.close();
+        ctx.channel().close();
     }
 }
