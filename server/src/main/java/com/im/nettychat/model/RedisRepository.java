@@ -1,4 +1,4 @@
-package com.im.nettychat.service;
+package com.im.nettychat.model;
 
 import com.im.nettychat.cache.CacheName;
 import com.im.nettychat.cache.CacheType;
@@ -11,9 +11,9 @@ import redis.clients.jedis.Jedis;
  * @author hejianglong
  * @date 2018/12/20.
  */
-public class RedisService {
+public class RedisRepository {
 
-    public static final RedisService redisService = (RedisService) CglibJedisInterceptor.getCglibProxy(RedisService.class);
+    public static final RedisRepository redisRepository = (RedisRepository) CglibJedisInterceptor.getCglibProxy(RedisRepository.class);
 
     public <T> T vGetObject(CacheName cacheName, String key, Class<T> cassClass) {
         if (cacheName.getType() != CacheType.V) {
@@ -26,19 +26,19 @@ public class RedisService {
         return null;
     }
 
-    public Boolean sExist(CacheName cacheName, String username) {
+    public Boolean sExist(CacheName cacheName, String key) {
         if (cacheName.getType() != CacheType.S) {
             throw new IllegalArgumentException("expected S found " + cacheName.getType());
         }
-        return getJedis().sismember(cacheName.name(), username);
+        return getJedis().sismember(cacheName.name(), key);
     }
 
 
-    public void hSet(CacheName cacheName, String username, String val) {
+    public void hSet(CacheName cacheName, String key, String val) {
         if (cacheName.getType() != CacheType.H) {
             throw new IllegalArgumentException("expected V found " + cacheName.getType());
         }
-        getJedis().hset(cacheName.name(), username, val);
+        getJedis().hset(cacheName.name(), key, val);
     }
 
 
@@ -49,11 +49,11 @@ public class RedisService {
         return getJedis().del(cacheName.name());
     }
 
-    public String hGet(CacheName cacheName, String username) {
+    public String hGet(CacheName cacheName, String key) {
         if (cacheName.getType() != CacheType.H) {
             throw new IllegalArgumentException("expected H found " + cacheName.getType());
         }
-        return getJedis().hget(cacheName.name(), username);
+        return getJedis().hget(cacheName.name(), key);
     }
 
     public Object vGetString(CacheName cacheName, String key) {
@@ -101,6 +101,13 @@ public class RedisService {
             getJedis().expire(cacheName.name(), (int) cacheName.getExpiration());
         }
         return success > 0;
+    }
+
+    public Boolean vExits(CacheName cacheName, String key) {
+        if (cacheName.getType() != CacheType.V) {
+            throw new IllegalArgumentException("expected V found " + cacheName.getType());
+        }
+        return getJedis().exists(key);
     }
 
     private Jedis getJedis() {

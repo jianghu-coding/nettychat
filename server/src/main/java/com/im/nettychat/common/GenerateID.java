@@ -14,10 +14,8 @@
 package com.im.nettychat.common;
 
 import com.im.nettychat.cache.CacheName;
-import com.im.nettychat.config.ServerConfig;
-
 import static com.im.nettychat.cache.CacheName.USER_ID;
-import static com.im.nettychat.service.RedisService.redisService;
+import static com.im.nettychat.model.RedisRepository.redisRepository;
 
 /**
  * @author hejianglong
@@ -31,6 +29,6 @@ public class GenerateID {
     }
 
     private static Long generateID(CacheName cacheName) {
-        return redisService.vIncr(cacheName);
+        return redisRepository.vIncr(cacheName);
     }
 }

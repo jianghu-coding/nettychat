@@ -42,12 +42,13 @@ import java.util.concurrent.Executors;
  */
 public class ClientTest {
 
-    private static final String TEST_A_USERNAME = "666666";
+    public static final String TEST_A_USERNAME = "666666";
     public static final String TEST_A_PASSWORD = "777777";
     public static final String TEST_A_NAME = "阿宝";
     public static final String TEST_B_USERNAME = "888888";
     public static final String TEST_B_PASSWORD = "999999";
     public static final String TEST_B_NAME = "宝六";
+    public static final String HOST = "127.0.0.1";
 
     /**
      * 测试注册
@@ -66,10 +67,10 @@ public class ClientTest {
                     ch.pipeline().addLast(new RegisterResponseHandler());
                 }
             });
-        final String username = TEST_B_USERNAME;
-        final String password = TEST_B_PASSWORD;
-        final String name = TEST_B_NAME;
-        ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).addListener(future -> {
+        final String username = TEST_A_USERNAME;
+        final String password = TEST_A_PASSWORD;
+        final String name = TEST_A_NAME;
+        ChannelFuture channelFuture = bootstrap.connect(HOST, 8080).addListener(future -> {
             // 建立连接成功后发起登录请求或者注册请求
             Channel channel = ((ChannelFuture) future).channel();
             // 发起注册
@@ -103,7 +104,7 @@ public class ClientTest {
                                     ch.pipeline().addLast(new LoginResponseHandler());
                                 }
                             });
-                        ChannelFuture channelFuture = bootstrap.connect("114.115.248.101", 8080).addListener(future -> {
+                        ChannelFuture channelFuture = bootstrap.connect(HOST, 8080).addListener(future -> {
                             if (future.isSuccess()) {
                                 // 建立连接成功后发起登录请求或者注册请求
                                 Channel channel = ((ChannelFuture) future).channel();
@@ -154,7 +155,7 @@ public class ClientTest {
 
     private static void waitForResponse() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException ignored) {
         }
     }

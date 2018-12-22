@@ -39,3 +39,5 @@
     请求对象体必须包含字段 command(请求指令), version(版本号)
     安卓 demo
     com.im.nettychat.ClientTest.java
+
+# 接口文档见 doc.md

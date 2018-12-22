@@ -14,7 +14,7 @@
 package com.im.nettychat.util;
 
 import com.im.nettychat.cache.CacheName;
-import static com.im.nettychat.service.RedisService.redisService;
+import static com.im.nettychat.model.RedisRepository.redisRepository;
 
 /**
  * @author hejianglong
@@ -32,7 +32,7 @@ public class LockUtil {
     public static void lock(CacheName key) {
         boolean success = false;
         for(;;) {
-            success = redisService.vSetNx(key, LOCK_VAL);
+            success = redisRepository.vSetNx(key, LOCK_VAL);
             if (success) {
                 return;
             }
@@ -40,6 +40,6 @@ public class LockUtil {
     }
 
     public static void unLock(CacheName key) {
-        redisService.hDel(key);
+        redisRepository.hDel(key);
     }
 }

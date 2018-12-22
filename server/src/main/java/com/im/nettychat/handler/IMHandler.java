@@ -28,6 +28,7 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
     public IMHandler() {
         handlerMap = new HashMap<>();
         handlerMap.put(Command.SEND_MESSAGE, MessageHandler.INSTANCE);
+        handlerMap.put(Command.CREATE_GROUP, CreateGroupHandler.INSTANCE);
     }
 
     @Override

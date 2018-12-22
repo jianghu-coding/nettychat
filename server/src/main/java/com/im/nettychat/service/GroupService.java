@@ -1,7 +1,7 @@
 /*
- * Project: com.im.nettychat.util
+ * Project: com.im.nettychat.service
  * 
- * File Created at 2018/12/20
+ * File Created at 2018/12/22
  * 
  * Copyright 2018 CMCC Corporation Limited.
  * All rights reserved.
@@ -11,20 +11,16 @@
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license.
  */
-package com.im.nettychat.util;
+package com.im.nettychat.service;
+
+import com.im.nettychat.protocol.request.CreateGroupRequest;
+import io.netty.channel.ChannelHandlerContext;
 
 /**
  * @author hejianglong
  * @Desc
- * @date 2018/12/20 下午8:41
+ * @date 2018/12/22 下午10:32
  */
-public class BooleanUtils {
-
-    public static boolean isTrue(Boolean val) {
-        return val != null && val.equals(true);
-    }
-
-    public static boolean isNotTrue(Boolean exits) {
-        return exits == null || !exits;
-    }
+public interface GroupService {
+    void createGroup(ChannelHandlerContext ctx, CreateGroupRequest msg);
 }

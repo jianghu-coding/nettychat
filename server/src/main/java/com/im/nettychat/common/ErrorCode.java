@@ -16,4 +16,6 @@ public interface ErrorCode {
     String PASSWORD_ERROR = "passwordError";
 
     String NOT_SUPPORT_SEND_OFFLINE = "notSupportSendOffline";
+
+    String GROUP_NAME_REQUIRED = "groupNameRequired";
 }

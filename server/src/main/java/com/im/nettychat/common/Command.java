@@ -13,6 +13,8 @@ public interface Command {
 
     Byte REGISTER = 4;
 
+    Byte CREATE_GROUP = 6;
+
     // response
     Byte LOGIN_RESPONSE = 3;
 
@@ -20,4 +22,5 @@ public interface Command {
 
     Byte SEND_MESSAGE_RESPONSE = 7;
 
+    Byte CREATE_GROUP_RESPONSE = 9;
 }

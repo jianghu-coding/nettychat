@@ -19,7 +19,7 @@ import com.im.nettychat.util.Util;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import static com.im.nettychat.common.ErrorCode.NEED_USERNAME_PASSWORD;
-import static com.im.nettychat.service.RedisService.redisService;
+import static com.im.nettychat.model.RedisRepository.redisRepository;
 
 /**
  * @author hejianglong
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     public void login(ChannelHandlerContext ctx, LoginRequest msg) {
         LoginResponse response = new LoginResponse();
-        String userId = redisService.hGet(CacheName.USERNAME_ID, msg.getUsername());
+        String userId = redisRepository.hGet(CacheName.USERNAME_ID, msg.getUsername());
         // 用户不存在
         if (userId == null || userId.trim().length() == 0) {
             response.setError(true);
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
             ctx.writeAndFlush(response);
             return;
         }
-        User user = redisService.vGetObject(CacheName.USER_INFO, String.valueOf(userId), User.class);
+        User user = redisRepository.vGetObject(CacheName.USER_INFO, String.valueOf(userId), User.class);
         if (!user.isValidPassword(msg.getPassword())) {
             response.setError(true);
             response.setErrorInfo(ErrorConfig.getError(ErrorCode.PASSWORD_ERROR));
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         LockUtil.lock(CacheName.REGISTER_LOCK);
         try {
             // 检测用户是否已经被注册了
-            String existUserId = redisService.hGet(CacheName.USERNAME_ID, msg.getUsername());
+            String existUserId = redisRepository.hGet(CacheName.USERNAME_ID, msg.getUsername());
             if (existUserId != null) {
                 response.setError(true);
                 response.setErrorInfo(ErrorConfig.getError(ErrorCode.USER_ALREADY_EXIST));
@@ -81,8 +81,8 @@ public class UserServiceImpl implements UserService {
             user.setName(msg.getName());
             user.setUsername(msg.getUsername());
             user.setPassword(Util.hashPasswordAddingSalt(msg.getPassword()));
-            redisService.vSetObject(CacheName.USER_INFO, String.valueOf(userId), user);
-            redisService.hSet(CacheName.USERNAME_ID, msg.getUsername(), String.valueOf(userId));
+            redisRepository.vSetObject(CacheName.USER_INFO, String.valueOf(userId), user);
+            redisRepository.hSet(CacheName.USERNAME_ID, msg.getUsername(), String.valueOf(userId));
             response.setUserId(userId);
             response.setName(user.getName());
 

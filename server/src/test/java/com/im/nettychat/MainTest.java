@@ -31,9 +31,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.MessageToMessageDecoder;
-
 import java.util.List;
 import java.util.Scanner;
+import static com.im.nettychat.ClientTest.HOST;
 
 /**
  * @author hejianglong
@@ -41,6 +41,7 @@ import java.util.Scanner;
  * @date 2018/12/22 下午7:04
  */
 public class MainTest {
+
     // 客户端互相聊天
     public static void main(String[] args) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();
@@ -60,15 +61,15 @@ public class MainTest {
                     ch.pipeline().addLast(new MessageResponseHandler());
                 }
             });
-        ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).addListener(future -> {
+        ChannelFuture channelFuture = bootstrap.connect(HOST, 8080).addListener(future -> {
             if (future.isSuccess()) {
                 // 建立连接成功后发起登录请求或者注册请求
                 Channel channel = ((ChannelFuture) future).channel();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        while (!Thread.interrupted()) {
-                            Scanner scanner = new Scanner(System.in);
+                        Scanner scanner = new Scanner(System.in);
+                        while(!Thread.interrupted()) {
                             System.out.println("---输入指令 -> a: 登录, b: 发送消息");
                             String command = scanner.nextLine();
                             if (command.equals("a")) {
@@ -131,7 +132,6 @@ class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponse> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponse msg) throws Exception {
-        System.out.println("---=-==--");
         if (msg.getCommand() == Command.LOGIN_RESPONSE) {
             // 如果是注册则返回注册响应指令
             LoginResponse response = (LoginResponse) msg;

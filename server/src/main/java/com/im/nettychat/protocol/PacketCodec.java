@@ -1,9 +1,11 @@
 package com.im.nettychat.protocol;
 
 import com.im.nettychat.common.Command;
+import com.im.nettychat.protocol.request.CreateGroupRequest;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
+import com.im.nettychat.protocol.response.CreateGroupResponse;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.MessageResponse;
 import com.im.nettychat.protocol.response.RegisterResponse;
@@ -31,6 +33,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.LOGIN, LoginRequest.class);
         packetTypeMap.put(Command.REGISTER, RegisterRequest.class);
         packetTypeMap.put(Command.SEND_MESSAGE, MessageRequest.class);
+        packetTypeMap.put(Command.CREATE_GROUP, CreateGroupRequest.class);
 
         test();
         serializerMap = new HashMap<>();
@@ -43,6 +46,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.REGISTER_RESPONSE, RegisterResponse.class);
         packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponse.class);
         packetTypeMap.put(Command.SEND_MESSAGE_RESPONSE, MessageResponse.class);
+        packetTypeMap.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponse.class);
     }
 
     public void encode(ByteBuf byteBuf, Packet packet) {

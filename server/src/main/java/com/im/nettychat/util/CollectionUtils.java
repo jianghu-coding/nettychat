@@ -19,4 +19,8 @@ public class CollectionUtils {
     public static boolean isNotNullOrEmpty(String[] arrays) {
         return arrays != null && arrays.length > 0;
     }
+
+    public static boolean isNotNullOrEmpty(Collection collection) {
+        return collection != null && collection.size() > 0;
+    }
 }
