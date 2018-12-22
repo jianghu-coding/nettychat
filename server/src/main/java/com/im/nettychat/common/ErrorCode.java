@@ -5,7 +5,7 @@ package com.im.nettychat.common;
  * @Desc
  * @date 2018/12/20 下午9:24
  */
-public interface ConstantError {
+public interface ErrorCode {
 
     String USER_NOT_FOUND = "userNotFound";
 
@@ -14,4 +14,6 @@ public interface ConstantError {
     String USER_ALREADY_EXIST = "userAlreadyExist";
 
     String PASSWORD_ERROR = "passwordError";
+
+    String NOT_SUPPORT_SEND_OFFLINE = "notSupportSendOffline";
 }

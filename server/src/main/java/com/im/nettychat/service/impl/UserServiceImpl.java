@@ -1,12 +1,11 @@
 package com.im.nettychat.service.impl;
 
 import com.im.nettychat.cache.CacheName;
-import com.im.nettychat.common.ConstantError;
+import com.im.nettychat.common.ErrorCode;
 import com.im.nettychat.common.GenerateID;
 import com.im.nettychat.common.Session;
 import com.im.nettychat.config.ErrorConfig;
 import com.im.nettychat.proxy.CglibServiceInterceptor;
-import com.im.nettychat.model.UID;
 import com.im.nettychat.model.User;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
@@ -19,7 +18,7 @@ import com.im.nettychat.util.StringUtils;
 import com.im.nettychat.util.Util;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import static com.im.nettychat.common.ConstantError.NEED_USERNAME_PASSWORD;
+import static com.im.nettychat.common.ErrorCode.NEED_USERNAME_PASSWORD;
 import static com.im.nettychat.service.RedisService.redisService;
 
 /**
@@ -37,14 +36,14 @@ public class UserServiceImpl implements UserService {
         // 用户不存在
         if (userId == null || userId.trim().length() == 0) {
             response.setError(true);
-            response.setErrorInfo(ErrorConfig.getError(ConstantError.USER_NOT_FOUND));
+            response.setErrorInfo(ErrorConfig.getError(ErrorCode.USER_NOT_FOUND));
             ctx.writeAndFlush(response);
             return;
         }
         User user = redisService.vGetObject(CacheName.USER_INFO, String.valueOf(userId), User.class);
         if (!user.isValidPassword(msg.getPassword())) {
             response.setError(true);
-            response.setErrorInfo(ErrorConfig.getError(ConstantError.PASSWORD_ERROR));
+            response.setErrorInfo(ErrorConfig.getError(ErrorCode.PASSWORD_ERROR));
             ctx.writeAndFlush(response);
             return;
         }
@@ -71,7 +70,7 @@ public class UserServiceImpl implements UserService {
             String existUserId = redisService.hGet(CacheName.USERNAME_ID, msg.getUsername());
             if (existUserId != null) {
                 response.setError(true);
-                response.setErrorInfo(ErrorConfig.getError(ConstantError.USER_ALREADY_EXIST));
+                response.setErrorInfo(ErrorConfig.getError(ErrorCode.USER_ALREADY_EXIST));
                 ctx.writeAndFlush(response);
                 ctx.fireChannelReadComplete();
                 return;

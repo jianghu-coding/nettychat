@@ -5,6 +5,7 @@ import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.response.LoginResponse;
+import com.im.nettychat.protocol.response.MessageResponse;
 import com.im.nettychat.protocol.response.RegisterResponse;
 import com.im.nettychat.serialize.Serializer;
 import com.im.nettychat.serialize.impl.JSONSerializer;
@@ -41,6 +42,7 @@ public class PacketCodec {
     private void test() {
         packetTypeMap.put(Command.REGISTER_RESPONSE, RegisterResponse.class);
         packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponse.class);
+        packetTypeMap.put(Command.SEND_MESSAGE_RESPONSE, MessageResponse.class);
     }
 
     public void encode(ByteBuf byteBuf, Packet packet) {

@@ -11,7 +11,7 @@ import static com.im.nettychat.common.Command.SEND_MESSAGE;
 @Data
 public class MessageRequest extends RequestPacket {
 
-    private String toUserId;
+    private Long toUserId;
 
     private String message;
 

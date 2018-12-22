@@ -43,4 +43,13 @@ public class SessionUtil {
     public static boolean notLogin(Channel channel) {
         return getSession(channel) == null;
     }
+
+    public static void unBindSession(Channel channel) {
+        Session session = channel.attr(SESSION_ATTRIBUTE_KEY).get();
+        USER_ID_CHANNEL.remove(session.getUserId());
+    }
+
+    public static boolean hasLogin(Channel channel) {
+        return getSession(channel) != null;
+    }
 }

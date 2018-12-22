@@ -18,4 +18,6 @@ public interface Command {
 
     Byte REGISTER_RESPONSE = 5;
 
+    Byte SEND_MESSAGE_RESPONSE = 7;
+
 }

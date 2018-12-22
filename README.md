@@ -39,29 +39,3 @@
     请求对象体必须包含字段 command(请求指令), version(版本号)
     安卓 demo
     com.im.nettychat.ClientTest.java
-
-# 接口
-## 错误处理
-每个返回对象都包含2个字段
-
-    error: true, errorInfo: "xxx" // 如果error为true, errorInfo展示错误信息
-    
-### 注册
-request 内容
-    
-    (byte) version: 1, 
-    (string) name: "名称", 
-    (string) username: "用户名", 
-    (string) userId: "用户id", 
-    (string) desc: "用户简洁", 
-    (byte) command: 4
-    
-response 内容
-
-    (byte) version: 1, 
-    (string) icon: "头像", 
-    (string) username: "用户名", 
-    (string) password: "密码", 
-    (byte) command: 5    
-### 登录
-### 发送消息

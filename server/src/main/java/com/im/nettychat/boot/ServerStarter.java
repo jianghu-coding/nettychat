@@ -9,7 +9,7 @@ import com.im.nettychat.handler.AuthHandler;
 import com.im.nettychat.handler.IMHandler;
 import com.im.nettychat.handler.LoginHandler;
 import com.im.nettychat.handler.RegisterHandler;
-import com.im.nettychat.handler.RequestMessageHandler;
+import com.im.nettychat.handler.MessageHandler;
 import com.im.nettychat.handler.ServerVerifyHandler;
 import com.im.nettychat.util.DateUtil;
 import io.netty.bootstrap.ServerBootstrap;
@@ -58,7 +58,7 @@ public class ServerStarter {
                             ch.pipeline().addLast(LoginHandler.INSTANCE);
                             // 后面的都必须登录后访问
                             ch.pipeline().addLast(AuthHandler.INSTANCE);
-                            ch.pipeline().addLast(RequestMessageHandler.INSTANCE);
+                            ch.pipeline().addLast(MessageHandler.INSTANCE);
                             ch.pipeline().addLast(IMHandler.INSTANCE);
                         }
                     });
