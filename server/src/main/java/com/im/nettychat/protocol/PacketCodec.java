@@ -9,10 +9,15 @@ import com.im.nettychat.protocol.response.RegisterResponse;
 import com.im.nettychat.serialize.Serializer;
 import com.im.nettychat.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class PacketCodec {
+
+    private static final InternalLogger logger = InternalLoggerFactory.getInstance(PacketCodec.class);
 
     public static final int MAGIC_NUMBER = 0x28917645;
     public static final PacketCodec INSTANCE = new PacketCodec();
@@ -64,7 +69,9 @@ public class PacketCodec {
 
         // 数据包长度
         int length = byteBuf.readInt();
-
+        logger.info("serializeAlgorithm: " + serializeAlgorithm);
+        logger.info("command: " + command);
+        logger.info("length: " + length);
         byte[] bytes = new byte[length];
         byteBuf.readBytes(bytes);
 
