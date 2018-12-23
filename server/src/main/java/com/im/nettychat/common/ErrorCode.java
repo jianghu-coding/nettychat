@@ -20,4 +20,10 @@ public interface ErrorCode {
     String GROUP_NAME_REQUIRED = "groupNameRequired";
 
     String GROUP_NAME_REPEAT = "groupNameRepeat";
+
+    String GROUP_NOT_FOUND = "groupNotFound";
+
+    String GROUP_USER_UPPER_LIMIT = "groupUserUpperLimit";
+
+    String GROUP_USER_ALREADY_EXIST = "groupUserAlreadyExist";
 }

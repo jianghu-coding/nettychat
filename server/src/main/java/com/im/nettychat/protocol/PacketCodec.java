@@ -1,14 +1,18 @@
 package com.im.nettychat.protocol;
 
 import com.im.nettychat.common.Command;
-import com.im.nettychat.protocol.request.CreateGroupRequest;
+import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
-import com.im.nettychat.protocol.response.CreateGroupResponse;
+import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
+import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.response.group.CreateGroupResponse;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.MessageResponse;
 import com.im.nettychat.protocol.response.RegisterResponse;
+import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
+import com.im.nettychat.protocol.response.group.JoinGroupResponse;
 import com.im.nettychat.serialize.Serializer;
 import com.im.nettychat.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -34,6 +38,8 @@ public class PacketCodec {
         packetTypeMap.put(Command.REGISTER, RegisterRequest.class);
         packetTypeMap.put(Command.SEND_MESSAGE, MessageRequest.class);
         packetTypeMap.put(Command.CREATE_GROUP, CreateGroupRequest.class);
+        packetTypeMap.put(Command.JOIN_GROUP, JoinGroupRequest.class);
+        packetTypeMap.put(Command.GET_USER_GROUP, GetUserGroupRequest.class);
 
         test();
         serializerMap = new HashMap<>();
@@ -47,6 +53,8 @@ public class PacketCodec {
         packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponse.class);
         packetTypeMap.put(Command.SEND_MESSAGE_RESPONSE, MessageResponse.class);
         packetTypeMap.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponse.class);
+        packetTypeMap.put(Command.JOIN_GROUP_RESPONSE, JoinGroupResponse.class);
+        packetTypeMap.put(Command.GET_USER_GROUP_RESPONSE, GetUserGroupResponse.class);
     }
 
     public void encode(ByteBuf byteBuf, Packet packet) {

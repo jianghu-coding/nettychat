@@ -1,7 +1,7 @@
 /*
- * Project: com.im.nettychat.protocol.response
+ * Project: com.im.nettychat.protocol.request.group
  * 
- * File Created at 2018/12/22
+ * File Created at 2018/12/23
  * 
  * Copyright 2018 CMCC Corporation Limited.
  * All rights reserved.
@@ -11,33 +11,23 @@
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license.
  */
-package com.im.nettychat.protocol.response;
+package com.im.nettychat.protocol.request.group;
 
 import com.im.nettychat.common.Command;
-import com.im.nettychat.protocol.ResponsePacket;
 import lombok.Data;
-import java.util.List;
 
 /**
  * @author hejianglong
  * @Desc
- * @date 2018/12/22 下午10:26
+ * @date 2018/12/23 下午2:11
  */
 @Data
-public class CreateGroupResponse extends ResponsePacket {
-
-    private String groupName;
+public class GetUserGroupRequest extends UserGroupRequest {
 
     private Long groupId;
 
-    private List<Long> userIds;
-
-    private String icon;
-
-    private String desc;
-
     @Override
     public Byte getCommand() {
-        return Command.CREATE_GROUP_RESPONSE;
+        return Command.GET_USER_GROUP;
     }
 }

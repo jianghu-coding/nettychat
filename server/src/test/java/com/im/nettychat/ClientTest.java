@@ -14,9 +14,11 @@
 package com.im.nettychat;
 
 import com.im.nettychat.common.Command;
+import com.im.nettychat.model.User;
 import com.im.nettychat.protocol.PacketCodec;
 import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.response.RegisterResponse;
+import com.im.nettychat.util.BeanUtil;
 import com.im.nettychat.util.Util;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -69,9 +71,9 @@ public class ClientTest {
                     ch.pipeline().addLast(new RegisterResponseHandler());
                 }
             });
-        final String username = TEST_A_USERNAME;
-        final String password = TEST_A_PASSWORD;
-        final String name = TEST_A_NAME;
+        final String username = TEST_B_USERNAME;
+        final String password = TEST_B_PASSWORD;
+        final String name = TEST_B_NAME;
         ChannelFuture channelFuture = bootstrap.connect(HOST, 8080).addListener(future -> {
             // 建立连接成功后发起登录请求或者注册请求
             Channel channel = ((ChannelFuture) future).channel();
@@ -79,6 +81,15 @@ public class ClientTest {
             register(channel, name, username, password);
         });
         channelFuture.sync().channel().closeFuture().sync();
+    }
+
+    @Test
+    public void testd() {
+        User user = new User();
+        user.setUsername("3213213");
+        User tg = new User();
+        BeanUtil.copyProperties(tg,user);
+        System.out.println(tg);
     }
 
     // 并发测试

@@ -18,7 +18,7 @@ public enum CacheName {
 
     USER_GROUP_ID(CacheType.V, 0),
 
-    USER_ID_USER_GROUP(CacheType.H, 0);
+    USER_ID_USER_GROUP(CacheType.S, 0);
 
     /**
      * 缓存类型
