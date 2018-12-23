@@ -73,6 +73,8 @@ public class GroupServiceImpl extends BaseService implements GroupService {
         Long userId = session.getUserId();
         // 自己也在群组中
         groupUserIds.add(userId);
+        // 去重一次
+        groupUserIds = groupUserIds.stream().distinct().collect(Collectors.toList());
         String groupName = request.getGroupName();
         // 拉人创建群组的时候过滤掉无效的用户
         if (CollectionUtils.isNotNullOrEmpty(groupUserIds)) {
