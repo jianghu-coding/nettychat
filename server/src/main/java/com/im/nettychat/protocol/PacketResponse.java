@@ -22,7 +22,7 @@ import lombok.Data;
  * @date 2018/12/20 下午9:12
  */
 @Data
-public abstract class ResponsePacket extends Packet {
+public abstract class PacketResponse extends Packet {
 
     protected boolean error;
 

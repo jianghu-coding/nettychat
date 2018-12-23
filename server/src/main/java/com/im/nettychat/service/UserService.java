@@ -15,6 +15,8 @@ package com.im.nettychat.service;
 
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
+import com.im.nettychat.protocol.request.user.AddFriendRequest;
+import com.im.nettychat.protocol.request.user.GetFriendRequest;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -27,4 +29,8 @@ public interface UserService {
     void login(ChannelHandlerContext ctx, LoginRequest msg);
 
     void register(ChannelHandlerContext ctx, RegisterRequest msg);
+
+    void addFriend(ChannelHandlerContext ctx, AddFriendRequest msg);
+
+    void getFriends(ChannelHandlerContext ctx, GetFriendRequest msg);
 }

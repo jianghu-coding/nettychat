@@ -1,7 +1,7 @@
 /*
- * Project: com.im.nettychat.protocol.response
+ * Project: com.im.nettychat.protocol.response.user
  * 
- * File Created at 2018/12/20
+ * File Created at 2018/12/23
  * 
  * Copyright 2018 CMCC Corporation Limited.
  * All rights reserved.
@@ -11,30 +11,21 @@
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license.
  */
-package com.im.nettychat.protocol.response;
+package com.im.nettychat.protocol.response.user;
 
-import com.im.nettychat.protocol.PacketResponse;
+import com.im.nettychat.common.Command;
 import lombok.Data;
-import static com.im.nettychat.common.Command.LOGIN_RESPONSE;
 
 /**
  * @author hejianglong
  * @Desc
- * @date 2018/12/20 下午8:59
+ * @date 2018/12/23 下午8:45
  */
 @Data
-public class LoginResponse extends PacketResponse {
-
-    private Long userId;
-
-    private String name;
-
-    private String icon;
-
-    private String desc;
+public class AddFriendResponse extends UserResponse {
 
     @Override
     public Byte getCommand() {
-        return LOGIN_RESPONSE;
+        return Command.ADD_FRIEND_RESPONSE;
     }
 }

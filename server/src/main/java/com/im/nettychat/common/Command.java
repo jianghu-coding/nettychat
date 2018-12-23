@@ -21,6 +21,9 @@ public interface Command {
 
     Byte SEND_GROUP_MESSAGE = 12;
 
+    Byte ADD_FRIEND = 14;
+
+    Byte GET_FRIENDS = 16;
 
     // response
     Byte LOGIN_RESPONSE = 3;
@@ -36,4 +39,8 @@ public interface Command {
     Byte GET_USER_GROUP_RESPONSE = 13;
 
     Byte SEND_GROUP_MESSAGE_RESPONSE = 15;
+
+    Byte ADD_FRIEND_RESPONSE = 17;
+
+    Byte GET_FRIENDS_RESPONSE = 19;
 }

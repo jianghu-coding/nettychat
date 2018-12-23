@@ -1,6 +1,6 @@
 package com.im.nettychat.protocol.request;
 
-import com.im.nettychat.protocol.RequestPacket;
+import com.im.nettychat.protocol.PacketRequest;
 import lombok.Data;
 import static com.im.nettychat.common.Command.LOGIN;
 
@@ -9,7 +9,7 @@ import static com.im.nettychat.common.Command.LOGIN;
  * @date 2018/12/20.
  */
 @Data
-public class LoginRequest extends RequestPacket {
+public class LoginRequest extends PacketRequest {
 
     private String username;
 

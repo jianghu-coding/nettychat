@@ -19,6 +19,7 @@ import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.request.group.UserGroupRequest;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import static com.im.nettychat.service.impl.GroupServiceImpl.groupService;
@@ -28,6 +29,7 @@ import static com.im.nettychat.service.impl.GroupServiceImpl.groupService;
  * @Desc
  * @date 2018/12/22 下午10:24
  */
+@ChannelHandler.Sharable
 public class UserGroupHandler extends SimpleChannelInboundHandler<UserGroupRequest> {
 
     public static final UserGroupHandler INSTANCE = new UserGroupHandler();

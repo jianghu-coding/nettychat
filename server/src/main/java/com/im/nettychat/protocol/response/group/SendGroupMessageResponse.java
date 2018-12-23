@@ -14,7 +14,7 @@
 package com.im.nettychat.protocol.response.group;
 
 import com.im.nettychat.common.Command;
-import com.im.nettychat.protocol.ResponsePacket;
+import com.im.nettychat.protocol.PacketResponse;
 import lombok.Data;
 
 /**
@@ -23,7 +23,7 @@ import lombok.Data;
  * @date 2018/12/23 下午6:24
  */
 @Data
-public class SendGroupMessageResponse extends ResponsePacket {
+public class SendGroupMessageResponse extends PacketResponse {
 
     private Long sendUserId;
 

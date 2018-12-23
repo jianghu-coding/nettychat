@@ -93,7 +93,7 @@ public class GroupServiceImpl extends BaseService implements GroupService {
         redisRepository.hMSet(CacheName.USER_GROUP, String.valueOf(userGroupId), getGroupInfo(groupName, filterUserIds, userId));
         Arrays.asList(filterUserIds.split(GROUP_USER_ID_SPLIT)).forEach(uID -> {
             // 给每个用户记录他有那些一个群组
-            redisRepository.sadd(CacheName.USER_ID_USER_GROUP, String.valueOf(uID), String.valueOf(userGroupId));
+            redisRepository.sAdd(CacheName.USER_ID_USER_GROUP, String.valueOf(uID), String.valueOf(userGroupId));
         });
         response.setGroupId(userGroupId);
         ctx.writeAndFlush(response);
@@ -128,7 +128,7 @@ public class GroupServiceImpl extends BaseService implements GroupService {
         // 维护群组信息增加一个成员
         redisRepository.hSet(CacheName.USER_GROUP, String.valueOf(msg.getGroupId()), GroupKey.USER_IDS, groupUserIds);
         // 加入群组的人新增一个群组
-        redisRepository.sadd(CacheName.USER_ID_USER_GROUP, String.valueOf(userId), String.valueOf(msg.getGroupId()));
+        redisRepository.sAdd(CacheName.USER_ID_USER_GROUP, String.valueOf(userId), String.valueOf(msg.getGroupId()));
         response.setGroupName(userGroup.getGroupName());
         response.setGroupId(msg.getGroupId());
         response.setIcon(userGroup.getIcon());

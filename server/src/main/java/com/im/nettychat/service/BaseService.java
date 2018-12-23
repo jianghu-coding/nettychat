@@ -14,7 +14,7 @@
 package com.im.nettychat.service;
 
 import com.im.nettychat.config.ErrorConfig;
-import com.im.nettychat.protocol.ResponsePacket;
+import com.im.nettychat.protocol.PacketResponse;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -24,7 +24,7 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class BaseService {
 
-    protected void exceptionResponse(ChannelHandlerContext ctx, String errorCode, ResponsePacket response) {
+    protected void exceptionResponse(ChannelHandlerContext ctx, String errorCode, PacketResponse response) {
         response.setError(true);
         response.setErrorInfo(ErrorConfig.getError(errorCode));
         ctx.writeAndFlush(response);

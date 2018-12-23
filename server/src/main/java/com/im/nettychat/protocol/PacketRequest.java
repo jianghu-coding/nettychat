@@ -7,5 +7,5 @@ import lombok.Data;
  * @date 2018/12/20.
  */
 @Data
-public abstract class RequestPacket extends Packet {
+public abstract class PacketRequest extends Packet {
 }

@@ -32,6 +32,8 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
         handlerMap.put(Command.GET_USER_GROUP, UserGroupHandler.INSTANCE);
         handlerMap.put(Command.JOIN_GROUP, UserGroupHandler.INSTANCE);
         handlerMap.put(Command.SEND_GROUP_MESSAGE, UserGroupHandler.INSTANCE);
+        handlerMap.put(Command.ADD_FRIEND, UserHandler.INSTANCE);
+        handlerMap.put(Command.GET_FRIENDS, UserHandler.INSTANCE);
     }
 
     @Override

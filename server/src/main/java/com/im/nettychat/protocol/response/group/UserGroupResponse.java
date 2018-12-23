@@ -13,12 +13,12 @@
  */
 package com.im.nettychat.protocol.response.group;
 
-import com.im.nettychat.protocol.ResponsePacket;
+import com.im.nettychat.protocol.PacketResponse;
 
 /**
  * @author hejianglong
  * @Desc
  * @date 2018/12/23 下午1:19
  */
-public abstract class UserGroupResponse extends ResponsePacket {
+public abstract class UserGroupResponse extends PacketResponse {
 }

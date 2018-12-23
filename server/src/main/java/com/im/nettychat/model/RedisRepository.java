@@ -8,6 +8,7 @@ import com.im.nettychat.serialize.Serializer;
 import redis.clients.jedis.Jedis;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author hejianglong
@@ -139,11 +140,18 @@ public class RedisRepository {
         getJedis().lpush(cacheName.getPrefix().concat(key), val);
     }
 
-    public void sadd(CacheName cacheName, String key, String...val) {
+    public void sAdd(CacheName cacheName, String key, String...val) {
         if (cacheName.getType() != CacheType.S) {
             throw new IllegalArgumentException("expected S found " + cacheName.getType());
         }
         getJedis().sadd(cacheName.getPrefix().concat(key), val);
+    }
+
+    public Set<String> sGet(CacheName cacheName, String key) {
+        if (cacheName.getType() != CacheType.S) {
+            throw new IllegalArgumentException("expected S found " + cacheName.getType());
+        }
+        return getJedis().smembers(cacheName.getPrefix().concat(key));
     }
 
     public boolean sismember(CacheName cacheName, String key, String val){

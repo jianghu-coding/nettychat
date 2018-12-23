@@ -13,7 +13,7 @@
  */
 package com.im.nettychat.protocol.response;
 
-import com.im.nettychat.protocol.ResponsePacket;
+import com.im.nettychat.protocol.PacketResponse;
 import lombok.Data;
 import static com.im.nettychat.common.Command.REGISTER_RESPONSE;
 
@@ -23,7 +23,7 @@ import static com.im.nettychat.common.Command.REGISTER_RESPONSE;
  * @date 2018/12/21 下午6:35
  */
 @Data
-public class RegisterResponse extends ResponsePacket {
+public class RegisterResponse extends PacketResponse {
 
     private Long userId;
 

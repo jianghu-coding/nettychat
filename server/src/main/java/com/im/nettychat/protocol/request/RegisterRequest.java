@@ -14,7 +14,7 @@
 package com.im.nettychat.protocol.request;
 
 import com.im.nettychat.common.Command;
-import com.im.nettychat.protocol.RequestPacket;
+import com.im.nettychat.protocol.PacketRequest;
 import lombok.Data;
 
 /**
@@ -23,7 +23,7 @@ import lombok.Data;
  * @date 2018/12/20 下午9:33
  */
 @Data
-public class RegisterRequest extends RequestPacket {
+public class RegisterRequest extends PacketRequest {
 
     private String name;
 

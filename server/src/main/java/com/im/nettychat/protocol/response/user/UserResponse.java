@@ -1,5 +1,5 @@
 /*
- * Project: com.im.nettychat.protocol.request.group
+ * Project: com.im.nettychat.protocol.response.user
  * 
  * File Created at 2018/12/23
  * 
@@ -11,14 +11,14 @@
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license.
  */
-package com.im.nettychat.protocol.request.group;
+package com.im.nettychat.protocol.response.user;
 
-import com.im.nettychat.protocol.PacketRequest;
+import com.im.nettychat.protocol.PacketResponse;
 
 /**
  * @author hejianglong
  * @Desc
- * @date 2018/12/23 下午1:12
+ * @date 2018/12/23 下午8:45
  */
-public abstract class UserGroupRequest extends PacketRequest {
+public abstract class UserResponse extends PacketResponse {
 }

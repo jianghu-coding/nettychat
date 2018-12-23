@@ -4,7 +4,10 @@ import com.im.nettychat.cache.CacheName;
 import com.im.nettychat.common.ErrorCode;
 import com.im.nettychat.common.GenerateID;
 import com.im.nettychat.common.Session;
-import com.im.nettychat.config.ErrorConfig;
+import com.im.nettychat.protocol.request.user.AddFriendRequest;
+import com.im.nettychat.protocol.request.user.GetFriendRequest;
+import com.im.nettychat.protocol.response.user.AddFriendResponse;
+import com.im.nettychat.protocol.response.user.GetFriendResponse;
 import com.im.nettychat.proxy.CglibServiceInterceptor;
 import com.im.nettychat.model.User;
 import com.im.nettychat.protocol.request.LoginRequest;
@@ -13,12 +16,19 @@ import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.RegisterResponse;
 import com.im.nettychat.service.BaseService;
 import com.im.nettychat.service.UserService;
+import com.im.nettychat.util.CollectionUtils;
 import com.im.nettychat.util.LockUtil;
 import com.im.nettychat.util.SessionUtil;
 import com.im.nettychat.util.StringUtils;
 import com.im.nettychat.util.Util;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import static com.im.nettychat.common.AttributeKeys.SESSION_ATTRIBUTE_KEY;
 import static com.im.nettychat.model.RedisRepository.redisRepository;
 
 /**
@@ -27,6 +37,8 @@ import static com.im.nettychat.model.RedisRepository.redisRepository;
  * @date 2018/12/21 下午10:56
  */
 public class UserServiceImpl extends BaseService implements UserService {
+
+    private static final InternalLogger logger = InternalLoggerFactory.getInstance(UserServiceImpl.class);
 
     public static final UserService userService = (UserServiceImpl) CglibServiceInterceptor.getCglibProxy(UserServiceImpl.class);
 
@@ -82,6 +94,46 @@ public class UserServiceImpl extends BaseService implements UserService {
         } finally {
             LockUtil.unLock(CacheName.REGISTER_LOCK);
         }
+    }
+
+    @Override
+    public void addFriend(ChannelHandlerContext ctx, AddFriendRequest request) {
+        AddFriendResponse response = new AddFriendResponse();
+        Long friendUserId = request.getFriendUserId();
+        boolean exits = redisRepository.keyExits(CacheName.USER_INFO, String.valueOf(friendUserId));
+        Long userId = ctx.channel().attr(SESSION_ATTRIBUTE_KEY).get().getUserId();
+        if(!exits) {
+            exceptionResponse(ctx, ErrorCode.USER_NOT_FOUND, response);
+            return;
+        }
+        redisRepository.sAdd(CacheName.USER_FRIEND, String.valueOf(userId), String.valueOf(friendUserId));
+        ctx.writeAndFlush(response);
+    }
+
+    @Override
+    public void getFriends(ChannelHandlerContext ctx, GetFriendRequest msg) {
+        GetFriendResponse response = new GetFriendResponse();
+        Long userId = ctx.channel().attr(SESSION_ATTRIBUTE_KEY).get().getUserId();
+        Set<String> friendUserIds = redisRepository.sGet(CacheName.USER_FRIEND, String.valueOf(userId));
+        List<User> friends = new ArrayList<>();
+        if (CollectionUtils.isNotNullOrEmpty(friendUserIds)) {
+            for (String friendId: friendUserIds) {
+                User user = redisRepository.vGetObject(CacheName.USER_INFO, String.valueOf(friendId), User.class);
+                if (user == null) {
+                    logger.warn("friend userId is not exits: " + friendId);
+                    continue;
+                }
+                User copyUser = new User();
+                copyUser.setId(user.getId());
+                copyUser.setUsername(user.getUsername());
+                copyUser.setName(user.getName());
+                copyUser.setIcon(user.getIcon());
+                copyUser.setDesc(user.getDesc());
+                friends.add(copyUser);
+            }
+        }
+        response.setFriends(friends);
+        ctx.writeAndFlush(response);
     }
 
     private void bindSession(User user, Channel channel) {
