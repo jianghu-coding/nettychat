@@ -60,4 +60,63 @@ response:
     (byte) version: 1, 
     (long) fromUserId: 123, // 谁发的 
     (string) message: "内容", 
-    (byte) command: 7   
+    (byte) command: 7
+### 创建群组
+request:
+    
+    (byte) version: 1, 
+    (string) groupName: "群组名称", 
+    (List<Long>) userIds: [1,2,3], // 创建时拉取的人可以不拉人创建 
+    (byte) command: 6
+    
+response:
+
+    (byte) version: 1, 
+    (string) groupName: "群组名称",
+    (long) groupId: "群组ID", 
+    (List<Long>) userIds: [1,2,3,4], // 群组人员
+    (string) icon // 图标
+    (byte) command: 9
+### 加入群组
+request:
+    
+    (byte) version: 1, 
+    (long) groupId: 1234, // 加入群组的id
+    (byte) command: 8
+    
+response:
+
+    (byte) version: 1, 
+    (long) groupId: 1234, // 加入群组的id
+    (string) groupName: "群组名称",
+    (string) icon // 图标
+    (byte) command: 11
+### 获取群组信息
+request:
+    
+    (byte) version: 1, 
+    (long) groupId: 1234, // 群组的id
+    (byte) command: 10
+    
+response:
+
+    (byte) version: 1, 
+    (long) groupId: 1234, // 群组的id
+    (long) owner: 12345, // 群主
+    (string) groupName: "群组名称",
+    (List<Long>) userIds: [1,2,3,4], // 群组人员
+    (string) icon // 图标    (byte) command: 13
+### 发送群组消息
+request:
+    
+    (byte) version: 1, 
+    (string) groupId: 12343, // 发给那个群组
+    (string) message: "内容", 
+    (byte) command: 2
+    
+response:
+
+    (byte) version: 1, 
+    (long) sendUserId: 123, // 谁发的信息
+    (string) message: "内容", 
+    (byte) command: 7
