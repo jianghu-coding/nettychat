@@ -21,17 +21,23 @@ import com.im.nettychat.model.key.GroupKey;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.response.group.CreateGroupResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
 import com.im.nettychat.protocol.response.group.JoinGroupResponse;
+import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
 import com.im.nettychat.proxy.CglibServiceInterceptor;
 import com.im.nettychat.service.BaseService;
 import com.im.nettychat.service.GroupService;
 import com.im.nettychat.util.BeanUtil;
 import com.im.nettychat.util.BooleanUtils;
 import com.im.nettychat.util.CollectionUtils;
+import com.im.nettychat.util.SessionUtil;
 import com.im.nettychat.util.StringUtils;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -139,6 +145,40 @@ public class GroupServiceImpl extends BaseService implements GroupService {
         UserGroup userGroup = getUserGroup(msg.getGroupId());
         BeanUtil.copyProperties(userGroup, response);
         ctx.writeAndFlush(response);
+    }
+
+    @Override
+    public void sendGroupMessage(ChannelHandlerContext ctx, SendGroupMessageRequest msg) {
+        SendGroupMessageResponse response = new SendGroupMessageResponse();
+        boolean exits = redisRepository.keyExits(CacheName.USER_GROUP, String.valueOf(msg.getGroupId()));
+        // 没有找到群组
+        if (!exits) {
+            exceptionResponse(ctx, ErrorCode.GROUP_NOT_FOUND, response);
+            return;
+        }
+        Long userId = ctx.channel().attr(SESSION_ATTRIBUTE_KEY).get().getUserId();
+        boolean existGroup = redisRepository.sismember(CacheName.USER_ID_USER_GROUP, String.valueOf(userId), String.valueOf(msg.getGroupId()));
+        // 用户不再群组中
+        if (!existGroup) {
+            exceptionResponse(ctx, ErrorCode.GROUP_NOT_THIS_USER, response);
+            return;
+        }
+        UserGroup userGroup = getUserGroup(msg.getGroupId());
+        List<Long> userIds = userGroup.getUserIds();
+        ChannelGroup channelGroup = new DefaultChannelGroup(ctx.executor());
+        // 目前暂时不能发送离线消息
+        for(Long uid: userIds) {
+            if (uid.equals(userId)) {
+                continue;
+            }
+            Channel channel = SessionUtil.getChannel(uid);
+            if (channel != null) {
+                channelGroup.add(channel);
+            }
+        }
+        response.setSendUserId(userId);
+        response.setMessage(msg.getMessage());
+        channelGroup.writeAndFlush(response);
     }
 
     private UserGroup getUserGroup(Long groupId) {

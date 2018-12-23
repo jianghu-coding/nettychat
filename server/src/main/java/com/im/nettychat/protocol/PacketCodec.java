@@ -7,12 +7,14 @@ import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.response.group.CreateGroupResponse;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.MessageResponse;
 import com.im.nettychat.protocol.response.RegisterResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
 import com.im.nettychat.protocol.response.group.JoinGroupResponse;
+import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
 import com.im.nettychat.serialize.Serializer;
 import com.im.nettychat.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -40,6 +42,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.CREATE_GROUP, CreateGroupRequest.class);
         packetTypeMap.put(Command.JOIN_GROUP, JoinGroupRequest.class);
         packetTypeMap.put(Command.GET_USER_GROUP, GetUserGroupRequest.class);
+        packetTypeMap.put(Command.SEND_GROUP_MESSAGE, SendGroupMessageRequest.class);
 
         test();
         serializerMap = new HashMap<>();
@@ -55,6 +58,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponse.class);
         packetTypeMap.put(Command.JOIN_GROUP_RESPONSE, JoinGroupResponse.class);
         packetTypeMap.put(Command.GET_USER_GROUP_RESPONSE, GetUserGroupResponse.class);
+        packetTypeMap.put(Command.SEND_GROUP_MESSAGE_RESPONSE, SendGroupMessageResponse.class);
     }
 
     public void encode(ByteBuf byteBuf, Packet packet) {

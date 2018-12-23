@@ -16,6 +16,7 @@ package com.im.nettychat.service;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -24,9 +25,13 @@ import io.netty.channel.ChannelHandlerContext;
  * @date 2018/12/22 下午10:32
  */
 public interface GroupService {
+
     void createGroup(ChannelHandlerContext ctx, CreateGroupRequest msg);
 
     void joinGroup(ChannelHandlerContext ctx, JoinGroupRequest msg);
 
     void getUserGroup(ChannelHandlerContext ctx, GetUserGroupRequest msg);
+
+    void sendGroupMessage(ChannelHandlerContext ctx, SendGroupMessageRequest msg);
+
 }

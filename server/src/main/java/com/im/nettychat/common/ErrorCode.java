@@ -26,4 +26,6 @@ public interface ErrorCode {
     String GROUP_USER_UPPER_LIMIT = "groupUserUpperLimit";
 
     String GROUP_USER_ALREADY_EXIST = "groupUserAlreadyExist";
+
+    String GROUP_NOT_THIS_USER = "groupNotThisUser";
 }

@@ -31,10 +31,16 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
         handlerMap.put(Command.CREATE_GROUP, UserGroupHandler.INSTANCE);
         handlerMap.put(Command.GET_USER_GROUP, UserGroupHandler.INSTANCE);
         handlerMap.put(Command.JOIN_GROUP, UserGroupHandler.INSTANCE);
+        handlerMap.put(Command.SEND_GROUP_MESSAGE, UserGroupHandler.INSTANCE);
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Packet msg) throws Exception {
+        SimpleChannelInboundHandler<? extends Packet> handler = handlerMap.get(msg.getCommand());
+        if (handler == null) {
+            logger.info("not found handler for command: " + msg.getCommand());
+            return;
+        }
         handlerMap.get(msg.getCommand()).channelRead(ctx, msg);
     }
 

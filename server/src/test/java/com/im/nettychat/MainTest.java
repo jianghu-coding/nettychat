@@ -20,11 +20,13 @@ import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.response.group.CreateGroupResponse;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.MessageResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
 import com.im.nettychat.protocol.response.group.JoinGroupResponse;
+import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -70,6 +72,7 @@ public class MainTest {
                     ch.pipeline().addLast(new CreateGroupResponseHandler());
                     ch.pipeline().addLast(new GetGroupResponseHandler());
                     ch.pipeline().addLast(new JoinGroupResponseHandler());
+                    ch.pipeline().addLast(new SendGroupMessageResponseHandler());
                 }
             });
         ChannelFuture channelFuture = bootstrap.connect(HOST, 8080).addListener(future -> {
@@ -81,7 +84,7 @@ public class MainTest {
                     public void run() {
                         Scanner scanner = new Scanner(System.in);
                         while(!Thread.interrupted()) {
-                            System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组");
+                            System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组, f: 发送群组消息");
                             String command = scanner.nextLine();
                             if (command.equals("a")) {
                                 System.out.println("开始登录");
@@ -110,6 +113,11 @@ public class MainTest {
                                 System.out.println("请输入要加入的群组的id: ");
                                 String groupId = scanner.nextLine();
                                 joinGroup(channel, Long.valueOf(groupId));
+                            } else if (command.equals("f")) {
+                                System.out.println("请输入群组的id和发送消息用,隔开");
+                                String groupIdMessage = scanner.nextLine();
+                                String[] gm = groupIdMessage.split(",");
+                                sendGroupMessage(channel, Long.valueOf(gm[0]), gm[1]);
                             }
                         }
                     }
@@ -117,6 +125,16 @@ public class MainTest {
             }
         });
         channelFuture.sync().channel().closeFuture().sync();
+    }
+
+    private static void sendGroupMessage(Channel channel, Long groupId, String message) {
+        SendGroupMessageRequest request = new SendGroupMessageRequest();
+        request.setGroupId(groupId);
+        request.setMessage(message);
+        ByteBuf byteBuf = channel.alloc().buffer();
+        PacketCodec.INSTANCE.encode(byteBuf, request);
+        channel.writeAndFlush(byteBuf);
+        waitForResponse();
     }
 
     private static void joinGroup(Channel channel, Long groupId) {
@@ -168,12 +186,9 @@ public class MainTest {
     }
 
     private static void waitForResponse() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ignored) {
-        }
     }
 }
+
 class PacketDecoder extends MessageToMessageDecoder<ByteBuf> {
 
     @Override
@@ -182,13 +197,29 @@ class PacketDecoder extends MessageToMessageDecoder<ByteBuf> {
     }
 }
 
+class SendGroupMessageResponseHandler extends SimpleChannelInboundHandler<SendGroupMessageResponse> {
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, SendGroupMessageResponse response) throws Exception {
+        if (response.getCommand().equals(Command.SEND_GROUP_MESSAGE_RESPONSE)) {
+            // 如果是注册则返回注册响应指令
+            // 如果存在错误
+            if (response.isError()) {
+                System.out.println("登录失败: [ " + response.getErrorInfo() + "]");
+            } else {
+                // 成功输出对象
+                System.out.println("登录成功: [ " + response + " ]");
+            }
+        }
+    }
+}
+
 class JoinGroupResponseHandler extends SimpleChannelInboundHandler<JoinGroupResponse> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, JoinGroupResponse msg) throws Exception {
-        if (msg.getCommand() == Command.JOIN_GROUP_RESPONSE) {
+    protected void channelRead0(ChannelHandlerContext ctx, JoinGroupResponse response) throws Exception {
+        if (response.getCommand() == Command.JOIN_GROUP_RESPONSE) {
             // 如果是注册则返回注册响应指令
-            JoinGroupResponse response = (JoinGroupResponse) msg;
             // 如果存在错误
             if (response.isError()) {
                 System.out.println("登录失败: [ " + response.getErrorInfo() + "]");
@@ -203,10 +234,9 @@ class JoinGroupResponseHandler extends SimpleChannelInboundHandler<JoinGroupResp
 class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponse> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, LoginResponse msg) throws Exception {
-        if (msg.getCommand() == Command.LOGIN_RESPONSE) {
+    protected void channelRead0(ChannelHandlerContext ctx, LoginResponse response) throws Exception {
+        if (response.getCommand() == Command.LOGIN_RESPONSE) {
             // 如果是注册则返回注册响应指令
-            LoginResponse response = (LoginResponse) msg;
             // 如果存在错误
             if (response.isError()) {
                 System.out.println("登录失败: [ " + response.getErrorInfo() + "]");
@@ -221,16 +251,15 @@ class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponse> {
 class MessageResponseHandler extends SimpleChannelInboundHandler<MessageResponse> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, MessageResponse msg) throws Exception {
-        if (msg.getCommand() == Command.SEND_MESSAGE_RESPONSE) {
+    protected void channelRead0(ChannelHandlerContext ctx, MessageResponse response) throws Exception {
+        if (response.getCommand() == Command.SEND_MESSAGE_RESPONSE) {
             // 如果是注册则返回注册响应指令
-            MessageResponse registerResponse = (MessageResponse) msg;
             // 如果存在错误
-            if (registerResponse.isError()) {
-                System.out.println("发送消息失败: [ " + registerResponse.getErrorInfo() + "]");
+            if (response.isError()) {
+                System.out.println("发送消息失败: [ " + response.getErrorInfo() + "]");
             } else {
                 // 成功输出对象
-                System.out.println("收到消息: [ " + registerResponse + " ]");
+                System.out.println("收到消息: [ " + response + " ]");
             }
         }
     }
@@ -239,10 +268,9 @@ class MessageResponseHandler extends SimpleChannelInboundHandler<MessageResponse
 class CreateGroupResponseHandler extends SimpleChannelInboundHandler<CreateGroupResponse> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, CreateGroupResponse msg) throws Exception {
-        if (msg.getCommand() == Command.CREATE_GROUP_RESPONSE) {
+    protected void channelRead0(ChannelHandlerContext ctx, CreateGroupResponse response) throws Exception {
+        if (response.getCommand() == Command.CREATE_GROUP_RESPONSE) {
             // 如果是注册则返回注册响应指令
-            CreateGroupResponse response = (CreateGroupResponse) msg;
             // 如果存在错误
             if (response.isError()) {
                 System.out.println(response.getErrorInfo());
@@ -257,10 +285,9 @@ class CreateGroupResponseHandler extends SimpleChannelInboundHandler<CreateGroup
 class GetGroupResponseHandler extends SimpleChannelInboundHandler<GetUserGroupResponse> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, GetUserGroupResponse msg) throws Exception {
-        if (msg.getCommand().equals(Command.GET_USER_GROUP_RESPONSE)) {
+    protected void channelRead0(ChannelHandlerContext ctx, GetUserGroupResponse response) throws Exception {
+        if (response.getCommand().equals(Command.GET_USER_GROUP_RESPONSE)) {
             // 如果是注册则返回注册响应指令
-            GetUserGroupResponse response = (GetUserGroupResponse) msg;
             // 如果存在错误
             if (response.isError()) {
                 System.out.println(response.getErrorInfo());
@@ -271,3 +298,4 @@ class GetGroupResponseHandler extends SimpleChannelInboundHandler<GetUserGroupRe
         }
     }
 }
+

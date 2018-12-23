@@ -19,6 +19,9 @@ public interface Command {
 
     Byte GET_USER_GROUP = 10;
 
+    Byte SEND_GROUP_MESSAGE = 12;
+
+
     // response
     Byte LOGIN_RESPONSE = 3;
 
@@ -31,4 +34,6 @@ public interface Command {
     Byte JOIN_GROUP_RESPONSE = 11;
 
     Byte GET_USER_GROUP_RESPONSE = 13;
+
+    Byte SEND_GROUP_MESSAGE_RESPONSE = 15;
 }
