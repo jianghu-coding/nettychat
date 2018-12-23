@@ -16,6 +16,7 @@ package com.im.nettychat.protocol.response;
 import com.im.nettychat.common.Command;
 import com.im.nettychat.protocol.ResponsePacket;
 import lombok.Data;
+import java.util.List;
 
 /**
  * @author hejianglong
@@ -24,6 +25,16 @@ import lombok.Data;
  */
 @Data
 public class CreateGroupResponse extends ResponsePacket {
+
+    private String groupName;
+
+    private Long groupId;
+
+    private List<Long> userIds;
+
+    private String icon;
+
+    private String desc;
 
     @Override
     public Byte getCommand() {

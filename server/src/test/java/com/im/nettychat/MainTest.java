@@ -15,6 +15,7 @@ package com.im.nettychat;
 
 import com.im.nettychat.common.Command;
 import com.im.nettychat.protocol.PacketCodec;
+import com.im.nettychat.protocol.request.CreateGroupRequest;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.response.LoginResponse;
@@ -31,8 +32,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.MessageToMessageDecoder;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import static com.im.nettychat.ClientTest.HOST;
 
 /**
@@ -70,7 +73,7 @@ public class MainTest {
                     public void run() {
                         Scanner scanner = new Scanner(System.in);
                         while(!Thread.interrupted()) {
-                            System.out.println("---输入指令 -> a: 登录, b: 发送消息");
+                            System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组");
                             String command = scanner.nextLine();
                             if (command.equals("a")) {
                                 System.out.println("开始登录");
@@ -84,6 +87,13 @@ public class MainTest {
                                 String userAndMessage = scanner.nextLine();
                                 String[] us = userAndMessage.split(",");
                                 sendMessage(channel, Long.valueOf(us[0]), us[1]);
+                            } else if (command.equals("c")) {
+                                System.out.println("请输入群组名称");
+                                String groupName = scanner.nextLine();
+                                System.out.println("请输入拉取的用户id用,隔开");
+                                String userIds = scanner.nextLine();
+                                String[] userIdArr = userIds.split(",");
+                                createGroup(channel, groupName, Arrays.asList(userIdArr).stream().map(v -> Long.valueOf(v)).collect(Collectors.toList()));
                             }
                         }
                     }
@@ -91,6 +101,16 @@ public class MainTest {
             }
         });
         channelFuture.sync().channel().closeFuture().sync();
+    }
+
+    private static void createGroup(Channel channel, String groupName, List<Long> userIds) {
+        CreateGroupRequest request = new CreateGroupRequest();
+        request.setGroupName(groupName);
+        request.setUserIds(userIds);
+        ByteBuf byteBuf = channel.alloc().buffer();
+        PacketCodec.INSTANCE.encode(byteBuf, request);
+        channel.writeAndFlush(byteBuf);
+        waitForResponse();
     }
 
     private static void login(Channel channel, String username, String password) {

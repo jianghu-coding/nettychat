@@ -18,4 +18,6 @@ public interface ErrorCode {
     String NOT_SUPPORT_SEND_OFFLINE = "notSupportSendOffline";
 
     String GROUP_NAME_REQUIRED = "groupNameRequired";
+
+    String GROUP_NAME_REPEAT = "groupNameRepeat";
 }

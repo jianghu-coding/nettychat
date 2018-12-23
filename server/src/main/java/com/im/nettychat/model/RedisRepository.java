@@ -6,6 +6,7 @@ import com.im.nettychat.cache.RedisPool;
 import com.im.nettychat.proxy.CglibJedisInterceptor;
 import com.im.nettychat.serialize.Serializer;
 import redis.clients.jedis.Jedis;
+import java.util.Map;
 
 /**
  * @author hejianglong
@@ -26,25 +27,37 @@ public class RedisRepository {
         return null;
     }
 
-    public Boolean sExist(CacheName cacheName, String key) {
+    public boolean sExist(CacheName cacheName, String key) {
         if (cacheName.getType() != CacheType.S) {
             throw new IllegalArgumentException("expected S found " + cacheName.getType());
         }
         return getJedis().sismember(cacheName.name(), key);
     }
 
-
     public void hSet(CacheName cacheName, String key, String val) {
         if (cacheName.getType() != CacheType.H) {
-            throw new IllegalArgumentException("expected V found " + cacheName.getType());
+            throw new IllegalArgumentException("expected H found " + cacheName.getType());
         }
         getJedis().hset(cacheName.name(), key, val);
     }
 
+    public void hSet(CacheName cacheName, String key, String field, String val) {
+        if (cacheName.getType() != CacheType.H) {
+            throw new IllegalArgumentException("expected H found " + cacheName.getType());
+        }
+        getJedis().hset(cacheName.getPrefix().concat(key), field, val);
+    }
+
+    public void hMSet(CacheName cacheName, String key, Map<String, String> hash) {
+        if (cacheName.getType() != CacheType.H) {
+            throw new IllegalArgumentException("expected H found " + cacheName.getType());
+        }
+        getJedis().hmset(cacheName.getPrefix().concat(key), hash);
+    }
 
     public long hDel(CacheName cacheName) {
         if (cacheName.getType() != CacheType.V) {
-            throw new IllegalArgumentException("expected V found " + cacheName.getType());
+            throw new IllegalArgumentException("expected H found " + cacheName.getType());
         }
         return getJedis().del(cacheName.name());
     }
@@ -54,6 +67,10 @@ public class RedisRepository {
             throw new IllegalArgumentException("expected H found " + cacheName.getType());
         }
         return getJedis().hget(cacheName.name(), key);
+    }
+
+    public boolean hExits(CacheName cacheName, String key) {
+        return getJedis().hexists(cacheName.name(), key);
     }
 
     public Object vGetString(CacheName cacheName, String key) {
@@ -107,7 +124,7 @@ public class RedisRepository {
         if (cacheName.getType() != CacheType.V) {
             throw new IllegalArgumentException("expected V found " + cacheName.getType());
         }
-        return getJedis().exists(key);
+        return getJedis().exists(cacheName.getPrefix().concat(key));
     }
 
     private Jedis getJedis() {
