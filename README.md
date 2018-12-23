@@ -7,7 +7,7 @@
     3. 配置 server.properties
     4. mvn clean install -Dmaven.test.skip=true
        mvn assembly:assembly -Dmaven.test.skip=true // 将依赖一起打包
-       // 部署环境需要指定 -Xms -Xmx 等配置信息, jdk默认10M的eden会内存溢出以及out of memory
+       // 部署环境需要指定 -Xms -Xmx 等配置信息, 默认10M或者较小会产生多次full gc以及eden会内存溢出
        // nohup java -Xms300M -Xmx300M  -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
     5. nohup java -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
 
