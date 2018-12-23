@@ -1,17 +1,25 @@
 # nettychat
+    基于netty4 IM
 
-# init server project
+# 项目启动前配置
     1. jdk >= 1.8
-    2. 安装配置redis
-    3. 配置server.properties
+    2. 安装配置redis, 无需设置账号密码
+    3. 配置 server.properties
     4. mvn clean install -Dmaven.test.skip=true
-       mvn assembly:assembly -Dmaven.test.skip=true
+       mvn assembly:assembly -Dmaven.test.skip=true // 将依赖一起打包
+       // 部署环境需要指定 -Xms -Xmx 等配置信息, jdk默认10M的eden会内存溢出以及out of memory
+       // nohup java -Xms300M -Xmx300M  -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
     5. nohup java -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
 
-# test
-    run ClientTest.java register
+# 客户端测试用列
+    安卓还没有写好, 用端口访问测试
+        见MainTest.java
+    初始化配置账号2个
+    账号, 密码
+    666666,777777
+    888888,999999
 
-# server config
+# 服务端配置
     ip: 114.115.248.101
     port: 8080
     
@@ -40,4 +48,5 @@
     安卓 demo
     com.im.nettychat.ClientTest.java
 
+![avatar](https://upload-images.jianshu.io/upload_images/11476787-b9c8f64d314e1e60.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 # 接口文档见 doc.md

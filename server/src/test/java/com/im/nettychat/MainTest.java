@@ -70,7 +70,7 @@ public class MainTest {
     private static final String TEST_B_USERNAME = "888888";
     private static final String TEST_B_PASSWORD = "999999";
     private static final String TEST_B_NAME = "宝六";
-    private static final String HOST = "127.0.0.1";
+    private static final String HOST = "114.115.248.101";
 
 
     // 客户端互相聊天

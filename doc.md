@@ -120,3 +120,29 @@ response:
     (long) sendUserId: 123, // 谁发的信息
     (string) message: "内容", 
     (byte) command: 7
+### 添加好友
+request:
+    
+    (byte) version: 1, 
+    (long) friendUserId: 12343, // 好友id
+    (byte) command: 14
+    
+response:
+
+    (byte) version: 1, 
+    (byte) command: 17
+### 我的好友列表
+request:
+    
+    (byte) version: 1, 
+    (byte) command: 16
+    
+response:
+
+    (byte) version: 1, 
+    (List<User>) friends, // 好友信息
+    (byte) command: 17
+    // 该接口返回的部分字段信息
+    User: { 
+        id, name, icon, desc
+    }
