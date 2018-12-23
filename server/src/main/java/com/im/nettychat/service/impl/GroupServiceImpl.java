@@ -20,6 +20,7 @@ import com.im.nettychat.model.key.GroupKey;
 import com.im.nettychat.protocol.request.CreateGroupRequest;
 import com.im.nettychat.protocol.response.CreateGroupResponse;
 import com.im.nettychat.proxy.CglibServiceInterceptor;
+import com.im.nettychat.service.BaseService;
 import com.im.nettychat.service.GroupService;
 import com.im.nettychat.util.BooleanUtils;
 import com.im.nettychat.util.CollectionUtils;
@@ -37,7 +38,7 @@ import static com.im.nettychat.model.RedisRepository.redisRepository;
  * @Desc
  * @date 2018/12/22 下午10:32
  */
-public class GroupServiceImpl implements GroupService {
+public class GroupServiceImpl extends BaseService implements GroupService {
 
     public static final GroupService groupService = (GroupServiceImpl) CglibServiceInterceptor.getCglibProxy(GroupServiceImpl.class);
 
@@ -48,9 +49,7 @@ public class GroupServiceImpl implements GroupService {
         String filterUserIds = "";
         // 群组名称必填
         if (StringUtils.isEmpty(request.getGroupName())) {
-            response.setError(true);
-            response.setErrorInfo(ErrorCode.GROUP_NAME_REQUIRED);
-            ctx.writeAndFlush(response);
+            exceptionResponse(ctx, ErrorCode.GROUP_NAME_REQUIRED, response);
             return;
         }
         Session session = ctx.channel().attr(SESSION_ATTRIBUTE_KEY).get();

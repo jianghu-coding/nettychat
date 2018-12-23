@@ -11,6 +11,7 @@ import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.RegisterResponse;
+import com.im.nettychat.service.BaseService;
 import com.im.nettychat.service.UserService;
 import com.im.nettychat.util.LockUtil;
 import com.im.nettychat.util.SessionUtil;
@@ -18,7 +19,6 @@ import com.im.nettychat.util.StringUtils;
 import com.im.nettychat.util.Util;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import static com.im.nettychat.common.ErrorCode.NEED_USERNAME_PASSWORD;
 import static com.im.nettychat.model.RedisRepository.redisRepository;
 
 /**
@@ -26,7 +26,7 @@ import static com.im.nettychat.model.RedisRepository.redisRepository;
  * @Desc
  * @date 2018/12/21 下午10:56
  */
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseService implements UserService {
 
     public static final UserService userService = (UserServiceImpl) CglibServiceInterceptor.getCglibProxy(UserServiceImpl.class);
 
@@ -35,16 +35,12 @@ public class UserServiceImpl implements UserService {
         String userId = redisRepository.hGet(CacheName.USERNAME_ID, msg.getUsername());
         // 用户不存在
         if (userId == null || userId.trim().length() == 0) {
-            response.setError(true);
-            response.setErrorInfo(ErrorConfig.getError(ErrorCode.USER_NOT_FOUND));
-            ctx.writeAndFlush(response);
+            exceptionResponse(ctx, ErrorCode.USER_NOT_FOUND, response);
             return;
         }
         User user = redisRepository.vGetObject(CacheName.USER_INFO, String.valueOf(userId), User.class);
         if (!user.isValidPassword(msg.getPassword())) {
-            response.setError(true);
-            response.setErrorInfo(ErrorConfig.getError(ErrorCode.PASSWORD_ERROR));
-            ctx.writeAndFlush(response);
+            exceptionResponse(ctx, ErrorCode.PASSWORD_ERROR, response);
             return;
         }
         response.setUserId(user.getId());
@@ -59,9 +55,7 @@ public class UserServiceImpl implements UserService {
     public void register(ChannelHandlerContext ctx, RegisterRequest msg) {
         RegisterResponse response = new RegisterResponse();
         if (StringUtils.isEmpty(msg.getUsername()) || StringUtils.isEmpty(msg.getPassword())) {
-            response.setError(true);
-            response.setErrorInfo(NEED_USERNAME_PASSWORD);
-            ctx.writeAndFlush(response);
+            exceptionResponse(ctx, ErrorCode.NEED_USERNAME_PASSWORD, response);
             return;
         }
         LockUtil.lock(CacheName.REGISTER_LOCK);
@@ -69,10 +63,7 @@ public class UserServiceImpl implements UserService {
             // 检测用户是否已经被注册了
             String existUserId = redisRepository.hGet(CacheName.USERNAME_ID, msg.getUsername());
             if (existUserId != null) {
-                response.setError(true);
-                response.setErrorInfo(ErrorConfig.getError(ErrorCode.USER_ALREADY_EXIST));
-                ctx.writeAndFlush(response);
-                ctx.fireChannelReadComplete();
+                exceptionResponse(ctx, ErrorCode.USER_ALREADY_EXIST, response);
                 return;
             }
             Long userId = GenerateID.generateUserID();

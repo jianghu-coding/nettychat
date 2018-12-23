@@ -18,6 +18,7 @@ import com.im.nettychat.protocol.PacketCodec;
 import com.im.nettychat.protocol.request.CreateGroupRequest;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
+import com.im.nettychat.protocol.response.CreateGroupResponse;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.MessageResponse;
 import io.netty.bootstrap.Bootstrap;
@@ -62,6 +63,7 @@ public class MainTest {
                     // 收到服务器返回来的消息
                     ch.pipeline().addLast(new LoginResponseHandler());
                     ch.pipeline().addLast(new MessageResponseHandler());
+                    ch.pipeline().addLast(new CreateGroupResponseHandler());
                 }
             });
         ChannelFuture channelFuture = bootstrap.connect(HOST, 8080).addListener(future -> {
@@ -157,10 +159,10 @@ class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponse> {
             LoginResponse response = (LoginResponse) msg;
             // 如果存在错误
             if (response.isError()) {
-                System.out.println(response.getErrorInfo());
+                System.out.println("登录失败: [ " + response + "]");
             } else {
                 // 成功输出对象
-                System.out.println(response);
+                System.out.println("登录成功: [ " + response + " ]");
             }
         }
     }
@@ -175,10 +177,28 @@ class MessageResponseHandler extends SimpleChannelInboundHandler<MessageResponse
             MessageResponse registerResponse = (MessageResponse) msg;
             // 如果存在错误
             if (registerResponse.isError()) {
-                System.out.println(registerResponse.getErrorInfo());
+                System.out.println("发送消息失败: [ " + registerResponse + "]");
             } else {
                 // 成功输出对象
                 System.out.println("收到消息: [ " + registerResponse + " ]");
+            }
+        }
+    }
+}
+
+class CreateGroupResponseHandler extends SimpleChannelInboundHandler<CreateGroupResponse> {
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, CreateGroupResponse msg) throws Exception {
+        if (msg.getCommand() == Command.CREATE_GROUP_RESPONSE) {
+            // 如果是注册则返回注册响应指令
+            CreateGroupResponse response = (CreateGroupResponse) msg;
+            // 如果存在错误
+            if (response.isError()) {
+                System.out.println(response);
+            } else {
+                // 成功输出对象
+                System.out.println("创建群组成功:[ " + response + " ]");
             }
         }
     }
