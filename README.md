@@ -1,7 +1,8 @@
-# nettychat
-    基于netty4 IM
+## nettychat
+    服务端：基于netty4.16, redis, java8编写
+    客户端: 安卓
 
-# 项目启动前配置
+## 项目启动前配置
     1. jdk >= 1.8
     2. 安装配置redis, 无需设置账号密码
     3. 配置 server.properties
@@ -11,7 +12,9 @@
        // nohup java -Xms300M -Xmx300M  -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
     5. nohup java -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
 
-# 客户端测试用列
+## 接口文档见 doc.md
+
+## 客户端测试
     安卓还没有写好, 用端口访问测试
         见MainTest.java
     初始化配置账号2个
@@ -19,11 +22,11 @@
     666666,777777
     888888,999999
 
-# 服务端配置
+## 服务端配置
     ip: 114.115.248.101
     port: 8080
     
-# 请求指令
+## 请求指令
     定义: common/Command.java
     
     // request
@@ -64,7 +67,7 @@
 
     Byte GET_FRIENDS_RESPONSE = 19;
 
-# 协议规范
+## 协议规范
     首部4个字节 "魔数" 标识 协议认证
     int MAGIC_NUMBER = 0x12345678; // 魔数
     byte VERSION = 1; // 版本
@@ -72,7 +75,7 @@
     byte command = command; // 上述指令中选择
     byte length = length; // 数据长度
 
-# 使用讲解
+## 使用讲解
     com.im.nettychat.ClientTest.java // 有详细测试用列操作展示如下
     为了写测试用列方便request, response都复用了server的, 客户端可以自己定义取消不要的字段
     ---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组, f: 发送群组消息
@@ -129,4 +132,8 @@
     ---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表
     h
     成功: [ GetFriendResponse(friends=[User(id=2, username=888888, password=null, name=系统用户-2, icon=null, desc=null)]) ]
-# 接口文档见 doc.md
+ ## 待更新内容:
+ 
+    群组列表
+    离线消息发送
+    
