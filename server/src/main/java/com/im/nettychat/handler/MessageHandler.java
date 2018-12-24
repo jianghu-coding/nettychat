@@ -1,6 +1,7 @@
 package com.im.nettychat.handler;
 
 import com.im.nettychat.common.ErrorCode;
+import com.im.nettychat.config.ErrorConfig;
 import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.response.MessageResponse;
 import com.im.nettychat.util.SessionUtil;
@@ -32,7 +33,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageRequest> 
         }
         if (toChannel == null) {
             response.setError(true);
-            response.setErrorInfo(ErrorCode.NOT_SUPPORT_SEND_OFFLINE);
+            response.setErrorInfo(ErrorConfig.getError(ErrorCode.NOT_SUPPORT_SEND_OFFLINE));
             ctx.writeAndFlush(response);
             return;
         }

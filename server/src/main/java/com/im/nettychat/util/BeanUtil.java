@@ -14,7 +14,6 @@
 package com.im.nettychat.util;
 
 import org.apache.commons.beanutils.BeanUtils;
-
 import java.lang.reflect.InvocationTargetException;
 
 /**

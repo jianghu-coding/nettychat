@@ -108,52 +108,57 @@ public class MainTest {
                     public void run() {
                         Scanner scanner = new Scanner(System.in);
                         while(!Thread.interrupted()) {
-                            System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组, f: 发送群组消息");
-                            System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表");
-                            String command = scanner.nextLine();
-                            if (command.equals("a")) {
-                                System.out.println("开始登录");
-                                System.out.println("请输入用户名和密码用,隔开");
-                                String userInfo = scanner.nextLine();
-                                String[] userInfoArr = userInfo.split(",");
-                                // 发起登录
-                                login(channel, userInfoArr[0], userInfoArr[1]);
-                            } else if (command.equals("b")) {
-                                System.out.println("请输入对方的id和发送的消息用,隔开: ");
-                                String userAndMessage = scanner.nextLine();
-                                String[] us = userAndMessage.split(",");
-                                sendMessage(channel, Long.valueOf(us[0]), us[1]);
-                            } else if (command.equals("c")) {
-                                System.out.println("请输入群组名称");
-                                String groupName = scanner.nextLine();
-                                System.out.println("请输入拉取的用户id用,隔开");
-                                String userIds = scanner.nextLine();
-                                String[] userIdArr = userIds.split(",");
-                                createGroup(channel, groupName, Arrays.asList(userIdArr).stream().map(v -> Long.valueOf(v)).collect(Collectors.toList()));
-                            } else if (command.equals("d")) {
-                                System.out.println("请输入群组id");
-                                String groupId = scanner.nextLine();
-                                getUserGroup(channel, Long.valueOf(groupId));
-                            } else if (command.equals("e")) {
-                                System.out.println("请输入要加入的群组的id: ");
-                                String groupId = scanner.nextLine();
-                                joinGroup(channel, Long.valueOf(groupId));
-                            } else if (command.equals("f")) {
-                                System.out.println("请输入群组的id和发送消息用,隔开");
-                                String groupIdMessage = scanner.nextLine();
-                                String[] gm = groupIdMessage.split(",");
-                                sendGroupMessage(channel, Long.valueOf(gm[0]), gm[1]);
-                            } else if (command.equals("q")) {
-                                System.out.println("请输入名称, 用户名, 密码用,隔开");
-                                String userInfo = scanner.nextLine();
-                                String[] userInfoArr = userInfo.split(",");
-                                register(channel, userInfoArr[0], userInfoArr[1], userInfoArr[2]);
-                            } else if (command.equals("g")) {
-                                System.out.println("请输入对方的id: ");
-                                String userId = scanner.nextLine();
-                                addFriend(channel, Long.valueOf(userId));
-                            } else if (command.equals("h")) {
-                                getFriends(channel);
+                            try {
+                                System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组, f: 发送群组消息");
+                                System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表");
+                                String command = scanner.nextLine();
+                                if (command.equals("a")) {
+                                    System.out.println("开始登录");
+                                    System.out.println("请输入用户名和密码用,隔开");
+                                    String userInfo = scanner.nextLine();
+                                    String[] userInfoArr = userInfo.split(",");
+                                    // 发起登录
+                                    login(channel, userInfoArr[0], userInfoArr[1]);
+                                } else if (command.equals("b")) {
+                                    System.out.println("请输入对方的id和发送的消息用,隔开: ");
+                                    String userAndMessage = scanner.nextLine();
+                                    String[] us = userAndMessage.split(",");
+                                    sendMessage(channel, Long.valueOf(us[0]), us[1]);
+                                } else if (command.equals("c")) {
+                                    System.out.println("请输入群组名称");
+                                    String groupName = scanner.nextLine();
+                                    System.out.println("请输入拉取的用户id用,隔开");
+                                    String userIds = scanner.nextLine();
+                                    String[] userIdArr = userIds.split(",");
+                                    createGroup(channel, groupName, Arrays.asList(userIdArr).stream().map(v -> Long.valueOf(v)).collect(Collectors.toList()));
+                                } else if (command.equals("d")) {
+                                    System.out.println("请输入群组id");
+                                    String groupId = scanner.nextLine();
+                                    getUserGroup(channel, Long.valueOf(groupId));
+                                } else if (command.equals("e")) {
+                                    System.out.println("请输入要加入的群组的id: ");
+                                    String groupId = scanner.nextLine();
+                                    joinGroup(channel, Long.valueOf(groupId));
+                                } else if (command.equals("f")) {
+                                    System.out.println("请输入群组的id和发送消息用,隔开");
+                                    String groupIdMessage = scanner.nextLine();
+                                    String[] gm = groupIdMessage.split(",");
+                                    sendGroupMessage(channel, Long.valueOf(gm[0]), gm[1]);
+                                } else if (command.equals("q")) {
+                                    System.out.println("请输入名称, 用户名, 密码用,隔开");
+                                    String userInfo = scanner.nextLine();
+                                    String[] userInfoArr = userInfo.split(",");
+                                    register(channel, userInfoArr[0], userInfoArr[1], userInfoArr[2]);
+                                } else if (command.equals("g")) {
+                                    System.out.println("请输入对方的id: ");
+                                    String userId = scanner.nextLine();
+                                    addFriend(channel, Long.valueOf(userId));
+                                } else if (command.equals("h")) {
+                                    getFriends(channel);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("输入格式错误");
+                                e.printStackTrace();
                             }
                         }
                     }
