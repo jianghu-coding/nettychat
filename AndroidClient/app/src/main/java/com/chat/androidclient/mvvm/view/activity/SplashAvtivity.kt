@@ -17,7 +17,7 @@ class SplashAvtivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_avtivity)
         Handler().postDelayed({
             val loginstate = SPUtils.getInstance().getBoolean(LOGINSTATE)
-            if (loginstate){
+            if (!loginstate){
                 startActivity(Intent(this,MainActivity::class.java))
             }else {
                 startActivity(Intent(this, LoginActivity::class.java))
