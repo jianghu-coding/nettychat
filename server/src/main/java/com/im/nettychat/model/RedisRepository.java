@@ -154,6 +154,13 @@ public class RedisRepository {
         return getJedis().smembers(cacheName.getPrefix().concat(key));
     }
 
+    public void sRemove(CacheName cacheName, String key, String... members) {
+        if (cacheName.getType() != CacheType.S) {
+            throw new IllegalArgumentException("expected S found " + cacheName.getType());
+        }
+        getJedis().srem(cacheName.getPrefix().concat(key), members);
+    }
+
     public boolean sismember(CacheName cacheName, String key, String val){
         return getJedis().sismember(cacheName.getPrefix().concat(key), val);
     }

@@ -20,6 +20,7 @@ import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
+import com.im.nettychat.protocol.request.group.GetUserGroupListRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
@@ -29,6 +30,7 @@ import com.im.nettychat.protocol.response.RegisterResponse;
 import com.im.nettychat.protocol.response.group.CreateGroupResponse;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.MessageResponse;
+import com.im.nettychat.protocol.response.group.GetUserGroupListResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
 import com.im.nettychat.protocol.response.group.JoinGroupResponse;
 import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
@@ -70,10 +72,9 @@ public class MainTest {
     private static final String TEST_B_USERNAME = "888888";
     private static final String TEST_B_PASSWORD = "999999";
     private static final String TEST_B_NAME = "宝六";
-    private static final String HOST = "114.115.248.101";
+    private static final String HOST = "127.0.0.1";
+    private static final int PORT = 8080;
 
-
-    // 客户端互相聊天
     public static void main(String[] args) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -97,9 +98,10 @@ public class MainTest {
                     ch.pipeline().addLast(new SendGroupMessageResponseHandler());
                     ch.pipeline().addLast(new AddFriendResponseHandler());
                     ch.pipeline().addLast(new GetFriendResponseHandler());
+                    ch.pipeline().addLast(new GetUserGroupListResponseHandler());
                 }
             });
-        ChannelFuture channelFuture = bootstrap.connect(HOST, 8080).addListener(future -> {
+        ChannelFuture channelFuture = bootstrap.connect(HOST, PORT).addListener(future -> {
             if (future.isSuccess()) {
                 // 建立连接成功后发起登录请求或者注册请求
                 Channel channel = ((ChannelFuture) future).channel();
@@ -110,7 +112,7 @@ public class MainTest {
                         while(!Thread.interrupted()) {
                             try {
                                 System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组, f: 发送群组消息");
-                                System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表");
+                                System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表, i: 获取我的群组列表");
                                 String command = scanner.nextLine();
                                 if (command.equals("a")) {
                                     System.out.println("开始登录");
@@ -155,6 +157,8 @@ public class MainTest {
                                     addFriend(channel, Long.valueOf(userId));
                                 } else if (command.equals("h")) {
                                     getFriends(channel);
+                                } else if (command.equals("i")) {
+                                    getUserGroupList(channel);
                                 }
                             } catch (Exception e) {
                                 System.out.println("输入格式错误");
@@ -166,6 +170,13 @@ public class MainTest {
             }
         });
         channelFuture.sync().channel().closeFuture().sync();
+    }
+
+    private static void getUserGroupList(Channel channel) {
+        GetUserGroupListRequest request = new GetUserGroupListRequest();
+        ByteBuf byteBuf = channel.alloc().buffer();
+        PacketCodec.INSTANCE.encode(byteBuf, request);
+        channel.writeAndFlush(byteBuf);
     }
 
     private static void addFriend(Channel channel, Long friendId) {
@@ -279,6 +290,19 @@ class GetTestFriendResponse extends PacketResponse {
         private String name;
 
         //setter getter ..
+    }
+}
+
+class GetUserGroupListResponseHandler extends SimpleChannelInboundHandler<GetUserGroupListResponse> {
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, GetUserGroupListResponse response) throws Exception {
+        if (response.isError()) {
+            System.out.println("失败: [ " + response.getErrorInfo() + "]");
+        } else {
+            // 成功输出对象
+            System.out.println("成功: [ " + response + " ]");
+        }
     }
 }
 
