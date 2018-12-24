@@ -19,10 +19,12 @@ import com.im.nettychat.common.Session;
 import com.im.nettychat.model.UserGroup;
 import com.im.nettychat.model.key.GroupKey;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
+import com.im.nettychat.protocol.request.group.GetUserGroupListRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.response.group.CreateGroupResponse;
+import com.im.nettychat.protocol.response.group.GetUserGroupListResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
 import com.im.nettychat.protocol.response.group.JoinGroupResponse;
 import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
@@ -38,10 +40,14 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import static com.im.nettychat.common.AttributeKeys.SESSION_ATTRIBUTE_KEY;
 import static com.im.nettychat.model.RedisRepository.redisRepository;
@@ -181,6 +187,38 @@ public class GroupServiceImpl extends BaseService implements GroupService {
         response.setSendUserId(userId);
         response.setMessage(msg.getMessage());
         channelGroup.writeAndFlush(response);
+    }
+
+    @Override
+    public void getUserGroupList(ChannelHandlerContext ctx, GetUserGroupListRequest msg) {
+        GetUserGroupListResponse response = new GetUserGroupListResponse();
+        List<UserGroup> userGroups = new ArrayList<>();
+        Long userId = ctx.channel().attr(SESSION_ATTRIBUTE_KEY).get().getUserId();
+        Set<String> groupIdSet = redisRepository.sGet(CacheName.USER_ID_USER_GROUP, String.valueOf(userId));
+        // 已经解散的群组
+        Set<String> cancelGroupIds = new HashSet<>();
+        for(String groupId: groupIdSet) {
+            UserGroup userGroup = getUserGroup(Long.valueOf(groupId));
+            if (userGroup == null) {
+                cancelGroupIds.add(groupId);
+            }
+            userGroup.setUserIdsStr(null);
+            userGroups.add(userGroup);
+        }
+        // 删除已经解散或者无效的群组
+        String[] cancelGroupIdArr = new String[cancelGroupIds.size()];
+        if (CollectionUtils.isNotNullOrEmpty(cancelGroupIds)) {
+            deleteUserGroup(userId, cancelGroupIds.toArray(cancelGroupIdArr));
+        }
+        response.setUserGroups(userGroups);
+        ctx.writeAndFlush(response);
+    }
+
+    /**
+     *  删除用户某个群组
+     */
+    private void deleteUserGroup(Long userId, String... groupId) {
+        redisRepository.sRemove(CacheName.USER_ID_USER_GROUP, String.valueOf(userId), groupId);
     }
 
     private UserGroup getUserGroup(Long groupId) {

@@ -28,44 +28,6 @@
     
 ## 请求指令
     定义: common/Command.java
-    
-    // request
-    Byte LOGIN = 1;
-
-    Byte SEND_MESSAGE = 2;
-
-    Byte REGISTER = 4;
-
-    Byte CREATE_GROUP = 6;
-
-    Byte JOIN_GROUP = 8;
-
-    Byte GET_USER_GROUP = 10;
-
-    Byte SEND_GROUP_MESSAGE = 12;
-
-    Byte ADD_FRIEND = 14;
-
-    Byte GET_FRIENDS = 16;
-
-    // response
-    Byte LOGIN_RESPONSE = 3;
-
-    Byte REGISTER_RESPONSE = 5;
-
-    Byte SEND_MESSAGE_RESPONSE = 7;
-
-    Byte CREATE_GROUP_RESPONSE = 9;
-
-    Byte JOIN_GROUP_RESPONSE = 11;
-
-    Byte GET_USER_GROUP_RESPONSE = 13;
-
-    Byte SEND_GROUP_MESSAGE_RESPONSE = 15;
-
-    Byte ADD_FRIEND_RESPONSE = 17;
-
-    Byte GET_FRIENDS_RESPONSE = 19;
 
 ## 协议规范
     首部4个字节 "魔数" 标识 协议认证
@@ -134,6 +96,5 @@
     成功: [ GetFriendResponse(friends=[User(id=2, username=888888, password=null, name=系统用户-2, icon=null, desc=null)]) ]
  ## 待更新内容:
  
-    群组列表
     离线消息发送
     

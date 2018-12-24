@@ -14,6 +14,7 @@
 package com.im.nettychat.service;
 
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
+import com.im.nettychat.protocol.request.group.GetUserGroupListRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
@@ -34,4 +35,5 @@ public interface GroupService {
 
     void sendGroupMessage(ChannelHandlerContext ctx, SendGroupMessageRequest msg);
 
+    void getUserGroupList(ChannelHandlerContext ctx, GetUserGroupListRequest msg);
 }
