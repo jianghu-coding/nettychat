@@ -14,6 +14,7 @@
 package com.im.nettychat.service;
 
 import com.im.nettychat.protocol.request.LoginRequest;
+import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
@@ -33,4 +34,6 @@ public interface UserService {
     void addFriend(ChannelHandlerContext ctx, AddFriendRequest msg);
 
     void getFriends(ChannelHandlerContext ctx, GetFriendRequest msg);
+
+    void sendMessage(ChannelHandlerContext ctx, MessageRequest request);
 }

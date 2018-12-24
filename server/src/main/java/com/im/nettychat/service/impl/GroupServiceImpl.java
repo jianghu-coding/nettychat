@@ -15,7 +15,9 @@ package com.im.nettychat.service.impl;
 
 import com.im.nettychat.cache.CacheName;
 import com.im.nettychat.common.ErrorCode;
+import com.im.nettychat.common.OfflineMessageType;
 import com.im.nettychat.common.Session;
+import com.im.nettychat.model.OfflineMessage;
 import com.im.nettychat.model.UserGroup;
 import com.im.nettychat.model.key.GroupKey;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
@@ -40,7 +42,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -174,19 +175,36 @@ public class GroupServiceImpl extends BaseService implements GroupService {
         UserGroup userGroup = getUserGroup(msg.getGroupId());
         List<Long> userIds = userGroup.getUserIds();
         ChannelGroup channelGroup = new DefaultChannelGroup(ctx.executor());
-        // 目前暂时不能发送离线消息
+        String message = msg.getMessage();
+        List<Long> offlineUserIds = new ArrayList<>();
         for(Long uid: userIds) {
             if (uid.equals(userId)) {
                 continue;
             }
             Channel channel = SessionUtil.getChannel(uid);
-            if (channel != null) {
-                channelGroup.add(channel);
+            // 用户不在线存储到它的用户离线消息中
+            if (channel == null) {
+                offlineUserIds.add(uid);
+                continue;
             }
+            channelGroup.add(channel);
         }
         response.setSendUserId(userId);
-        response.setMessage(msg.getMessage());
+        response.setMessage(message);
+        // 此处后立即返回给客户端消息
         channelGroup.writeAndFlush(response);
+
+        // 存储离线消息
+        for(Long offlineUserId: offlineUserIds) {
+            // 存储到它的用户离线消息中
+            OfflineMessage offlineMessage = new OfflineMessage();
+            offlineMessage.setMessage(message);
+            offlineMessage.setMessageType(OfflineMessageType.GROUP);
+            offlineMessage.setGroupId(msg.getGroupId());
+            offlineMessage.setUserId(userId);
+            redisRepository
+                    .lPush(CacheName.OFFLINE_MESSAGE, String.valueOf(offlineUserId), offlineMessage);
+        }
     }
 
     @Override

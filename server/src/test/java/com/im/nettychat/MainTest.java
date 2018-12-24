@@ -34,6 +34,7 @@ import com.im.nettychat.protocol.response.group.GetUserGroupListResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
 import com.im.nettychat.protocol.response.group.JoinGroupResponse;
 import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
+import com.im.nettychat.protocol.response.offline.OfflineMessageResponse;
 import com.im.nettychat.protocol.response.user.AddFriendResponse;
 import com.im.nettychat.protocol.response.user.GetFriendResponse;
 import io.netty.bootstrap.Bootstrap;
@@ -99,6 +100,7 @@ public class MainTest {
                     ch.pipeline().addLast(new AddFriendResponseHandler());
                     ch.pipeline().addLast(new GetFriendResponseHandler());
                     ch.pipeline().addLast(new GetUserGroupListResponseHandler());
+                    ch.pipeline().addLast(new OfflineMessageResponseResponseHandler());
                 }
             });
         ChannelFuture channelFuture = bootstrap.connect(HOST, PORT).addListener(future -> {
@@ -290,6 +292,19 @@ class GetTestFriendResponse extends PacketResponse {
         private String name;
 
         //setter getter ..
+    }
+}
+
+class OfflineMessageResponseResponseHandler extends SimpleChannelInboundHandler<OfflineMessageResponse> {
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, OfflineMessageResponse response) throws Exception {
+        if (response.isError()) {
+            System.out.println("失败: [ " + response.getErrorInfo() + "]");
+        } else {
+            // 成功输出对象
+            System.out.println("成功: [ " + response + " ]");
+        }
     }
 }
 

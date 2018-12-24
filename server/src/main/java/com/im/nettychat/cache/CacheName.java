@@ -20,7 +20,9 @@ public enum CacheName {
 
     USER_ID_USER_GROUP(CacheType.S, 0),
 
-    USER_FRIEND(CacheType.S, 0);
+    USER_FRIEND(CacheType.S, 0),
+
+    OFFLINE_MESSAGE(CacheType.L, 0);
 
     /**
      * 缓存类型

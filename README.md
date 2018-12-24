@@ -95,6 +95,6 @@
     h
     成功: [ GetFriendResponse(friends=[User(id=2, username=888888, password=null, name=系统用户-2, icon=null, desc=null)]) ]
  ## 待更新内容:
- 
-    离线消息发送
+    传输数据加密解密
+    测试
     
