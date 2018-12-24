@@ -94,7 +94,4 @@
     ---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表
     h
     成功: [ GetFriendResponse(friends=[User(id=2, username=888888, password=null, name=系统用户-2, icon=null, desc=null)]) ]
- ## 待更新内容:
-    传输数据加密解密
-    测试
-    
+ ## 待更新内容:    

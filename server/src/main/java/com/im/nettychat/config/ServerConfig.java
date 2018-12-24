@@ -10,6 +10,8 @@ public class ServerConfig {
 
     private final static String PORT = "server.port";
 
+    private final static String HTTP_PORT = "server.http.port";
+
     private final static String CORE_THREAD = "thread.num";
 
     private final static String REDIS_HOST = "redis.host";
@@ -30,6 +32,10 @@ public class ServerConfig {
 
     public static int getPort() {
         return Integer.parseInt(SERVER_PROPERTIES.getProperty(PORT));
+    }
+
+    public static int getHttpPort() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(HTTP_PORT));
     }
 
     public static int getCoreThread() {
