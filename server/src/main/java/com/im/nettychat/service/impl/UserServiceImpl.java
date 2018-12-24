@@ -180,8 +180,10 @@ public class UserServiceImpl extends BaseService implements UserService {
         OfflineMessageResponse offlineMessageResponse = new OfflineMessageResponse();
         List<OfflineMessage> offlineMessages = redisRepository.lRangeObject(CacheName.OFFLINE_MESSAGE, userId, 0, -1, OfflineMessage.class);
         offlineMessageResponse.setMessages(offlineMessages);
-        ctx.writeAndFlush(offlineMessageResponse);
-        redisRepository.removeKey(CacheName.OFFLINE_MESSAGE, userId);
+        ctx.writeAndFlush(offlineMessageResponse).addListener(future -> {
+            // 消息推送成功后删除
+            redisRepository.removeKey(CacheName.OFFLINE_MESSAGE, userId);
+        });
     }
 
     private void bindSession(User user, Channel channel) {

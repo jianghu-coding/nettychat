@@ -13,8 +13,9 @@
  */
 package com.im.nettychat;
 
+import com.im.nettychat.codec.PacketCodecHandler;
 import com.im.nettychat.common.Command;
-import com.im.nettychat.protocol.PacketCodec;
+import com.im.nettychat.handler.VerifyHandler;
 import com.im.nettychat.protocol.PacketResponse;
 import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
@@ -26,19 +27,7 @@ import com.im.nettychat.protocol.request.group.JoinGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
-import com.im.nettychat.protocol.response.RegisterResponse;
-import com.im.nettychat.protocol.response.group.CreateGroupResponse;
-import com.im.nettychat.protocol.response.LoginResponse;
-import com.im.nettychat.protocol.response.MessageResponse;
-import com.im.nettychat.protocol.response.group.GetUserGroupListResponse;
-import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
-import com.im.nettychat.protocol.response.group.JoinGroupResponse;
-import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
-import com.im.nettychat.protocol.response.offline.OfflineMessageResponse;
-import com.im.nettychat.protocol.response.user.AddFriendResponse;
-import com.im.nettychat.protocol.response.user.GetFriendResponse;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -48,7 +37,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.MessageToMessageDecoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -88,19 +76,10 @@ public class MainTest {
             .handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) {
-                    ch.pipeline().addLast(new PacketDecoder());
+                    ch.pipeline().addLast(new VerifyHandler());
+                    ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
                     // 收到服务器返回来的消息
-                    ch.pipeline().addLast(new RegisterResponseHandler());
-                    ch.pipeline().addLast(new LoginResponseHandler());
-                    ch.pipeline().addLast(new MessageResponseHandler());
-                    ch.pipeline().addLast(new CreateGroupResponseHandler());
-                    ch.pipeline().addLast(new GetGroupResponseHandler());
-                    ch.pipeline().addLast(new JoinGroupResponseHandler());
-                    ch.pipeline().addLast(new SendGroupMessageResponseHandler());
-                    ch.pipeline().addLast(new AddFriendResponseHandler());
-                    ch.pipeline().addLast(new GetFriendResponseHandler());
-                    ch.pipeline().addLast(new GetUserGroupListResponseHandler());
-                    ch.pipeline().addLast(new OfflineMessageResponseResponseHandler());
+                    ch.pipeline().addLast(new ResponseHandler());
                 }
             });
         ChannelFuture channelFuture = bootstrap.connect(HOST, PORT).addListener(future -> {
@@ -176,96 +155,68 @@ public class MainTest {
 
     private static void getUserGroupList(Channel channel) {
         GetUserGroupListRequest request = new GetUserGroupListRequest();
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, request);
-        channel.writeAndFlush(byteBuf);
+        channel.writeAndFlush(request);
     }
 
     private static void addFriend(Channel channel, Long friendId) {
         AddFriendRequest request = new AddFriendRequest();
         request.setFriendUserId(friendId);
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, request);
-        channel.writeAndFlush(byteBuf);
+        channel.writeAndFlush(request);
     }
 
     private static void getFriends(Channel channel) {
         GetFriendRequest request = new GetFriendRequest();
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, request);
-        channel.writeAndFlush(byteBuf);
+        channel.writeAndFlush(request);
     }
 
     private static void register(Channel channel, String name, String username, String password) {
-        RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setName(name);
-        registerRequest.setUsername(username);
-        registerRequest.setPassword(password);
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, registerRequest);
-        channel.writeAndFlush(byteBuf);
+        RegisterRequest request = new RegisterRequest();
+        request.setName(name);
+        request.setUsername(username);
+        request.setPassword(password);
+        channel.writeAndFlush(request);
     }
 
     private static void sendGroupMessage(Channel channel, Long groupId, String message) {
         SendGroupMessageRequest request = new SendGroupMessageRequest();
         request.setGroupId(groupId);
         request.setMessage(message);
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, request);
-        channel.writeAndFlush(byteBuf);
+        channel.writeAndFlush(request);
     }
 
     private static void joinGroup(Channel channel, Long groupId) {
         JoinGroupRequest request = new JoinGroupRequest();
         request.setGroupId(groupId);
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, request);
-        channel.writeAndFlush(byteBuf);
+        channel.writeAndFlush(request);
     }
 
     private static void getUserGroup(Channel channel, Long groupId) {
         GetUserGroupRequest request = new GetUserGroupRequest();
         request.setGroupId(groupId);
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, request);
-        channel.writeAndFlush(byteBuf);
+        channel.writeAndFlush(request);
     }
 
     private static void createGroup(Channel channel, String groupName, List<Long> userIds) {
         CreateGroupRequest request = new CreateGroupRequest();
         request.setGroupName(groupName);
         request.setUserIds(userIds);
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, request);
-        channel.writeAndFlush(byteBuf);
+        channel.writeAndFlush(request);
     }
 
     private static void login(Channel channel, String username, String password) {
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername(username);
-        loginRequest.setPassword(password);
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, loginRequest);
-        channel.writeAndFlush(byteBuf);
+        LoginRequest request = new LoginRequest();
+        request.setUsername(username);
+        request.setPassword(password);
+        channel.writeAndFlush(request);
     }
 
     private static void sendMessage(Channel channel, Long userId, String message) {
-        MessageRequest requestMessage = new MessageRequest();
-        requestMessage.setToUserId(userId);
-        requestMessage.setMessage(message);
-        ByteBuf byteBuf = channel.alloc().buffer();
-        PacketCodec.INSTANCE.encode(byteBuf, requestMessage);
-        channel.writeAndFlush(byteBuf);
+        MessageRequest request = new MessageRequest();
+        request.setToUserId(userId);
+        request.setMessage(message);
+        channel.writeAndFlush(request);
     }
 
-}
-
-class PacketDecoder extends MessageToMessageDecoder<ByteBuf> {
-
-    @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List out) {
-        out.add(PacketCodec.INSTANCE.decode(in));
-    }
 }
 
 /**
@@ -295,140 +246,10 @@ class GetTestFriendResponse extends PacketResponse {
     }
 }
 
-class OfflineMessageResponseResponseHandler extends SimpleChannelInboundHandler<OfflineMessageResponse> {
+class ResponseHandler extends SimpleChannelInboundHandler<PacketResponse> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, OfflineMessageResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class GetUserGroupListResponseHandler extends SimpleChannelInboundHandler<GetUserGroupListResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, GetUserGroupListResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class GetFriendResponseHandler extends SimpleChannelInboundHandler<GetFriendResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, GetFriendResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class AddFriendResponseHandler extends SimpleChannelInboundHandler<AddFriendResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, AddFriendResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class SendGroupMessageResponseHandler extends SimpleChannelInboundHandler<SendGroupMessageResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, SendGroupMessageResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class JoinGroupResponseHandler extends SimpleChannelInboundHandler<JoinGroupResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, JoinGroupResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, LoginResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class MessageResponseHandler extends SimpleChannelInboundHandler<MessageResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, MessageResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class CreateGroupResponseHandler extends SimpleChannelInboundHandler<CreateGroupResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, CreateGroupResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class GetGroupResponseHandler extends SimpleChannelInboundHandler<GetUserGroupResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, GetUserGroupResponse response) throws Exception {
-        if (response.isError()) {
-            System.out.println("失败: [ " + response.getErrorInfo() + "]");
-        } else {
-            // 成功输出对象
-            System.out.println("成功: [ " + response + " ]");
-        }
-    }
-}
-
-class RegisterResponseHandler extends SimpleChannelInboundHandler<RegisterResponse> {
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, RegisterResponse response) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, PacketResponse response) throws Exception {
         if (response.isError()) {
             System.out.println("失败: [ " + response.getErrorInfo() + "]");
         } else {

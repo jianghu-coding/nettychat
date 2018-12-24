@@ -10,7 +10,7 @@ import com.im.nettychat.handler.IMHandler;
 import com.im.nettychat.handler.LoginHandler;
 import com.im.nettychat.handler.RegisterHandler;
 import com.im.nettychat.handler.MessageHandler;
-import com.im.nettychat.handler.ServerVerifyHandler;
+import com.im.nettychat.handler.VerifyHandler;
 import com.im.nettychat.util.DateUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -52,7 +52,7 @@ public class ServerStarter {
                     .childHandler(new ChannelInitializer<NioSocketChannel>() {
                         @Override
                         protected void initChannel(NioSocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new ServerVerifyHandler());
+                            ch.pipeline().addLast(new VerifyHandler());
                             ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
                             ch.pipeline().addLast(RegisterHandler.INSTANCE);
                             ch.pipeline().addLast(LoginHandler.INSTANCE);

@@ -23,10 +23,6 @@ import static com.im.nettychat.cache.LocalRSession.LOCAL_JEDIS;
  */
 public class RedisPool extends RedisBootstrap {
 
-    /**
-     *
-     * @return
-     */
     public static Jedis getJedis() {
         Jedis jedis = LOCAL_JEDIS.get();
         if (jedis != null) {
