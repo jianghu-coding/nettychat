@@ -18,6 +18,8 @@ public class ServerConfig {
 
     private final static String SERVER_WRITE_TIMEOUT = "server.write.timeout";
 
+    private final static String SERVER_SERVICE_THREAD_TIMEOUT = "server.service.thread.timeout";
+
     private final static String CORE_THREAD = "thread.num";
 
     private final static String THREAD_QUEUE_CAPACITY = "thread.queue.capacity";
@@ -96,5 +98,9 @@ public class ServerConfig {
 
     public static int getServerWriteTimeout() {
         return Integer.valueOf(SERVER_PROPERTIES.getProperty(SERVER_WRITE_TIMEOUT, "5"));
+    }
+
+    public static int getServiceThreadTimeOut() {
+        return Integer.valueOf(SERVER_PROPERTIES.getProperty(SERVER_SERVICE_THREAD_TIMEOUT, "8"));
     }
 }
