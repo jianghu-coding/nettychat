@@ -12,6 +12,14 @@ public class ServerConfig {
 
     private final static String HTTP_PORT = "server.http.port";
 
+    private final static String SERVER_TIMEOUT_OPEN = "server.timeout.open";
+
+    private final static String SERVER_READ_TIMEOUT = "server.read.timeout";
+
+    private final static String SERVER_WRITE_TIMEOUT = "server.write.timeout";
+
+    private final static String SERVER_ALL_TIMEOUT = "server.all.timeout";
+
     private final static String CORE_THREAD = "thread.num";
 
     private final static String THREAD_QUEUE_CAPACITY = "thread.queue.capacity";
@@ -78,5 +86,21 @@ public class ServerConfig {
 
     public static boolean getRedisTestOnReturn() {
         return Boolean.valueOf(SERVER_PROPERTIES.getProperty(REDIS_TEST_ON_RETURN, "true"));
+    }
+
+    public static boolean getServerTimeoutOpen() {
+        return Boolean.valueOf(SERVER_PROPERTIES.getProperty(SERVER_TIMEOUT_OPEN, "false"));
+    }
+
+    public static int getServerReadTimeout() {
+        return Integer.valueOf(SERVER_PROPERTIES.getProperty(SERVER_READ_TIMEOUT, "5"));
+    }
+
+    public static int getServerWriteTimeout() {
+        return Integer.valueOf(SERVER_PROPERTIES.getProperty(SERVER_WRITE_TIMEOUT, "5"));
+    }
+
+    public static int getServerAllTimeout() {
+        return Integer.valueOf(SERVER_PROPERTIES.getProperty(SERVER_ALL_TIMEOUT, "8"));
     }
 }

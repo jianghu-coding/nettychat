@@ -29,16 +29,6 @@ public class Util {
     private static final int HASH_KEY_LENGTH = 192;
     private static final int DEFAULT_SALT_SIZE = 32;
 
-    public static Integer integerAdd(Integer a, Integer b) {
-        if(a == null) {
-            return b;
-        }
-        if(b == null) {
-            return a;
-        }
-        return a + b;
-    }
-
     public static boolean isEmpty(String source) {
         return (source == null || "".equals(source));
     }
