@@ -27,4 +27,9 @@ abstract class Packet:Serializable {
 
     @get:JSONField(serialize = false)
     abstract val command: Byte
+    
+    override fun toString(): String {
+        return "Packet(version=$version, command=$command)"
+    }
+    
 }

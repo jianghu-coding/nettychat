@@ -11,6 +11,8 @@ class ResponseHandler : SimpleChannelInboundHandler<PacketResponse>() {
     override fun channelRead0(ctx: ChannelHandlerContext?, msg: PacketResponse) {
         if (msg.error){
         
+        }else{
+        
         }
     }
 }

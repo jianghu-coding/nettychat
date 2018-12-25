@@ -14,7 +14,7 @@ class SignUpVM(var view: SignUpActivity) : BaseViewModel {
     fun signup(name:String,username:String,password:String){
         val intent = Intent()
         intent.action="chatcommand"
-        intent.putExtra(ChatService.CMD, Command.LOGIN)
+        intent.putExtra(ChatService.CMD, Command.REGISTER)
         intent.putExtra(ChatService.EXTRA,  RegisterRequest(name,username,password))
         view.sendBroadcast(intent)
     }

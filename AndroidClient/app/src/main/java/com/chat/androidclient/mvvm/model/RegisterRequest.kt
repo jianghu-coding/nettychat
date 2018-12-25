@@ -8,7 +8,11 @@ import com.chat.androidclient.network.NeetClient
  */
 class RegisterRequest(var name:String,var username:String, var password:String): Packet() {
     override val command: Byte
-        get() = Command.LOGIN
+        get() = Command.REGISTER
+    
+    override fun toString(): String {
+        return "RegisterRequest(name='$name', username='$username', password='$password')"
+    }
     
 }
 
