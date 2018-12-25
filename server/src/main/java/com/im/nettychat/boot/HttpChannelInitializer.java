@@ -29,8 +29,8 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 public class HttpChannelInitializer extends ChannelInitializer<Channel> {
 
     @Override
-    protected void initChannel(Channel ch) throws Exception {
-        ch.pipeline().addLast("http-decoder", new HttpRequestDecoder());
+    protected void initChannel(Channel ch) {
+        ch.pipeline().addLast(new HttpRequestDecoder());
         // 把多个消息转化成一个消息(FullHttpRequest或者FullHttpResponse),原因是HTTP解码器在每个HTTP消息中会生成多个消息对象
         ch.pipeline().addLast(new HttpObjectAggregator(65536));
         ch.pipeline().addLast(new HttpResponseEncoder());

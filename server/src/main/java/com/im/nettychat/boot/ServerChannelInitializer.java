@@ -32,8 +32,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class ServerChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
     @Override
-    protected void initChannel(NioSocketChannel ch) throws Exception {
-        ch.pipeline().addLast(HttpRequestHandler.INSTANCE);
+    protected void initChannel(NioSocketChannel ch) {
         ch.pipeline().addLast(new VerifyHandler());
         ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
         ch.pipeline().addLast(RegisterHandler.INSTANCE);
