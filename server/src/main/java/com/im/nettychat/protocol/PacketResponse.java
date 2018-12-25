@@ -13,7 +13,6 @@
  */
 package com.im.nettychat.protocol;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
 /**

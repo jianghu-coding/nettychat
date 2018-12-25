@@ -1,6 +1,5 @@
 package com.im.nettychat.proxy;
 
-import com.im.nettychat.executor.ThreadPoolService;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -9,6 +8,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import static com.im.nettychat.cache.LocalRSession.LOCAL_JEDIS;
+import static com.im.nettychat.executor.AsyncTaskPool.TASK_POOL;
 
 /**
  * @author hejianglong
@@ -33,7 +33,7 @@ public class CglibServiceInterceptor implements MethodInterceptor {
         if (Object.class == method.getDeclaringClass()) {
             return methodProxy.invokeSuper(obj, args);
         }
-        Future future = ThreadPoolService.submit(new Callable() {
+        Future future = TASK_POOL.submit(new Callable() {
             @Override
             public Object call() throws Exception {
                 Object result = null;

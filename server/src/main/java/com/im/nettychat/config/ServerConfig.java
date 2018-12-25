@@ -14,6 +14,8 @@ public class ServerConfig {
 
     private final static String CORE_THREAD = "thread.num";
 
+    private final static String THREAD_QUEUE_CAPACITY = "thread.queue.capacity";
+
     private final static String REDIS_HOST = "redis.host";
 
     private final static String REDIS_PORT = "redis.port";
@@ -40,6 +42,10 @@ public class ServerConfig {
 
     public static int getCoreThread() {
         return Integer.parseInt(SERVER_PROPERTIES.getProperty(CORE_THREAD, "6"));
+    }
+
+    public static int getThreadQueueCapacity() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(THREAD_QUEUE_CAPACITY, String.valueOf(Integer.MAX_VALUE)));
     }
 
     public static String getRedisHost() {

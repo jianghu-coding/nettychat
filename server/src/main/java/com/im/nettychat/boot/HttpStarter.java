@@ -14,7 +14,6 @@
 package com.im.nettychat.boot;
 
 import com.im.nettychat.config.ServerConfig;
-import com.im.nettychat.executor.ThreadPoolService;
 import com.im.nettychat.util.DateUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -22,6 +21,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
+import static com.im.nettychat.executor.AsyncTaskPool.TASK_POOL;
 
 /**
  * http协议
@@ -66,7 +66,7 @@ public class HttpStarter implements Runnable {
         } finally {
             boosGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
-            ThreadPoolService.getExecutorService().shutdown();
+            TASK_POOL.shutdown();
             Thread.currentThread().interrupt();
             exit = true;
         }

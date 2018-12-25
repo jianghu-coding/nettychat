@@ -1,20 +1,6 @@
-/*
- * Project: com.im.nettychat.boot
- * 
- * File Created at 2018/12/24
- * 
- * Copyright 2018 CMCC Corporation Limited.
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * ZYHY Company. ("Confidential Information").  You shall not
- * disclose such Confidential Information and shall use it only in
- * accordance with the terms of the license.
- */
 package com.im.nettychat.boot;
 
 import com.im.nettychat.config.ServerConfig;
-import com.im.nettychat.executor.ThreadPoolService;
 import com.im.nettychat.util.DateUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -23,6 +9,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
+import static com.im.nettychat.executor.AsyncTaskPool.TASK_POOL;
 
 /**
  * 自定义协议
@@ -70,7 +57,7 @@ public class CustomStarter implements Runnable {
         } finally {
             boosGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
-            ThreadPoolService.getExecutorService().shutdown();
+            TASK_POOL.shutdown();
             exit = true;
             Thread.currentThread().interrupt();
         }
