@@ -15,7 +15,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpVM>() {
         when (v.id) {
             R.id.back -> finish()
             R.id.signupbtn -> {
-//            todo 注册用户
+                mVM.signup(mDataBinding.etName.text.toString(),mDataBinding.etName.text.toString(),mDataBinding.etPass.text.toString())
             }
         }
     }

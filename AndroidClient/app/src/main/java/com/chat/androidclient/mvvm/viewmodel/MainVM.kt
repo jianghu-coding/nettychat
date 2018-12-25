@@ -55,9 +55,9 @@ class MainVM(val view: MainActivity) : BaseViewModel {
         switchFragment(DynamicFragment::class.java)
     }
     
-    fun switchFragment(clazz: Class<*>) {
+    private fun switchFragment(clazz: Class<*>) {
         val name = clazz.name
-        var fragment: Fragment
+        val fragment: Fragment
         if (fragments.containsKey(name)) {
             fragment = fragments[name]!!
         }

@@ -17,8 +17,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding,LoginVM>() {
                 startActivity(Intent(this,SignUpActivity::class.java))
             }
             R.id.loginbtn->{
-                //todo 登陆
-                showMsg("正在开发")
+              mVM.login(mDataBinding.etName.text.toString(),mDataBinding.etPass.text.toString())
             }
         }
     }

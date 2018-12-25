@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.chat.androidclient"
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
@@ -39,6 +40,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     kapt "com.android.databinding:compiler:$android_plugin_version"
     implementation dependencies.utilcode
+    implementation dependencies.multidex
     implementation dependencies.recyclerView
     implementation dependencies.retrofit
     implementation dependencies.retrofitConverterGson
@@ -51,6 +53,10 @@ dependencies {
     implementation dependencies.rxlifecycle_component
     implementation dependencies.rxpermissions2
     implementation dependencies.design
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.6.Final'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.29'
+
+
 }
 repositories {
     mavenCentral()

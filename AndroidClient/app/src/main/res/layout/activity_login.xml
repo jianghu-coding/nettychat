@@ -45,6 +45,7 @@
             android:layout_toRightOf="@+id/tv_account"
             android:background="@null"
             android:hint="QQ号/手机号/邮箱"
+            android:id="@+id/et_name"
             android:textColor="@color/color000000"
             android:textSize="16sp"
             />
@@ -79,6 +80,7 @@
             android:layout_toRightOf="@+id/tv_pass"
             android:background="@null"
             android:hint="请填写密码"
+            android:id="@+id/et_pass"
             android:inputType="textPassword"
             android:textColor="@color/color000000"
             android:textSize="16sp"
