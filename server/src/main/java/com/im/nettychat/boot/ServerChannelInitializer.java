@@ -23,7 +23,8 @@ import com.im.nettychat.handler.RegisterHandler;
 import com.im.nettychat.handler.VerifyHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.handler.timeout.WriteTimeoutHandler;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,11 +40,10 @@ public class ServerChannelInitializer extends ChannelInitializer<NioSocketChanne
         ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
         ch.pipeline().addLast(RegisterHandler.INSTANCE);
         ch.pipeline().addLast(LoginHandler.INSTANCE);
-        // 是否开启超时验证处理
+        // 是否开启空闲连接检测, 对指定时间未操作的连接进行关闭
         if(ServerConfig.getServerTimeoutOpen()) {
-            ch.pipeline().addLast(new IdleStateHandler(ServerConfig.getServerReadTimeout(),
-                            ServerConfig.getServerWriteTimeout(),
-                            ServerConfig.getServerAllTimeout(), TimeUnit.SECONDS));
+            ch.pipeline().addLast(new ReadTimeoutHandler(ServerConfig.getServerReadTimeout() * 1000, TimeUnit.MILLISECONDS));
+            ch.pipeline().addLast(new WriteTimeoutHandler(ServerConfig.getServerWriteTimeout() * 1000, TimeUnit.MILLISECONDS));
         }
         // 后面的都必须登录后访问
         ch.pipeline().addLast(AuthHandler.INSTANCE);

@@ -6,6 +6,7 @@ import com.im.nettychat.util.SessionUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.timeout.ReadTimeoutException;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import java.util.HashMap;
@@ -50,6 +51,9 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         logger.error("server exception: ", cause);
+        if (cause instanceof ReadTimeoutException) {
+            logger.info("read or write timeout");
+        }
         ctx.channel().close();
     }
 
