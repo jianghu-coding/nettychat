@@ -23,13 +23,13 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
  * @Desc
  * @date 2018/12/22 下午1:58
  */
-public class ServerVerifyHandler extends LengthFieldBasedFrameDecoder {
+public class VerifyHandler extends LengthFieldBasedFrameDecoder {
 
     private static final int LENGTH_FIELD_OFFSET = 7;
 
     private static final int LENGTH_FIELD_LENGTH = 4;
 
-    public ServerVerifyHandler() {
+    public VerifyHandler() {
         super(Integer.MAX_VALUE, LENGTH_FIELD_OFFSET, LENGTH_FIELD_LENGTH);
     }
 

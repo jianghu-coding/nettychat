@@ -47,4 +47,6 @@ public interface Command {
     Byte GET_FRIENDS_RESPONSE = 19;
 
     Byte GET_USER_GROUP_LIST_RESPONSE = 21;
+
+    Byte OFFLINE_MESSAGE_RESPONSE = 23;
 }

@@ -3,9 +3,14 @@ package com.im.nettychat.service.impl;
 import com.im.nettychat.cache.CacheName;
 import com.im.nettychat.common.ErrorCode;
 import com.im.nettychat.common.GenerateID;
+import com.im.nettychat.common.OfflineMessageType;
 import com.im.nettychat.common.Session;
+import com.im.nettychat.model.OfflineMessage;
+import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
+import com.im.nettychat.protocol.response.MessageResponse;
+import com.im.nettychat.protocol.response.offline.OfflineMessageResponse;
 import com.im.nettychat.protocol.response.user.AddFriendResponse;
 import com.im.nettychat.protocol.response.user.GetFriendResponse;
 import com.im.nettychat.proxy.CglibServiceInterceptor;
@@ -62,6 +67,9 @@ public class UserServiceImpl extends BaseService implements UserService {
 
         bindSession(user, ctx.channel());
         ctx.writeAndFlush(response);
+
+        // 登录成功后返回所有未读的离线消息
+        sendOfflineMessageAndRemove(ctx, userId);
     }
 
     public void register(ChannelHandlerContext ctx, RegisterRequest msg) {
@@ -134,6 +142,48 @@ public class UserServiceImpl extends BaseService implements UserService {
         }
         response.setFriends(friends);
         ctx.writeAndFlush(response);
+    }
+
+    @Override
+    public void sendMessage(ChannelHandlerContext ctx, MessageRequest request) {
+        MessageResponse response = new MessageResponse();
+
+        String message = request.getMessage();
+        Long toUserId = request.getToUserId();
+        boolean exits = redisRepository.keyExits(CacheName.USER_INFO, String.valueOf(toUserId));
+        if(!exits) {
+            exceptionResponse(ctx, ErrorCode.USER_NOT_FOUND, response);
+            return;
+        }
+        Long fromUserId = ctx.channel().attr(SESSION_ATTRIBUTE_KEY).get().getUserId();
+        Channel toChannel = SessionUtil.getChannel(toUserId);
+        if (fromUserId.equals(toUserId)) {
+            return;
+        }
+        // 发送离线消息
+        if (toChannel == null) {
+            // 存储到它的用户离线消息中
+            OfflineMessage offlineMessage = new OfflineMessage();
+            offlineMessage.setMessage(message);
+            offlineMessage.setMessageType(OfflineMessageType.USER);
+            offlineMessage.setUserId(toUserId);
+            redisRepository
+                    .lPush(CacheName.OFFLINE_MESSAGE, String.valueOf(toUserId), offlineMessage);
+            return;
+        }
+        response.setMessage(message);
+        response.setFromUserId(fromUserId);
+        toChannel.writeAndFlush(response);
+    }
+
+    private void sendOfflineMessageAndRemove(ChannelHandlerContext ctx, String userId) {
+        OfflineMessageResponse offlineMessageResponse = new OfflineMessageResponse();
+        List<OfflineMessage> offlineMessages = redisRepository.lRangeObject(CacheName.OFFLINE_MESSAGE, userId, 0, -1, OfflineMessage.class);
+        offlineMessageResponse.setMessages(offlineMessages);
+        ctx.writeAndFlush(offlineMessageResponse).addListener(future -> {
+            // 消息推送成功后删除
+            redisRepository.removeKey(CacheName.OFFLINE_MESSAGE, userId);
+        });
     }
 
     private void bindSession(User user, Channel channel) {

@@ -19,6 +19,7 @@ import com.im.nettychat.protocol.response.group.GetUserGroupListResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
 import com.im.nettychat.protocol.response.group.JoinGroupResponse;
 import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
+import com.im.nettychat.protocol.response.offline.OfflineMessageResponse;
 import com.im.nettychat.protocol.response.user.AddFriendResponse;
 import com.im.nettychat.protocol.response.user.GetFriendResponse;
 import com.im.nettychat.serialize.Serializer;
@@ -70,6 +71,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.ADD_FRIEND_RESPONSE, AddFriendResponse.class);
         packetTypeMap.put(Command.GET_FRIENDS_RESPONSE, GetFriendResponse.class);
         packetTypeMap.put(Command.GET_USER_GROUP_LIST_RESPONSE, GetUserGroupListResponse.class);
+        packetTypeMap.put(Command.OFFLINE_MESSAGE_RESPONSE, OfflineMessageResponse.class);
     }
 
     public void encode(ByteBuf byteBuf, Packet packet) {

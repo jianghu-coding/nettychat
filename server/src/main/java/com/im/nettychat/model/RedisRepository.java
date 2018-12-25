@@ -6,6 +6,7 @@ import com.im.nettychat.cache.RedisPool;
 import com.im.nettychat.proxy.CglibJedisInterceptor;
 import com.im.nettychat.serialize.Serializer;
 import redis.clients.jedis.Jedis;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -138,6 +139,39 @@ public class RedisRepository {
             throw new IllegalArgumentException("expected L found " + cacheName.getType());
         }
         getJedis().lpush(cacheName.getPrefix().concat(key), val);
+    }
+
+    public void lPush(CacheName cacheName, String key, Object obj) {
+        if (cacheName.getType() != CacheType.L) {
+            throw new IllegalArgumentException("expected L found " + cacheName.getType());
+        }
+        getJedis().lpush(cacheName.getPrefix().concat(key).getBytes(), Serializer.DEFAULT.serialize(obj));
+    }
+
+    public List<String> lRange(CacheName cacheName, String key, int start, int end) {
+        if (cacheName.getType() != CacheType.L) {
+            throw new IllegalArgumentException("expected L found " + cacheName.getType());
+        }
+        return getJedis().lrange(cacheName.getPrefix().concat(key), start, end);
+    }
+
+    public Long removeKey(CacheName cacheName, String key) {
+        if (cacheName.getType() != CacheType.L) {
+            throw new IllegalArgumentException("expected L found " + cacheName.getType());
+        }
+        return getJedis().del(cacheName.getPrefix().concat(key));
+    }
+
+    public <T> List<T> lRangeObject(CacheName cacheName, String key, long start, long end, Class<T> cassClass) {
+        if (cacheName.getType() != CacheType.L) {
+            throw new IllegalArgumentException("expected L found " + cacheName.getType());
+        }
+        List<T> objs = new ArrayList<>();
+        List<byte[]> rs = getJedis().lrange(cacheName.getPrefix().concat(key).getBytes(), start, end);
+        for(byte[] bytes: rs) {
+            objs.add(Serializer.DEFAULT.deserialize(cassClass, bytes));
+        }
+        return objs;
     }
 
     public void sAdd(CacheName cacheName, String key, String...val) {
