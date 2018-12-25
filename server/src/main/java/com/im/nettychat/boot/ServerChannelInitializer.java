@@ -14,6 +14,7 @@
 package com.im.nettychat.boot;
 
 import com.im.nettychat.codec.PacketCodecHandler;
+import com.im.nettychat.codec.PacketDecoder;
 import com.im.nettychat.handler.AuthHandler;
 import com.im.nettychat.handler.IMHandler;
 import com.im.nettychat.handler.LoginHandler;

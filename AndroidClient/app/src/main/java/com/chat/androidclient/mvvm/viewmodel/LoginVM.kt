@@ -13,7 +13,7 @@ import com.chat.androidclient.service.ChatService
 class LoginVM(var view: LoginActivity) : BaseViewModel {
     fun login(name:String,pass:String){
         val intent = Intent()
-        intent.action="chatcommand"
+        intent.action=ChatService.CHAT_ACTION
         intent.putExtra(ChatService.CMD,Command.LOGIN)
         intent.putExtra(ChatService.EXTRA,  LoginRequest(name,pass))
         view.sendBroadcast(intent)

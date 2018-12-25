@@ -20,9 +20,9 @@ interface Serializer {
      * 二进制转换成 java 对象
      */
     fun <T> deserialize(clazz: Class<T>, bytes: ByteArray): T
-
+    
+    
     companion object {
-
         val DEFAULT: Serializer = JSONSerializer()
     }
 

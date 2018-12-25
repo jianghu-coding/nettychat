@@ -1,7 +1,6 @@
 package com.chat.androidclient.network
 
 import com.chat.androidclient.mvvm.model.LoginRequest
-import com.chat.androidclient.mvvm.procotol.PacketCodec
 import io.netty.channel.Channel
 
 /**
