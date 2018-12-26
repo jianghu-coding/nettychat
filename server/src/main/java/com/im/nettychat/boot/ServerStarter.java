@@ -2,6 +2,7 @@ package com.im.nettychat.boot;
 
 import com.im.nettychat.cache.RedisBootstrap;
 import com.im.nettychat.config.load.ConfigProperties;
+import com.im.nettychat.executor.AsyncTaskPool;
 import java.io.IOException;
 
 /**
@@ -24,5 +25,6 @@ public class ServerStarter {
     private static void init(String[] args) throws IOException {
         ConfigProperties.initParam(args);
         RedisBootstrap.init();
+        AsyncTaskPool.init();
     }
 }

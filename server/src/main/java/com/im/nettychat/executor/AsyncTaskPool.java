@@ -1,7 +1,11 @@
 package com.im.nettychat.executor;
 
+import com.im.nettychat.boot.CustomStarter;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author hejianglong
@@ -9,23 +13,33 @@ import java.util.concurrent.Future;
  */
 public class AsyncTaskPool extends ServerThreadPool {
 
+    private static final InternalLogger logger = InternalLoggerFactory.getInstance(CustomStarter.class);
+
     public final static AsyncTaskPool TASK_POOL = new AsyncTaskPool();
 
-    private AsyncTaskPool() { }
+    private final ThreadPoolExecutor executor;
+
+    public static void init() {
+        logger.info("async task pool init ..");
+    }
+
+    private AsyncTaskPool() {
+        executor = getExecutor();
+    }
 
     public void execute(Runnable task) {
-        getExecutor().execute(task);
+        executor.execute(task);
     }
 
     public Future submit(Callable task) {
-        return getExecutor().submit(task);
+        return executor.submit(task);
     }
 
     public void shutdown() {
-        getExecutor().shutdown();
+        executor.shutdown();
     }
 
     public void shutdownNow() {
-        getExecutor().shutdownNow();
+        executor.shutdownNow();
     }
 }

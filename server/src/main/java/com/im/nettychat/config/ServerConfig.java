@@ -20,9 +20,15 @@ public class ServerConfig {
 
     private final static String SERVER_SERVICE_THREAD_TIMEOUT = "server.service.thread.timeout";
 
-    private final static String CORE_THREAD = "thread.num";
+    private final static String CORE_POOL_SIZE = "thread.core.pool.size";
+
+    private final static String POOL_MAX_SIZE = "thread.max.pool.size";
+
+    private final static String KEEP_ALIVE_TIME = "thread.keep.alive.time";
 
     private final static String THREAD_QUEUE_CAPACITY = "thread.queue.capacity";
+
+    private final static String THREAD_QUEUE_TYPE = "thread.queue.type";
 
     private final static String REDIS_HOST = "redis.host";
 
@@ -48,8 +54,20 @@ public class ServerConfig {
         return Integer.parseInt(SERVER_PROPERTIES.getProperty(HTTP_PORT));
     }
 
-    public static int getCoreThread() {
-        return Integer.parseInt(SERVER_PROPERTIES.getProperty(CORE_THREAD, "6"));
+    public static int getCorePoolSize() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(CORE_POOL_SIZE, "3"));
+    }
+
+    public static int getMaxPoolSize() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(POOL_MAX_SIZE, "200"));
+    }
+
+    public static int getKeepAliveTime() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(KEEP_ALIVE_TIME, "1000"));
+    }
+
+    public static int getThreadQueueType() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(THREAD_QUEUE_TYPE, "1"));
     }
 
     public static int getThreadQueueCapacity() {

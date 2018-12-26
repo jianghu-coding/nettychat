@@ -1,6 +1,7 @@
 package com.im.nettychat.executor;
 
 import com.im.nettychat.config.ServerConfig;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadFactory;
@@ -14,20 +15,36 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ServerThreadPool {
 
+    private final static int LINKED_BLOCKING_QUEUE = 1;
+
+    private final static int ARRAY_BLOCKING_QUEUE = 2;
+
     protected static ThreadPoolExecutor getExecutor() {
-        return chooseExecutor(ServerConfig.getCoreThread(), ServerConfig.getThreadQueueCapacity());
+        return chooseExecutor(ServerConfig.getCorePoolSize(),
+                ServerConfig.getMaxPoolSize(),
+                ServerConfig.getKeepAliveTime(),
+                ServerConfig.getThreadQueueCapacity());
     }
 
-    private static ThreadPoolExecutor chooseExecutor(int coreThread, int queueCapacity) {
-        // TODO - 增加其它队列线程池的实现
-        return getExecutorByLinkedBlockingQueue(coreThread, queueCapacity);
+    private static ThreadPoolExecutor chooseExecutor(int corePoolSize,
+                                                     int maximumPoolSize,
+                                                     long keepAliveTime,
+                                                     int queueCapacity) {
+        int queueType = ServerConfig.getThreadQueueType();
+        if (isLinkedBlockingQueue(queueType)) {
+            return getExecutorByLinkedBlockingQueue(corePoolSize, queueCapacity);
+        } else if (isArrayBlockingQueue(queueType)) {
+            return getExecutorByArrayBlockingQueue(corePoolSize, maximumPoolSize, queueCapacity, keepAliveTime);
+        }
+        return getExecutorByLinkedBlockingQueue(corePoolSize, queueCapacity);
     }
 
-    private static ThreadPoolExecutor getExecutorByLinkedBlockingQueue(int coreThread, int queueCapacity) {
+    private static ThreadPoolExecutor getExecutorByLinkedBlockingQueue(int corePoolSize, int queueCapacity) {
         // LinkedBlockingQueue, 没有最大线程数量限制, 超过核心线程=最大线程, keepAliveTime无效
         // 超过就会最大线程, 就会一直阻塞在队列中, 所以队列最好指定容量防止占用资源过高影响其它服务
-        return new ThreadPoolExecutor(ServerConfig.getCoreThread(),
-                coreThread,
+        return new ThreadPoolExecutor(
+                corePoolSize,
+                corePoolSize,
                 0,
                 TimeUnit.MICROSECONDS,
                 new LinkedBlockingQueue<>(queueCapacity),
@@ -35,11 +52,33 @@ public class ServerThreadPool {
                 new RejectedServiceHandler());
     }
 
+    private static ThreadPoolExecutor getExecutorByArrayBlockingQueue(int corePoolSize,
+                                                                      int maximumPoolSize,
+                                                                      int queueCapacity,
+                                                                      long keepAliveTime) {
+        return new ThreadPoolExecutor(
+                corePoolSize,
+                maximumPoolSize,
+                keepAliveTime,
+                TimeUnit.MICROSECONDS,
+                new ArrayBlockingQueue(queueCapacity, false),
+                new NamedThreadFactory(),
+                new RejectedServiceHandler());
+    }
+
+    private static boolean isLinkedBlockingQueue(int queueType) {
+        return queueType == LINKED_BLOCKING_QUEUE;
+    }
+
+    private static boolean isArrayBlockingQueue(int queueType) {
+        return queueType == ARRAY_BLOCKING_QUEUE;
+    }
+
     static class RejectedServiceHandler implements RejectedExecutionHandler {
 
         @Override
         public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-
+            // TODO 拒绝任务处理
         }
     }
 
