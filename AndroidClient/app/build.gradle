@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
+
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
     defaultConfig {
@@ -12,6 +14,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -25,6 +28,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+}
+greendao {
+    schemaVersion 1//数据库版本号
+    daoPackage 'com.chat.androidclient.greendao'//设置DaoMaster、DaoSession、Dao包名
+    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+    //targetGenDirTest：设置生成单元测试目录
+    //generateTests：设置自动生成单元测试用例
 }
 kapt {
     generateStubs = true
@@ -56,6 +67,7 @@ dependencies {
     implementation dependencies.evenBus
     implementation dependencies.smartRefresh
     implementation dependencies.circleimageview
+    implementation dependencies.greendao
     compile group: 'io.netty', name: 'netty-all', version: '4.1.6.Final'
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.29'
 

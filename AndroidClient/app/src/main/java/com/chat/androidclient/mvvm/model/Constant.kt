@@ -10,4 +10,7 @@ object Constant {
     val LoginUserPass="loginuserpass"
     //登陆状态
     val LoginState="loginstate"
+    //用户id
+    val UserId="userid"
+    val DBNAME="chatDB"
 }

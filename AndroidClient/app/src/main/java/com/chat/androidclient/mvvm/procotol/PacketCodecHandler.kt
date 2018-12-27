@@ -13,7 +13,7 @@ class PacketCodecHandler private constructor() : MessageToMessageCodec<ByteBuf, 
     override fun decode(ctx: ChannelHandlerContext, byteBuf: ByteBuf, out: MutableList<Any>) {
         val packet = PacketCodec.INSTANCE.decode(byteBuf)
         if (packet == null) {
-            LogUtils.e("The command is not valid")
+            LogUtils.e("The command is not valid"+byteBuf)
             return
         }
         out.add(packet)
