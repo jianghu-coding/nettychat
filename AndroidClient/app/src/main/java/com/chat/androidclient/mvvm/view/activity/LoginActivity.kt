@@ -21,4 +21,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding,LoginVM>() {
             }
         }
     }
+    
+    fun setNameAndPassToView(name: String, pass: String) {
+        mDataBinding.etName.setText(name)
+        mDataBinding.etPass.setText(pass)
+    }
 }

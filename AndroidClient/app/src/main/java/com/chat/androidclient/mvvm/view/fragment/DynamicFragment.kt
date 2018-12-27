@@ -11,14 +11,15 @@ import com.chat.androidclient.R
 import com.chat.androidclient.databinding.FragmentConversationBinding
 import com.chat.androidclient.databinding.FragmentDynamicBinding
 import com.chat.androidclient.mvvm.viewmodel.ConversationVM
+import com.chat.androidclient.mvvm.viewmodel.DynamicVM
 
 /**
  * @author lps
  * 会话Fragment
  *
  */
-class DynamicFragment : BaseFragment<FragmentDynamicBinding, ConversationVM>() {
-    override fun getViewModel()= ConversationVM()
+class DynamicFragment : BaseFragment<FragmentDynamicBinding, DynamicVM>() {
+    override fun getViewModel()= DynamicVM()
     
     override fun getLayoutRes()=R.layout.fragment_dynamic
  

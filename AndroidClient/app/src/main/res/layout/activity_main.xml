@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 <data>
+    <import type="android.view.View"/>
     <variable
         name="vm"
         type="com.chat.androidclient.mvvm.viewmodel.MainVM"/>
@@ -20,19 +21,20 @@
             android:layout_height="140pt"
             android:background="@color/color41c5f6">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="95pt"
                 android:layout_height="95pt"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20pt"
-                android:src="@drawable/ukv"
+                android:src="@drawable/myheader"
+
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="消息"
+                android:text="@{vm.titleText}"
                 android:textColor="@color/colorffffff"
                 android:textSize="18sp"
                 />
@@ -44,6 +46,27 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20pt"
                 android:src="@drawable/wkj"
+                android:visibility="@{vm.conversationSelected?View.VISIBLE:View.GONE}"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20pt"
+                android:visibility="@{vm.contactsSelected?View.VISIBLE:View.GONE}"
+                android:src="@drawable/friends_btn_add_nor"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20pt"
+               android:text="更多"
+                android:visibility="@{vm.dynamicSelected?View.VISIBLE:View.GONE}"
+                android:textColor="@color/colorffffff"
+                android:textSize="18sp"
                 />
 
         </RelativeLayout>

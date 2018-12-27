@@ -6,17 +6,14 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
+import com.chat.androidclient.mvvm.model.Constant
 
 class SplashAvtivity : AppCompatActivity() {
-    companion object {
-        val LOGINSTATE="loginstate"
-    }
-    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_avtivity)
         Handler().postDelayed({
-            val loginstate = SPUtils.getInstance().getBoolean(LOGINSTATE)
+            val loginstate = SPUtils.getInstance().getBoolean(Constant.LoginState)
             if (loginstate){
                 startActivity(Intent(this,MainActivity::class.java))
             }else {

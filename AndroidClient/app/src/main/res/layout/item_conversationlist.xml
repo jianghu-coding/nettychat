@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="175pt"
+        android:layout_marginLeft="30pt"
+        android:layout_marginRight="30pt">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon"
+            android:layout_width="135pt"
+            android:layout_height="135pt"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ukv"
+            />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="33pt"
+            android:layout_marginRight="115pt"
+            android:layout_marginTop="33pt"
+            android:layout_toRightOf="@+id/icon"
+            android:text="张三"
+            android:textColor="@color/color000000"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="33pt"
+            android:layout_marginLeft="33pt"
+            android:layout_marginRight="115pt"
+            android:layout_toRightOf="@+id/icon"
+            android:text="helloworld"
+            android:textColor="@color/color808080"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="33pt"
+
+            android:layout_marginTop="33pt"
+            android:text="13:56"
+            android:textColor="@color/color808080"
+            android:textSize="14sp"
+
+            />
+
+        <TextView
+            android:padding="5pt"
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:maxWidth="80pt"
+            android:minWidth="60pt"
+            android:layout_height="60pt"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="33pt"
+            android:layout_marginLeft="33pt"
+            android:text="99+"
+            android:gravity="center"
+            android:background="@drawable/shape_circle_red"
+            android:textColor="@color/colorffffff"
+            android:textSize="14sp"
+
+            />
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="2pt"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colordee0df">
+
+        </View>
+    </RelativeLayout>
+</layout>

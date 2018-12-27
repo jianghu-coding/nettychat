@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.FragmentContactsBinding
 import com.chat.androidclient.databinding.FragmentConversationBinding
+import com.chat.androidclient.mvvm.viewmodel.ContactsVM
 import com.chat.androidclient.mvvm.viewmodel.ConversationVM
 
 /**
@@ -17,8 +18,8 @@ import com.chat.androidclient.mvvm.viewmodel.ConversationVM
  * 会话Fragment
  *
  */
-class ContactsFragment : BaseFragment<FragmentContactsBinding, ConversationVM>() {
-    override fun getViewModel()= ConversationVM()
+class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
+    override fun getViewModel()= ContactsVM()
     
     override fun getLayoutRes()=R.layout.fragment_contacts
  

@@ -17,6 +17,7 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
     var conversationSelected: ObservableField<Boolean> = ObservableField(false)
     var contactsSelected: ObservableField<Boolean> = ObservableField(false)
     val dynamicSelected: ObservableField<Boolean> = ObservableField(false)
+    val titleText: ObservableField<String> = ObservableField("")
     
     var fragments: HashMap<String, Fragment> = hashMapOf()
     var currentFragment: Fragment? = null
@@ -28,9 +29,8 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
         conversationSelected.set(true)
         contactsSelected.set(false)
         dynamicSelected.set(false)
+        titleText.set("消息")
         switchFragment(ConversationFragment::class.java)
-        
-        
     }
     
     /**
@@ -41,6 +41,7 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
         conversationSelected.set(false)
         contactsSelected.set(true)
         dynamicSelected.set(false)
+        titleText.set("联系人")
         switchFragment(ContactsFragment::class.java)
     }
     
@@ -52,6 +53,7 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
         conversationSelected.set(false)
         contactsSelected.set(false)
         dynamicSelected.set(true)
+        titleText.set("动态")
         switchFragment(DynamicFragment::class.java)
     }
     

@@ -41,6 +41,8 @@ ext {
             rxlifecycle_component : 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1',
             rxpermissions2        : 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar',
             photo_view            : 'com.github.chrisbanes:PhotoView:2.1.3',
-            utilcode              : 'com.blankj:utilcode:1.22.3'
+            utilcode              : 'com.blankj:utilcode:1.22.3',
+            smartRefresh          : 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18',
+            circleimageview          : 'de.hdodenhof:circleimageview:2.2.0'
     ]
 }
