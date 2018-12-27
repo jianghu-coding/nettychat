@@ -12,7 +12,23 @@ public class ServerConfig {
 
     private final static String HTTP_PORT = "server.http.port";
 
-    private final static String CORE_THREAD = "thread.num";
+    private final static String SERVER_TIMEOUT_OPEN = "server.timeout.open";
+
+    private final static String SERVER_READ_TIMEOUT = "server.read.timeout";
+
+    private final static String SERVER_WRITE_TIMEOUT = "server.write.timeout";
+
+    private final static String SERVER_SERVICE_THREAD_TIMEOUT = "server.service.thread.timeout";
+
+    private final static String CORE_POOL_SIZE = "thread.core.pool.size";
+
+    private final static String POOL_MAX_SIZE = "thread.max.pool.size";
+
+    private final static String KEEP_ALIVE_TIME = "thread.keep.alive.time";
+
+    private final static String THREAD_QUEUE_CAPACITY = "thread.queue.capacity";
+
+    private final static String THREAD_QUEUE_TYPE = "thread.queue.type";
 
     private final static String REDIS_HOST = "redis.host";
 
@@ -38,8 +54,24 @@ public class ServerConfig {
         return Integer.parseInt(SERVER_PROPERTIES.getProperty(HTTP_PORT));
     }
 
-    public static int getCoreThread() {
-        return Integer.parseInt(SERVER_PROPERTIES.getProperty(CORE_THREAD, "6"));
+    public static int getCorePoolSize() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(CORE_POOL_SIZE, "3"));
+    }
+
+    public static int getMaxPoolSize() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(POOL_MAX_SIZE, "200"));
+    }
+
+    public static int getKeepAliveTime() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(KEEP_ALIVE_TIME, "1000"));
+    }
+
+    public static int getThreadQueueType() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(THREAD_QUEUE_TYPE, "1"));
+    }
+
+    public static int getThreadQueueCapacity() {
+        return Integer.parseInt(SERVER_PROPERTIES.getProperty(THREAD_QUEUE_CAPACITY, String.valueOf(Integer.MAX_VALUE)));
     }
 
     public static String getRedisHost() {
@@ -72,5 +104,21 @@ public class ServerConfig {
 
     public static boolean getRedisTestOnReturn() {
         return Boolean.valueOf(SERVER_PROPERTIES.getProperty(REDIS_TEST_ON_RETURN, "true"));
+    }
+
+    public static boolean getServerTimeoutOpen() {
+        return Boolean.valueOf(SERVER_PROPERTIES.getProperty(SERVER_TIMEOUT_OPEN, "false"));
+    }
+
+    public static int getServerReadTimeout() {
+        return Integer.valueOf(SERVER_PROPERTIES.getProperty(SERVER_READ_TIMEOUT, "5"));
+    }
+
+    public static int getServerWriteTimeout() {
+        return Integer.valueOf(SERVER_PROPERTIES.getProperty(SERVER_WRITE_TIMEOUT, "5"));
+    }
+
+    public static int getServiceThreadTimeOut() {
+        return Integer.valueOf(SERVER_PROPERTIES.getProperty(SERVER_SERVICE_THREAD_TIMEOUT, "8"));
     }
 }

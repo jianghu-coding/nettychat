@@ -1,6 +1,6 @@
 package com.im.nettychat.proxy;
 
-import com.im.nettychat.executor.ThreadPoolService;
+import com.im.nettychat.config.ServerConfig;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -8,7 +8,9 @@ import redis.clients.jedis.Jedis;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import static com.im.nettychat.cache.LocalRSession.LOCAL_JEDIS;
+import static com.im.nettychat.executor.AsyncTaskPool.TASK_POOL;
 
 /**
  * @author hejianglong
@@ -33,7 +35,7 @@ public class CglibServiceInterceptor implements MethodInterceptor {
         if (Object.class == method.getDeclaringClass()) {
             return methodProxy.invokeSuper(obj, args);
         }
-        Future future = ThreadPoolService.submit(new Callable() {
+        Future future = TASK_POOL.submit(new Callable() {
             @Override
             public Object call() throws Exception {
                 Object result = null;
@@ -51,6 +53,6 @@ public class CglibServiceInterceptor implements MethodInterceptor {
                 return result;
             }
         });
-        return future.get();
+        return future.get(ServerConfig.getServiceThreadTimeOut(), TimeUnit.SECONDS);
     }
 }
