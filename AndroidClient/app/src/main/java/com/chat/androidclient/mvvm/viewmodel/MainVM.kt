@@ -13,7 +13,7 @@ import java.util.HashMap
 /**
  * Created by lps on 2018/12/24 11:14.
  */
-class MainVM(val view: MainActivity) : BaseViewModel {
+class MainVM(val view: MainActivity) : BaseViewModel() {
     var conversationSelected: ObservableField<Boolean> = ObservableField(false)
     var contactsSelected: ObservableField<Boolean> = ObservableField(false)
     val dynamicSelected: ObservableField<Boolean> = ObservableField(false)

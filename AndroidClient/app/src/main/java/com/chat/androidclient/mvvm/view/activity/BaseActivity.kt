@@ -50,4 +50,9 @@ open abstract class BaseActivity<T : ViewDataBinding, D : BaseViewModel> : RxApp
     fun showMsg(msg: String) {
         Snackbar.make(mDataBinding.root,msg,Snackbar.LENGTH_SHORT).show()
     }
+    
+    override fun onDestroy() {
+        mVM.destroy()
+        super.onDestroy()
+    }
 }

@@ -1,21 +1,21 @@
 package com.chat.androidclient.mvvm.viewmodel
 
-import android.content.Intent
-import com.chat.androidclient.mvvm.model.Command
-import com.chat.androidclient.mvvm.model.LoginRequest
+import com.chat.androidclient.event.SignUpResponseEvent
+import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.RegisterRequest
 import com.chat.androidclient.mvvm.view.activity.SignUpActivity
-import com.chat.androidclient.service.ChatService
+import okhttp3.OkHttpClient
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * Created by 李培生 on 2018/12/21 10:22.
  */
-class SignUpVM(var view: SignUpActivity) : BaseViewModel {
+class SignUpVM(var view: SignUpActivity) : BaseViewModel() {
     fun signup(name:String,username:String,password:String){
-        val intent = Intent()
-        intent.action="chatcommand"
-        intent.putExtra(ChatService.CMD, Command.REGISTER)
-        intent.putExtra(ChatService.EXTRA,  RegisterRequest(name,username,password))
-        view.sendBroadcast(intent)
+        ChatIM.instance.cmd( RegisterRequest(name,username,password))
+    }
+    @Subscribe
+    fun onSignupResponse(event: SignUpResponseEvent){
+    
     }
 }

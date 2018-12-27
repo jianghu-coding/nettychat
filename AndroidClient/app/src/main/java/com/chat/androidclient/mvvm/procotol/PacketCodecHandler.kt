@@ -1,5 +1,6 @@
 package com.chat.androidclient.mvvm.procotol
 
+import com.blankj.utilcode.util.LogUtils
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelHandlerContext
@@ -12,7 +13,7 @@ class PacketCodecHandler private constructor() : MessageToMessageCodec<ByteBuf, 
     override fun decode(ctx: ChannelHandlerContext, byteBuf: ByteBuf, out: MutableList<Any>) {
         val packet = PacketCodec.INSTANCE.decode(byteBuf)
         if (packet == null) {
-            logger.warn("The command is not valid")
+            LogUtils.e("The command is not valid")
             return
         }
         out.add(packet)

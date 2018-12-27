@@ -2,9 +2,12 @@ package com.chat.androidclient.mvvm.procotol;
 
 
 
+import com.blankj.utilcode.util.LogUtils;
 import com.chat.androidclient.mvvm.model.Command;
 import com.chat.androidclient.mvvm.model.LoginRequest;
 import com.chat.androidclient.mvvm.model.RegisterRequest;
+import com.chat.androidclient.mvvm.model.RegisterResponse;
+import com.chat.androidclient.mvvm.procotol.response.LoginResponse;
 import com.chat.androidclient.serialize.Serializer;
 import com.chat.androidclient.serialize.impl.JSONSerializer;
 
@@ -29,6 +32,8 @@ public class PacketCodec {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(Command.LOGIN, LoginRequest.class);
         packetTypeMap.put(Command.REGISTER, RegisterRequest.class);
+        packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponse.class);
+        packetTypeMap.put(Command.REGISTER_RESPONSE, RegisterResponse.class);
 //        packetTypeMap.put(Command.SEND_MESSAGE, MessageRequest.class);
 //        packetTypeMap.put(Command.CREATE_GROUP, CreateGroupRequest.class);
 //        packetTypeMap.put(Command.JOIN_GROUP, JoinGroupRequest.class);
@@ -71,9 +76,8 @@ public class PacketCodec {
 
         // 数据包长度
         int length = byteBuf.readInt();
-        logger.info("serializeAlgorithm: " + serializeAlgorithm);
-        logger.info("command: " + command);
-        logger.info("length: " + length);
+        LogUtils.e("command: " + command);
+
         byte[] bytes = new byte[length];
         byteBuf.readBytes(bytes);
 
