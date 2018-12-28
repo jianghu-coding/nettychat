@@ -1,6 +1,5 @@
 package com.chat.androidclient.mvvm.viewmodel
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -32,7 +31,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
     fun ReciveMessage(event: MessageEvent) {
         val response = event.msg as MessageResponse
         if (response.fromUserId == SPUtils.getInstance().getLong(Constant.UserId)) {
-        
+
         }
         else {
             //发送通知

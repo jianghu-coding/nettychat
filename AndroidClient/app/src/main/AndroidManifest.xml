@@ -3,17 +3,18 @@
           package="com.chat.androidclient">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/fsf"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".App"
         android:theme="@style/AppTheme">
         <activity
             android:name=".mvvm.view.activity.SplashAvtivity"
@@ -24,14 +25,18 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name=".service.ChatService"/>
+
+
         <activity
             android:name=".mvvm.view.activity.LoginActivity"
             android:theme="@style/fullscreen"/>
         <activity android:name=".mvvm.view.activity.MainActivity"/>
         <activity
             android:name=".mvvm.view.activity.SignUpActivity"
-            android:theme="@style/signupstyle"
+            android:theme="@style/signupstyle">
+        </activity>
+        <activity android:name=".mvvm.view.activity.ChatActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             >
         </activity>
     </application>

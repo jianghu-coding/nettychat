@@ -178,6 +178,7 @@
     android:layout_above="@+id/bottom_layout"
     android:layout_width="match_parent"
     android:id="@+id/main_content"
+    android:layout_marginBottom="2pt"
     android:layout_height="match_parent"/>
     </RelativeLayout>
 </layout>

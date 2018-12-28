@@ -1,6 +1,7 @@
 package com.chat.androidclient.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chat.androidclient.BR
 import com.chat.androidclient.R
+import com.chat.androidclient.mvvm.view.activity.ChatActivity
 
 /**
  * Created by lps on 2018/12/27 14:52.
@@ -15,6 +17,7 @@ import com.chat.androidclient.R
 class ConversationListAdapter(var context: Context) : RecyclerView.Adapter<VH<*>>() {
     override fun onBindViewHolder(holder: VH<*>, position: Int) {
         holder.binding.setVariable(BR.data,messageList[position])
+        holder.binding.root.setOnClickListener { context.startActivity(Intent(context,ChatActivity::class.java)) }
     }
     
     private val messageList:MutableList<String> = mutableListOf()

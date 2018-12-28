@@ -25,46 +25,55 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class MessageResponse extends PacketResponse {
     @Id
-    private long id;
+    private Long id;
     private Long fromUserId;
 
     private String message;
 
-    @Generated(hash = 968746289)
-    public MessageResponse(long id, Long fromUserId, String message) {
+
+    @Generated(hash = 945069059)
+    public MessageResponse(Long id, Long fromUserId, String message) {
         this.id = id;
         this.fromUserId = fromUserId;
         this.message = message;
     }
 
+
     @Generated(hash = 2003436558)
     public MessageResponse() {
     }
+
 
     @Override
     public byte getCommand() {
         return Command.SEND_MESSAGE_RESPONSE;
     }
 
-    public long getId() {
+
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
+
 
     public Long getFromUserId() {
         return this.fromUserId;
     }
 
+
     public void setFromUserId(Long fromUserId) {
         this.fromUserId = fromUserId;
     }
 
+
     public String getMessage() {
         return this.message;
     }
+
 
     public void setMessage(String message) {
         this.message = message;

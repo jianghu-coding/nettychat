@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable
+        name="vm"
+        type="com.chat.androidclient.mvvm.viewmodel.ChatVM"/>
+</data>
+<!--titleLayout-->
+    <RelativeLayout
+        android:background="@color/colorf1f2f7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mvvm.view.activity.ChatActivity">
+
+        <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="140pt"
+            android:background="@color/color41c5f6">
+
+            <ImageView
+                android:layout_width="60pt"
+                android:layout_height="95pt"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20pt"
+                android:src="@drawable/back"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="用户X"
+                    android:textColor="@color/colorffffff"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="iphone XR Max 在线"
+                    android:textColor="@color/colorffffff"
+                    android:textSize="12sp"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_call"
+                android:layout_width="65pt"
+                android:layout_height="65pt"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20pt"
+                android:layout_toLeftOf="@+id/iv_info"
+                android:src="@drawable/qq_profilecard_item_tel"
+                />
+
+            <ImageView
+                android:id="@+id/iv_info"
+                android:layout_width="65pt"
+                android:layout_height="65pt"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20pt"
+                android:src="@drawable/qq_profilecard_item_information"
+                />
+
+
+        </RelativeLayout>
+
+        <!--底部聊天-->
+        <RelativeLayout
+            android:layout_marginRight="25pt"
+            android:layout_marginLeft="25pt"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="130pt"
+                android:layout_height="95pt"
+                android:text="发送"
+                android:textColor="@color/colorffffff"
+                android:layout_alignParentRight="true"
+                android:id="@+id/btn_send_msg"
+                android:textSize="16sp"
+                android:background="@drawable/selecter_msg_send"
+                />
+            <EditText
+                app:textWatcher="@{vm.inputWatcher}"
+
+                android:layout_width="match_parent"
+                android:layout_height="95pt"
+                android:layout_marginRight="25pt"
+                android:layout_toLeftOf="@+id/btn_send_msg"
+                android:background="@drawable/shape_msg_input"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>
