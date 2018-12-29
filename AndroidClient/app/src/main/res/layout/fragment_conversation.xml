@@ -2,7 +2,10 @@
 <layout>
 
     <data>
-
+        <import type="android.view.View"/>
+<variable
+    name="vm"
+    type="com.chat.androidclient.mvvm.viewmodel.ConversationVM"/>
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,10 +15,7 @@
                  android:background="@color/colorffffff"
                  tools:context=".mvvm.view.fragment.ConversationFragment">
 
-        <include
-            layout="@layout/conversation_empty"
-            android:visibility="gone"
-            />
+
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshlayout"
             android:layout_width="match_parent"
@@ -63,7 +63,12 @@
 
 
         </RelativeLayout>
+            <include
+                layout="@layout/conversation_empty"
+                android:visibility="@{vm.isEmpty?View.VISIBLE:View.GONE}"
+                />
             <android.support.v7.widget.RecyclerView
+                android:visibility="@{vm.isEmpty?View.GONE:View.VISIBLE}"
                 android:id="@+id/message_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

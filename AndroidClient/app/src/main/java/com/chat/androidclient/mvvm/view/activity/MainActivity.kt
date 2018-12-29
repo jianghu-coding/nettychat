@@ -1,7 +1,5 @@
 package com.chat.androidclient.mvvm.view.activity
 
-import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityMainBinding

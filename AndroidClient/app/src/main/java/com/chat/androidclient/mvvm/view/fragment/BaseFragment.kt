@@ -21,7 +21,7 @@ open abstract class BaseFragment<T:ViewDataBinding,D:BaseViewModel>:RxFragment()
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?): View {
        mDataBinding=DataBindingUtil.inflate(inflater,getLayoutRes(),container,false)
-       mVM=getViewModel()
+        mVM=getViewModel()
         init()
         return mDataBinding.root
     }

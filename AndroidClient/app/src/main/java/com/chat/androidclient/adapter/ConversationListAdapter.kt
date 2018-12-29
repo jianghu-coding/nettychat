@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chat.androidclient.BR
 import com.chat.androidclient.R
+import com.chat.androidclient.mvvm.model.Conversation
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
 
 /**
  * Created by lps on 2018/12/27 14:52.
+ * to do 优化刷新数据逻辑
  */
 class ConversationListAdapter(var context: Context) : RecyclerView.Adapter<VH<*>>() {
     override fun onBindViewHolder(holder: VH<*>, position: Int) {
@@ -20,7 +22,7 @@ class ConversationListAdapter(var context: Context) : RecyclerView.Adapter<VH<*>
         holder.binding.root.setOnClickListener { context.startActivity(Intent(context,ChatActivity::class.java)) }
     }
     
-    private val messageList:MutableList<String> = mutableListOf()
+    private val messageList:MutableList<Conversation> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH<*> {
         val view: ViewDataBinding = DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(parent.context), R.layout.item_conversationlist, parent, false)
         return VH(view)
@@ -28,8 +30,14 @@ class ConversationListAdapter(var context: Context) : RecyclerView.Adapter<VH<*>
     
     override fun getItemCount()=messageList.size
     
-    fun addMessage(s: String) {
+    fun addMessage(s: Conversation) {
         messageList.add(s)
+        notifyDataSetChanged()
+    }
+    
+    fun setData(conversations: List<Conversation>) {
+        messageList.clear()
+        messageList.addAll(conversations)
         notifyDataSetChanged()
     }
     

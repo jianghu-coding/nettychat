@@ -19,7 +19,7 @@ open class BaseViewModel {
     
     }
     
-    fun destroy() {
+  open  fun destroy() {
         EventBus.getDefault().unregister(this)
     }
 }
