@@ -2,9 +2,10 @@ package com.chat.androidclient.mvvm.viewmodel
 
 import android.app.Fragment
 import android.databinding.ObservableField
+import android.os.Bundle
+import com.blankj.utilcode.util.LogUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.mvvm.view.activity.MainActivity
-import com.chat.androidclient.mvvm.view.fragment.BaseFragment
 import com.chat.androidclient.mvvm.view.fragment.ContactsFragment
 import com.chat.androidclient.mvvm.view.fragment.ConversationFragment
 import com.chat.androidclient.mvvm.view.fragment.DynamicFragment
@@ -25,7 +26,7 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
      * 选中会话
      */
     fun checkConversation() {
-        if (contactsSelected.get() as Boolean) return
+        if (conversationSelected.get() as Boolean) return
         conversationSelected.set(true)
         contactsSelected.set(false)
         dynamicSelected.set(false)
@@ -75,21 +76,25 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
             currentFragment = fragment
             return
         }
-        if (fragment.isAdded) {
-            view.fragmentManager
-                    .beginTransaction()
-                    .hide(currentFragment)
-                    .show(fragment)
-                    .commit()
+        if (currentFragment!=fragment) {
+            if (fragment.isAdded) {
+                view.fragmentManager
+                        .beginTransaction()
+                        .show(fragment)
+                        .hide(currentFragment)
+                        .commit()
+            }
+            else {
+                view.fragmentManager
+                        .beginTransaction()
+                        .add(R.id.main_content, fragment)
+                        .hide(currentFragment)
+                        .commit()
+            }
+            currentFragment = fragment
         }
-        else {
-            view.fragmentManager
-                    .beginTransaction()
-                    .hide(currentFragment)
-                    .add(R.id.main_content, fragment)
-                    .commit()
-        }
-        currentFragment = fragment
     
     }
+ 
+    
 }

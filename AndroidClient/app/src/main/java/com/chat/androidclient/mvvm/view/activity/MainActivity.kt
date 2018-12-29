@@ -1,5 +1,7 @@
 package com.chat.androidclient.mvvm.view.activity
 
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityMainBinding
@@ -8,7 +10,7 @@ import com.chat.androidclient.mvvm.viewmodel.MainVM
 class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
     override fun getLayoutRes()=R.layout.activity_main
     override fun getViewModel()= MainVM(this)
-    
+
     override fun init() {
         mDataBinding.vm=mVM
         mVM.checkConversation()
@@ -27,5 +29,4 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             }
         }
     }
- 
 }
