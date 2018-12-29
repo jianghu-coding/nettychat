@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/colorffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120pt">
+
+        <ImageView
+            android:id="@+id/iv_open_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50pt"
+            android:layout_centerVertical="true"
+            android:src="@drawable/right_arrow1_disable"
+            />
+
+        <TextView
+            android:id="@+id/groupname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_open_state"
+            android:textColor="@color/color000000"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/grouponline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color808080"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50pt"
+            android:layout_centerVertical="true"
+            />
+
+
+    </RelativeLayout>
+</FrameLayout>

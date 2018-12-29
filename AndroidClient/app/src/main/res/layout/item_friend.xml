@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160pt"
+   >
+<RelativeLayout
+    android:background="@color/colorffffff"
+    android:layout_width="match_parent"
+    android:layout_height="145pt">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/icon"
+        android:layout_marginLeft="50pt"
+        android:layout_width="105pt"
+        android:layout_height="105pt"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ukv"
+        />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="33pt"
+        android:layout_marginRight="115pt"
+        android:layout_marginTop="20pt"
+        android:layout_toRightOf="@+id/icon"
+        android:text="张三"
+        android:textColor="@color/color000000"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20pt"
+        android:layout_marginLeft="33pt"
+        android:layout_below="@+id/name"
+        android:layout_marginRight="50pt"
+        android:layout_toRightOf="@+id/icon"
+        android:singleLine="true"
+        android:text="[WiFi在线]问菩萨为何倒坐，叹众生不肯回头---from 斗战神第一章"
+        android:textColor="@color/color808080"
+        android:textSize="12sp"
+        />
+
+
+
+
+
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="0.5pt"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colordee0df">
+
+    </View>
+</RelativeLayout>
+</FrameLayout>

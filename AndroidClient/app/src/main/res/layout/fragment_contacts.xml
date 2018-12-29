@@ -1,23 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
 
     </data>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:background="@color/colorf1f2f7"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
 
-             android:layout_height="match_parent"
-             tools:context=".mvvm.view.fragment.ConversationFragment">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="正在开发。。。"
-    android:id="@+id/tv"
-    android:layout_gravity="center"
-    />
+                 android:background="@color/colorf3f3f3"
+                 tools:context=".mvvm.view.fragment.ConversationFragment">
 
-</FrameLayout>
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshlayout"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:background="@color/colorf3f3f3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorf3f3f3"
+
+                android:orientation="vertical">
+                <!--搜索-->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorffffff">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80pt"
+                        android:layout_marginBottom="30pt"
+                        android:layout_marginLeft="30pt"
+                        android:layout_marginRight="30pt"
+                        android:layout_marginTop="20pt"
+                        android:background="@drawable/shape_search"
+                        >
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true">
+
+                            <ImageView
+                                android:id="@+id/iv_search"
+                                android:layout_width="35pt"
+                                android:layout_height="35pt"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/qb_group_menu_search_group"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@+id/iv_search"
+                                android:singleLine="true"
+                                android:text="搜索"
+                                android:textSize="14sp"
+                                />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </FrameLayout>
+                <!--坦白说-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="210pt"
+                    android:layout_marginBottom="30pt"
+                    android:layout_marginLeft="30pt"
+                    android:layout_marginRight="30pt"
+                    android:layout_marginTop="30pt"
+                    android:background="@drawable/shape_msg_input">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30pt"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="坦白说"
+                            android:textColor="@color/color000000"
+                            android:textSize="18sp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="原来我的好友都是如此优秀"
+                            android:textColor="@color/color333333"
+                            android:textSize="12sp"
+                            />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="60pt"
+                        android:src="@drawable/tfd"
+                        />
+                </RelativeLayout>
+                <!--新朋友-->
+                <RelativeLayout
+                    android:background="@color/colorffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="120pt"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1pt"
+                        android:background="@color/colorf3f3f3"/>
+
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50pt"
+                        android:text="新朋友"
+                        android:textColor="@color/color000000"
+                        android:textSize="18sp"
+                        />
+
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="50pt"
+                        android:src="@drawable/right_arrow1_disable"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1pt"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorf3f3f3"/>
+                </RelativeLayout>
+                <!--创建群聊-->
+                <RelativeLayout
+                    android:layout_marginBottom="30pt"
+                    android:background="@color/colorffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="120pt"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1pt"
+                        android:background="@color/colorf3f3f3"/>
+
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50pt"
+                        android:text="创建群聊"
+                        android:textColor="@color/color000000"
+                        android:textSize="18sp"
+                        />
+
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="50pt"
+                        android:src="@drawable/right_arrow1_disable"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1pt"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorf3f3f3"/>
+                </RelativeLayout>
+                <!--好友的RecyclerView-->
+                <ExpandableListView
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:id="@+id/listview_friends"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </ExpandableListView>
+            </LinearLayout>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </FrameLayout>
 </layout>
