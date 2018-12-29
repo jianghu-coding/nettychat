@@ -41,7 +41,8 @@ public class PacketCodec {
 //        packetTypeMap.put(Command.GET_USER_GROUP, GetUserGroupRequest.class);
 //        packetTypeMap.put(Command.SEND_GROUP_MESSAGE, SendGroupMessageRequest.class);
 //        packetTypeMap.put(Command.ADD_FRIEND, AddFriendRequest.class);
-//        packetTypeMap.put(Command.GET_FRIENDS, GetFriendRequest.class);
+        packetTypeMap.put(Command.GET_FRIENDS, GetFriendRequest.class);
+        packetTypeMap.put(Command.GET_FRIENDS_RESPONSE, GetFriendResponse.class);
 //        packetTypeMap.put(Command.GET_USER_GROUP_LIST, GetUserGroupListRequest.class);
 
         serializerMap = new HashMap<>();

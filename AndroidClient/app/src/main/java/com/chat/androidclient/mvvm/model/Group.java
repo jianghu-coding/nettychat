@@ -20,7 +20,7 @@ public class Group {
     @Id
     private Long id;
     private Long groupId;
-    @ToMany(referencedJoinProperty = "userId")
+    @ToMany(referencedJoinProperty = "customid")
     private List<Friend> mFriendList;
     private String name;
     private int totalcount;

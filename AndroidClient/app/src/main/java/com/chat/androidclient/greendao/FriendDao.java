@@ -29,10 +29,11 @@ public class FriendDao extends AbstractDao<Friend, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property UserId = new Property(1, Long.class, "userId", false, "USER_ID");
-        public final static Property Headprofile = new Property(2, String.class, "headprofile", false, "HEADPROFILE");
-        public final static Property Nickname = new Property(3, String.class, "nickname", false, "NICKNAME");
-        public final static Property DevicesAndState = new Property(4, String.class, "devicesAndState", false, "DEVICES_AND_STATE");
-        public final static Property Sign = new Property(5, String.class, "sign", false, "SIGN");
+        public final static Property Customid = new Property(2, Long.class, "customid", false, "CUSTOMID");
+        public final static Property Headprofile = new Property(3, String.class, "headprofile", false, "HEADPROFILE");
+        public final static Property Nickname = new Property(4, String.class, "nickname", false, "NICKNAME");
+        public final static Property DevicesAndState = new Property(5, String.class, "devicesAndState", false, "DEVICES_AND_STATE");
+        public final static Property Sign = new Property(6, String.class, "sign", false, "SIGN");
     }
 
     private Query<Friend> group_MFriendListQuery;
@@ -51,10 +52,11 @@ public class FriendDao extends AbstractDao<Friend, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"FRIEND\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"USER_ID\" INTEGER," + // 1: userId
-                "\"HEADPROFILE\" TEXT," + // 2: headprofile
-                "\"NICKNAME\" TEXT," + // 3: nickname
-                "\"DEVICES_AND_STATE\" TEXT," + // 4: devicesAndState
-                "\"SIGN\" TEXT);"); // 5: sign
+                "\"CUSTOMID\" INTEGER," + // 2: customid
+                "\"HEADPROFILE\" TEXT," + // 3: headprofile
+                "\"NICKNAME\" TEXT," + // 4: nickname
+                "\"DEVICES_AND_STATE\" TEXT," + // 5: devicesAndState
+                "\"SIGN\" TEXT);"); // 6: sign
     }
 
     /** Drops the underlying database table. */
@@ -77,24 +79,29 @@ public class FriendDao extends AbstractDao<Friend, Long> {
             stmt.bindLong(2, userId);
         }
  
+        Long customid = entity.getCustomid();
+        if (customid != null) {
+            stmt.bindLong(3, customid);
+        }
+ 
         String headprofile = entity.getHeadprofile();
         if (headprofile != null) {
-            stmt.bindString(3, headprofile);
+            stmt.bindString(4, headprofile);
         }
  
         String nickname = entity.getNickname();
         if (nickname != null) {
-            stmt.bindString(4, nickname);
+            stmt.bindString(5, nickname);
         }
  
         String devicesAndState = entity.getDevicesAndState();
         if (devicesAndState != null) {
-            stmt.bindString(5, devicesAndState);
+            stmt.bindString(6, devicesAndState);
         }
  
         String sign = entity.getSign();
         if (sign != null) {
-            stmt.bindString(6, sign);
+            stmt.bindString(7, sign);
         }
     }
 
@@ -112,24 +119,29 @@ public class FriendDao extends AbstractDao<Friend, Long> {
             stmt.bindLong(2, userId);
         }
  
+        Long customid = entity.getCustomid();
+        if (customid != null) {
+            stmt.bindLong(3, customid);
+        }
+ 
         String headprofile = entity.getHeadprofile();
         if (headprofile != null) {
-            stmt.bindString(3, headprofile);
+            stmt.bindString(4, headprofile);
         }
  
         String nickname = entity.getNickname();
         if (nickname != null) {
-            stmt.bindString(4, nickname);
+            stmt.bindString(5, nickname);
         }
  
         String devicesAndState = entity.getDevicesAndState();
         if (devicesAndState != null) {
-            stmt.bindString(5, devicesAndState);
+            stmt.bindString(6, devicesAndState);
         }
  
         String sign = entity.getSign();
         if (sign != null) {
-            stmt.bindString(6, sign);
+            stmt.bindString(7, sign);
         }
     }
 
@@ -143,10 +155,11 @@ public class FriendDao extends AbstractDao<Friend, Long> {
         Friend entity = new Friend( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // userId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // headprofile
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // nickname
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // devicesAndState
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // sign
+            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // customid
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // headprofile
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // nickname
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // devicesAndState
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // sign
         );
         return entity;
     }
@@ -155,10 +168,11 @@ public class FriendDao extends AbstractDao<Friend, Long> {
     public void readEntity(Cursor cursor, Friend entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setHeadprofile(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setNickname(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setDevicesAndState(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setSign(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setCustomid(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setHeadprofile(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setNickname(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setDevicesAndState(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setSign(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
      }
     
     @Override
@@ -187,16 +201,16 @@ public class FriendDao extends AbstractDao<Friend, Long> {
     }
     
     /** Internal query to resolve the "mFriendList" to-many relationship of Group. */
-    public List<Friend> _queryGroup_MFriendList(Long userId) {
+    public List<Friend> _queryGroup_MFriendList(Long customid) {
         synchronized (this) {
             if (group_MFriendListQuery == null) {
                 QueryBuilder<Friend> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.UserId.eq(null));
+                queryBuilder.where(Properties.Customid.eq(null));
                 group_MFriendListQuery = queryBuilder.build();
             }
         }
         Query<Friend> query = group_MFriendListQuery.forCurrentThread();
-        query.setParameter(0, userId);
+        query.setParameter(0, customid);
         return query.list();
     }
 

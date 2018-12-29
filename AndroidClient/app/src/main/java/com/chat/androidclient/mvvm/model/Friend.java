@@ -13,15 +13,17 @@ public class Friend {
     @Id
     private Long id;
     private Long userId;
+    private Long customid;
     private String headprofile;
     private String nickname;
     private String devicesAndState;
     private String sign;
-    @Generated(hash = 434235566)
-    public Friend(Long id, Long userId, String headprofile, String nickname,
-            String devicesAndState, String sign) {
+    @Generated(hash = 380271733)
+    public Friend(Long id, Long userId, Long customid, String headprofile,
+            String nickname, String devicesAndState, String sign) {
         this.id = id;
         this.userId = userId;
+        this.customid = customid;
         this.headprofile = headprofile;
         this.nickname = nickname;
         this.devicesAndState = devicesAndState;
@@ -65,6 +67,12 @@ public class Friend {
     }
     public void setSign(String sign) {
         this.sign = sign;
+    }
+    public Long getCustomid() {
+        return this.customid;
+    }
+    public void setCustomid(Long customid) {
+        this.customid = customid;
     }
 
 }
