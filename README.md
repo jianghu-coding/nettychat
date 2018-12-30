@@ -12,6 +12,9 @@
        // nohup java -Xms300M -Xmx300M  -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
     5. nohup java -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
 
+## idea配置
+    idea plugins lombok 配置才能配合使用  @Data注解
+
 ## 接口文档见 doc.md
 
 ## 客户端测试

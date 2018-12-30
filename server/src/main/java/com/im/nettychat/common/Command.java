@@ -49,4 +49,10 @@ public interface Command {
     Byte GET_USER_GROUP_LIST_RESPONSE = 21;
 
     Byte OFFLINE_MESSAGE_RESPONSE = 23;
+
+    Byte READ_TIME_OUT = 25;
+
+    Byte WRITE_TIME_OUT = 27;
+
+    Byte FORBIDDEN_RESPONSE = 29;
 }

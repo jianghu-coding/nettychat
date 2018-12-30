@@ -12,7 +12,7 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
 import static com.im.nettychat.executor.AsyncTaskPool.TASK_POOL;
 
 /**
- * 自定义协议
+ *
  * @author hejianglong
  * @Desc
  * @date 2018/12/24 下午9:57

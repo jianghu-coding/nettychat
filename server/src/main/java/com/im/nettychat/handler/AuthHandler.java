@@ -1,5 +1,6 @@
 package com.im.nettychat.handler;
 
+import com.im.nettychat.protocol.response.ForbiddenResponse;
 import com.im.nettychat.util.SessionUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -20,7 +21,13 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (SessionUtil.notLogin(ctx.channel())) {
-            ctx.channel().close();
+            ForbiddenResponse forbiddenResponse = new ForbiddenResponse();
+            forbiddenResponse.setMessage("请登录后访问, 服务断开连接");
+            ctx.writeAndFlush(forbiddenResponse).addListener(future -> {
+                if (future.isSuccess()) {
+                    ctx.channel().close();
+                }
+            });
         } else {
             ctx.pipeline().remove(this);
             super.channelRead(ctx, msg);
