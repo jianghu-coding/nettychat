@@ -1,4 +1,4 @@
-package com.chat.androidclient.mvvm.procotol;
+package com.chat.androidclient.mvvm.procotol.response;
 
 import com.chat.androidclient.mvvm.model.Command;
 import com.chat.androidclient.mvvm.model.PacketResponse;

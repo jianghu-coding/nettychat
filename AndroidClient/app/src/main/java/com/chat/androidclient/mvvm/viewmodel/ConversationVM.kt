@@ -16,7 +16,7 @@ import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.DaoSession
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
-import com.chat.androidclient.mvvm.model.MessageResponse
+import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.view.fragment.ConversationFragment
 import org.greenrobot.eventbus.Subscribe
 

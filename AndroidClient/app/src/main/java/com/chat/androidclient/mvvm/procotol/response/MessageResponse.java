@@ -11,7 +11,10 @@
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license.
  */
-package com.chat.androidclient.mvvm.model;
+package com.chat.androidclient.mvvm.procotol.response;
+
+import com.chat.androidclient.mvvm.model.Command;
+import com.chat.androidclient.mvvm.model.PacketResponse;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

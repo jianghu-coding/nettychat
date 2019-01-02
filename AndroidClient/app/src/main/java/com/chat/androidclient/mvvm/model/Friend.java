@@ -3,6 +3,7 @@ package com.chat.androidclient.mvvm.model;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * Created by lps on 2018/12/29 15:35.
@@ -12,6 +13,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Friend {
     @Id
     private Long id;
+    @Unique
     private Long userId;
     private Long customid;
     private String headprofile;

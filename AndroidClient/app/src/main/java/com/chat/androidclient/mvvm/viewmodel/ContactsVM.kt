@@ -8,9 +8,10 @@ import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Friend
 import com.chat.androidclient.mvvm.model.Group
 import com.chat.androidclient.mvvm.procotol.GetFriendRequest
-import com.chat.androidclient.mvvm.procotol.GetFriendResponse
+import com.chat.androidclient.mvvm.procotol.response.GetFriendResponse
 import com.chat.androidclient.mvvm.view.fragment.ContactsFragment
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by lps on 2018/12/24 15:23.
@@ -30,7 +31,7 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
         
         
     }
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun ContactsResponse(event :FriendResponseEvent){
         val response = event.msg as GetFriendResponse
         var group = session.groupDao.queryBuilder().where(GroupDao.Properties.Name.eq("好友")).unique()
@@ -42,6 +43,7 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
         response.friends.forEach {
             var friend = Friend()
             friend.userId=it.id
+            friend.customid=groupId
             friend.nickname=it.username
             friend.headprofile=it.icon
             friend.sign=it.desc

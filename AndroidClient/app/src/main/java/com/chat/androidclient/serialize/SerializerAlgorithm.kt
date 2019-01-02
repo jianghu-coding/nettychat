@@ -5,6 +5,6 @@ interface SerializerAlgorithm {
         /**
          * json 序列化
          */
-        val JSON: Byte = 1
+      const  val JSON: Byte = 1
     }
 }

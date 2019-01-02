@@ -11,7 +11,10 @@
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license.
  */
-package com.chat.androidclient.mvvm.model
+package com.chat.androidclient.mvvm.procotol.response
+
+import com.chat.androidclient.mvvm.model.Command
+import com.chat.androidclient.mvvm.model.PacketResponse
 
 
 /**
@@ -22,13 +25,13 @@ package com.chat.androidclient.mvvm.model
 
 class RegisterResponse : PacketResponse() {
 
-    private val userId: Long? = null
+     var userId: Long? = null
 
-    private val name: String? = null
+     var name: String? = null
 
-    private val icon: String? = null
+     var icon: String? = null
 
-    private val desc: String? = null
+     var desc: String? = null
 
     override val command: Byte
         get() = Command.REGISTER_RESPONSE

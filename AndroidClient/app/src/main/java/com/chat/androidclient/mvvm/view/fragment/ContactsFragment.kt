@@ -23,7 +23,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
     }
     
     private fun initFriendList() {
-        friendAdapter = FriendAdapter()
+        friendAdapter = FriendAdapter(activity)
         mDataBinding.listviewFriends.setAdapter(friendAdapter)
         mDataBinding.listviewFriends.setGroupIndicator(null)
     }

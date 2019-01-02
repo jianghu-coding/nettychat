@@ -26,13 +26,13 @@ class LoginResponse : PacketResponse() {
     override val command: Byte
         get() = Command.LOGIN_RESPONSE
     
-    private val userId: Long? = null
+     var userId: Long? = null
 
-    private val name: String? = null
+     var name: String? = null
 
-    private val icon: String? = null
+     var icon: String? = null
 
-    private val desc: String? = null
+     var desc: String? = null
 
   
 }
