@@ -4,6 +4,7 @@ import android.app.Application
 import android.support.multidex.MultiDex
 import com.blankj.utilcode.util.LogUtils
 import com.chat.androidclient.im.ChatIM
+import org.greenrobot.greendao.query.QueryBuilder
 
 /**
  * Created by 李培生 on 2018/12/21 14:08.
@@ -14,5 +15,7 @@ class App:Application() {
         MultiDex.install(this)
         ChatIM.init()
 //        LogUtils.getConfig().setBorderSwitch(false)
+        QueryBuilder.LOG_SQL=true
+        QueryBuilder.LOG_VALUES=true
     }
 }

@@ -31,18 +31,27 @@ public class MessageResponse extends PacketResponse {
     private Long id;
     private Long fromUserId;
     private Long toUserId;
+    private Long time;
     private String message;
 
+    public Long getTime() {
+        return time;
+    }
 
-    @Generated(hash = 2116902851)
-    public MessageResponse(Long id, Long fromUserId, Long toUserId,
+    public MessageResponse setTime(Long mTime) {
+        time = mTime;
+        return this;
+    }
+
+    @Generated(hash = 1554578866)
+    public MessageResponse(Long id, Long fromUserId, Long toUserId, Long time,
             String message) {
         this.id = id;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
+        this.time = time;
         this.message = message;
     }
-
 
     @Generated(hash = 2003436558)
     public MessageResponse() {

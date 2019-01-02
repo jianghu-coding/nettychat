@@ -42,10 +42,12 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         isEmpty.set(conversationList.isEmpty())
         
     }
+    //更新这个列表的时候。比如和某人的会话。有新的消息发送或接收。
     @Subscribe
     fun  refreshConversation(event:RefreshConversationEvent){
         loadConversationFormDB()
     }
+    //收到后台推送过来的消息
     @Subscribe
     fun ReciveMessage(event: MessageEvent) {
         val response = event.msg as MessageResponse
@@ -58,6 +60,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
             notification(response)
             //写入聊天消息的db
             response.toUserId=SPUtils.getInstance().getLong(Constant.id)
+            response.time=System.currentTimeMillis()
             session.messageResponseDao.insert(response)
             //更新最近会话列表的DB
             val conversation = Conversation()

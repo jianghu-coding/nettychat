@@ -27,7 +27,8 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property FromUserId = new Property(1, Long.class, "fromUserId", false, "FROM_USER_ID");
         public final static Property ToUserId = new Property(2, Long.class, "toUserId", false, "TO_USER_ID");
-        public final static Property Message = new Property(3, String.class, "message", false, "MESSAGE");
+        public final static Property Time = new Property(3, Long.class, "time", false, "TIME");
+        public final static Property Message = new Property(4, String.class, "message", false, "MESSAGE");
     }
 
 
@@ -46,7 +47,8 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"FROM_USER_ID\" INTEGER," + // 1: fromUserId
                 "\"TO_USER_ID\" INTEGER," + // 2: toUserId
-                "\"MESSAGE\" TEXT);"); // 3: message
+                "\"TIME\" INTEGER," + // 3: time
+                "\"MESSAGE\" TEXT);"); // 4: message
     }
 
     /** Drops the underlying database table. */
@@ -74,9 +76,14 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             stmt.bindLong(3, toUserId);
         }
  
+        Long time = entity.getTime();
+        if (time != null) {
+            stmt.bindLong(4, time);
+        }
+ 
         String message = entity.getMessage();
         if (message != null) {
-            stmt.bindString(4, message);
+            stmt.bindString(5, message);
         }
     }
 
@@ -99,9 +106,14 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             stmt.bindLong(3, toUserId);
         }
  
+        Long time = entity.getTime();
+        if (time != null) {
+            stmt.bindLong(4, time);
+        }
+ 
         String message = entity.getMessage();
         if (message != null) {
-            stmt.bindString(4, message);
+            stmt.bindString(5, message);
         }
     }
 
@@ -116,7 +128,8 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // fromUserId
             cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // toUserId
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // message
+            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // time
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // message
         );
         return entity;
     }
@@ -126,7 +139,8 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setFromUserId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setToUserId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
-        entity.setMessage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTime(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
+        entity.setMessage(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     @Override

@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.chat.androidclient.event.RefreshConversationEvent
 import com.chat.androidclient.greendao.DaoMaster
+import com.chat.androidclient.greendao.MessageResponseDao
 import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
@@ -23,6 +24,18 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     val msgDao = devSession.messageResponseDao
     val conversationDao = devSession.conversationDao
     
+ 
+    
+     fun loadMessageFromDB() {
+        val qb = msgDao.queryBuilder()
+         val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()))
+         val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id))
+         qb.whereOr(condition1,condition2)
+        
+         val list = qb.list()
+        view.addMessages(list)
+    }
+    
     fun sendMsg(msg:String){
         ChatIM.instance.cmd(SendMessageRequest(id,msg))
 //清空输入框
@@ -32,8 +45,10 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         message.fromUserId= getMyId()
         message.message=msg
         message.toUserId=id
+        message.time=System.currentTimeMillis()
         msgDao.insertOrReplace(message)
 //        todo refresh list
+        view.addMessage(message)
         // 最近会话列表DB 刷新这个好友
         val conversation = Conversation()
         conversation.fromId=getMyId()
