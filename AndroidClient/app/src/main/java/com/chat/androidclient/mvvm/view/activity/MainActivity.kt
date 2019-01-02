@@ -1,5 +1,6 @@
 package com.chat.androidclient.mvvm.view.activity
 
+import android.content.Intent
 import android.view.View
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityMainBinding
@@ -24,6 +25,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             }
             R.id.re_dynamic->{
                 mVM.checkDynamic()
+            }
+            R.id.add_conversation->{
+                startActivity(Intent(this,SearchActivity::class.java))
             }
         }
     }

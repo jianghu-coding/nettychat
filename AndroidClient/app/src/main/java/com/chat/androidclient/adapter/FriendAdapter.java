@@ -10,6 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.chat.androidclient.R;
+import com.chat.androidclient.mvvm.model.Friend;
 import com.chat.androidclient.mvvm.model.Group;
 import com.chat.androidclient.mvvm.view.activity.ChatActivity;
 
@@ -45,7 +46,7 @@ public class FriendAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
+    public Friend getChild(int groupPosition, int childPosition) {
         return friendList.get(groupPosition).getMFriendList().get(childPosition);
     }
 
@@ -91,10 +92,9 @@ public class FriendAdapter extends BaseExpandableListAdapter {
         } else {
             vh = (ChildVH) convertView.getTag();
         }
-        convertView.setOnClickListener(v -> {
-            Intent mIntent = new Intent(mContext, ChatActivity.class);
-            mContext.startActivity(mIntent);
-        });
+        convertView.setOnClickListener(v ->
+           ChatActivity.startActivity(parent.getContext(),getChild(groupPosition,childPosition).getUserId())
+        );
         return convertView;
     }
 

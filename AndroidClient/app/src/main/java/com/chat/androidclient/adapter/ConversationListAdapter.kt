@@ -19,7 +19,7 @@ import com.chat.androidclient.mvvm.view.activity.ChatActivity
 class ConversationListAdapter(var context: Context) : RecyclerView.Adapter<VH<*>>() {
     override fun onBindViewHolder(holder: VH<*>, position: Int) {
         holder.binding.setVariable(BR.data,messageList[position])
-        holder.binding.root.setOnClickListener { context.startActivity(Intent(context,ChatActivity::class.java)) }
+        holder.binding.root.setOnClickListener { ChatActivity.startActivity(context,messageList[position].fromId) }
     }
     
     private val messageList:MutableList<Conversation> = mutableListOf()

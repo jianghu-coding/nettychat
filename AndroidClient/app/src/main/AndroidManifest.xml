@@ -25,8 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".mvvm.view.activity.LoginActivity"
             android:theme="@style/fullscreen"/>
@@ -35,9 +33,11 @@
             android:name=".mvvm.view.activity.SignUpActivity"
             android:theme="@style/signupstyle">
         </activity>
-        <activity android:name=".mvvm.view.activity.ChatActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            >
+        <activity
+            android:name=".mvvm.view.activity.ChatActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity android:name=".mvvm.view.activity.SearchActivity">
         </activity>
     </application>
 

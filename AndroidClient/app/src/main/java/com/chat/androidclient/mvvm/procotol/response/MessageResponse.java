@@ -30,14 +30,16 @@ public class MessageResponse extends PacketResponse {
     @Id
     private Long id;
     private Long fromUserId;
-
+    private Long toUserId;
     private String message;
 
 
-    @Generated(hash = 945069059)
-    public MessageResponse(Long id, Long fromUserId, String message) {
+    @Generated(hash = 2116902851)
+    public MessageResponse(Long id, Long fromUserId, Long toUserId,
+            String message) {
         this.id = id;
         this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
         this.message = message;
     }
 
@@ -77,6 +79,14 @@ public class MessageResponse extends PacketResponse {
         return this.message;
     }
 
+    public Long getToUserId() {
+        return toUserId;
+    }
+
+    public MessageResponse setToUserId(Long mToUserId) {
+        toUserId = mToUserId;
+        return this;
+    }
 
     public void setMessage(String message) {
         this.message = message;

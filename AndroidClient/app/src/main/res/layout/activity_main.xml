@@ -54,6 +54,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20pt"
+                android:onClick="onClick"
+                android:id="@+id/add_conversation"
                 android:visibility="@{vm.contactsSelected?View.VISIBLE:View.GONE}"
                 android:src="@drawable/friends_btn_add_nor"
                 />

@@ -26,7 +26,8 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property FromUserId = new Property(1, Long.class, "fromUserId", false, "FROM_USER_ID");
-        public final static Property Message = new Property(2, String.class, "message", false, "MESSAGE");
+        public final static Property ToUserId = new Property(2, Long.class, "toUserId", false, "TO_USER_ID");
+        public final static Property Message = new Property(3, String.class, "message", false, "MESSAGE");
     }
 
 
@@ -44,7 +45,8 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"MESSAGE_RESPONSE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"FROM_USER_ID\" INTEGER," + // 1: fromUserId
-                "\"MESSAGE\" TEXT);"); // 2: message
+                "\"TO_USER_ID\" INTEGER," + // 2: toUserId
+                "\"MESSAGE\" TEXT);"); // 3: message
     }
 
     /** Drops the underlying database table. */
@@ -67,9 +69,14 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             stmt.bindLong(2, fromUserId);
         }
  
+        Long toUserId = entity.getToUserId();
+        if (toUserId != null) {
+            stmt.bindLong(3, toUserId);
+        }
+ 
         String message = entity.getMessage();
         if (message != null) {
-            stmt.bindString(3, message);
+            stmt.bindString(4, message);
         }
     }
 
@@ -87,9 +94,14 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             stmt.bindLong(2, fromUserId);
         }
  
+        Long toUserId = entity.getToUserId();
+        if (toUserId != null) {
+            stmt.bindLong(3, toUserId);
+        }
+ 
         String message = entity.getMessage();
         if (message != null) {
-            stmt.bindString(3, message);
+            stmt.bindString(4, message);
         }
     }
 
@@ -103,7 +115,8 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
         MessageResponse entity = new MessageResponse( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // fromUserId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // message
+            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // toUserId
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // message
         );
         return entity;
     }
@@ -112,7 +125,8 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
     public void readEntity(Cursor cursor, MessageResponse entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setFromUserId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setMessage(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setToUserId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setMessage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     @Override

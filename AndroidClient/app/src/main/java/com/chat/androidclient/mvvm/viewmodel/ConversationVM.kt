@@ -9,9 +9,11 @@ import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.event.MessageEvent
+import com.chat.androidclient.event.RefreshConversationEvent
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.DaoSession
 import com.chat.androidclient.mvvm.model.Constant
@@ -40,10 +42,14 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         isEmpty.set(conversationList.isEmpty())
         
     }
-    
+    @Subscribe
+    fun  refreshConversation(event:RefreshConversationEvent){
+        loadConversationFormDB()
+    }
     @Subscribe
     fun ReciveMessage(event: MessageEvent) {
         val response = event.msg as MessageResponse
+        
         if (response.fromUserId == SPUtils.getInstance().getLong(Constant.UserId)) {
         
         }
@@ -51,6 +57,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
             //发送通知
             notification(response)
             //写入聊天消息的db
+            response.toUserId=SPUtils.getInstance().getLong(Constant.id)
             session.messageResponseDao.insert(response)
             //更新最近会话列表的DB
             val conversation = Conversation()

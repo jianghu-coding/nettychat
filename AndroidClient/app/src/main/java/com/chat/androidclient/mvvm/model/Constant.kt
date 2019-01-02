@@ -8,6 +8,7 @@ object Constant {
     val LoginUserName="loginusername"
     //密码
     val LoginUserPass="loginuserpass"
+    val id="user_id"
     //登陆状态
     val LoginState="loginstate"
     //用户id

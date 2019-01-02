@@ -32,5 +32,4 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
         friendAdapter.setData(datas)
     }
     
-    
 }

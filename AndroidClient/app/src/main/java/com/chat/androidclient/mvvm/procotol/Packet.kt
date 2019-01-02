@@ -18,6 +18,7 @@ import java.io.Serializable
 
 
 abstract class Packet:Serializable {
+    
     /**
      * 协议版本
      */

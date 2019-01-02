@@ -87,6 +87,7 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:onClick="onClick"
                 android:layout_width="130pt"
                 android:layout_height="95pt"
                 android:text="发送"
@@ -98,7 +99,7 @@
                 />
             <EditText
                 app:textWatcher="@{vm.inputWatcher}"
-
+android:id="@+id/msg_input"
                 android:layout_width="match_parent"
                 android:layout_height="95pt"
                 android:layout_marginRight="25pt"
