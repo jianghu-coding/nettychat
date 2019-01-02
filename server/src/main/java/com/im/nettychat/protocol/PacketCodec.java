@@ -11,6 +11,9 @@ import com.im.nettychat.protocol.request.group.JoinGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
+import com.im.nettychat.protocol.response.ForbiddenResponse;
+import com.im.nettychat.protocol.response.ReadTimeoutExceptionResponse;
+import com.im.nettychat.protocol.response.WriteTimeoutExceptionResponse;
 import com.im.nettychat.protocol.response.group.CreateGroupResponse;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.MessageResponse;
@@ -60,6 +63,7 @@ public class PacketCodec {
     }
 
     // TODO - wait remove, add response for decode
+    // 客户端参考解析指令用, 服务端实际不需要这段代码
     private void test() {
         packetTypeMap.put(Command.REGISTER_RESPONSE, RegisterResponse.class);
         packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponse.class);
@@ -72,6 +76,9 @@ public class PacketCodec {
         packetTypeMap.put(Command.GET_FRIENDS_RESPONSE, GetFriendResponse.class);
         packetTypeMap.put(Command.GET_USER_GROUP_LIST_RESPONSE, GetUserGroupListResponse.class);
         packetTypeMap.put(Command.OFFLINE_MESSAGE_RESPONSE, OfflineMessageResponse.class);
+        packetTypeMap.put(Command.READ_TIME_OUT, ReadTimeoutExceptionResponse.class);
+        packetTypeMap.put(Command.WRITE_TIME_OUT, WriteTimeoutExceptionResponse.class);
+        packetTypeMap.put(Command.FORBIDDEN_RESPONSE, ForbiddenResponse.class);
     }
 
     public void encode(ByteBuf byteBuf, Packet packet) {

@@ -12,6 +12,30 @@
        // nohup java -Xms300M -Xmx300M  -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
     5. nohup java -jar server-1.0-jar-with-dependencies.jar > /data/log/chat.log &
 
+## idea配置
+    idea plugins lombok 配置才能配合使用  @Data注解
+    
+## 已经完成的功能如下
+    1. 登录, 注册, 添加好友, 单聊, 好友列表
+    2. 创建群组, 添加群组, 拉人进入群组, 群聊
+    3. 离线消息推送，超时配置检测及开启
+    4. 耗时业务放入线程池处理避免阻塞以至于降低并发吞吐量
+    5. cglib动态代理service任务异步处理
+    6. cglib动态代理业务线程池FastThreadLocal存储JEDIS，避免每次操作都需要反复的获取JEDIS资源
+    
+## 待完善的功能
+    存储采用的redis, 对于数据一致性很高的场景不适用，大家可以参考以下策略进行处理
+    
+## 一致性场景举列
+    创建群组的时候，会维护群组的信息，比如他有哪些群组列表，二者缺一不可
+    ..等等
+    
+## 解决方案探讨
+    1. 采用关系型数据库, 缺点: 高并发情况下，会极大的降低并发和吞吐量，大量池中连接获取等待超时，mysql服务崩溃，当然可以进行限流但是本质上来说大  大的降低了并发量
+    2. 采用日志跟踪处理，服务一直处于高可用状态，极少情况出现操作失败，如果失败根据日志选择策略进行处理，是删除，恢复等等
+    3. 操作一个比如创建群组后，其它的任务丢给消息队列(redis, ..mq), 依次消费处理日志记录保证正确性，如果采用redis list可以用定时任务依次pop处理, 如果有操作失败的日志记录，再根据策略来处理操作失败的
+    4. 等等
+    
 ## 接口文档见 doc.md
 
 ## 客户端测试
@@ -95,3 +119,5 @@
     h
     成功: [ GetFriendResponse(friends=[User(id=2, username=888888, password=null, name=系统用户-2, icon=null, desc=null)]) ]
  ## 待更新内容:    
+    表情, 图片传输
+    自动扫描装载handler和对应指令避免每次手动操作

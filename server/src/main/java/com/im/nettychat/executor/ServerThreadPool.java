@@ -40,8 +40,6 @@ public class ServerThreadPool {
     }
 
     private static ThreadPoolExecutor getExecutorByLinkedBlockingQueue(int corePoolSize, int queueCapacity) {
-        // LinkedBlockingQueue, 没有最大线程数量限制, 超过核心线程=最大线程, keepAliveTime无效
-        // 超过就会最大线程, 就会一直阻塞在队列中, 所以队列最好指定容量防止占用资源过高影响其它服务
         return new ThreadPoolExecutor(
                 corePoolSize,
                 corePoolSize,

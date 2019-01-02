@@ -16,6 +16,7 @@ package com.im.nettychat.boot;
 import com.im.nettychat.codec.PacketCodecHandler;
 import com.im.nettychat.config.ServerConfig;
 import com.im.nettychat.handler.AuthHandler;
+import com.im.nettychat.handler.ExceptionHandler;
 import com.im.nettychat.handler.IMHandler;
 import com.im.nettychat.handler.LoginHandler;
 import com.im.nettychat.handler.MessageHandler;
@@ -43,11 +44,15 @@ public class ServerChannelInitializer extends ChannelInitializer<NioSocketChanne
         // 是否开启空闲连接检测, 对指定时间未操作的连接进行关闭
         if(ServerConfig.getServerTimeoutOpen()) {
             ch.pipeline().addLast(new ReadTimeoutHandler(ServerConfig.getServerReadTimeout(), TimeUnit.SECONDS));
-            ch.pipeline().addLast(new WriteTimeoutHandler(ServerConfig.getServerWriteTimeout(), TimeUnit.SECONDS));
+            // ch.pipeline().addLast(new WriteTimeoutHandler(ServerConfig.getServerWriteTimeout(), TimeUnit.SECONDS));
         }
         // 后面的都必须登录后访问
         ch.pipeline().addLast(AuthHandler.INSTANCE);
         ch.pipeline().addLast(MessageHandler.INSTANCE);
         ch.pipeline().addLast(IMHandler.INSTANCE);
+        // handler ...
+        // 这个放置到最后
+        ch.pipeline().addLast(ExceptionHandler.INSTANCE);
+
     }
 }

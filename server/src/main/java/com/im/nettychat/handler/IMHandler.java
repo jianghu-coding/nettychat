@@ -2,11 +2,9 @@ package com.im.nettychat.handler;
 
 import com.im.nettychat.common.Command;
 import com.im.nettychat.protocol.Packet;
-import com.im.nettychat.util.SessionUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.timeout.ReadTimeoutException;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import java.util.HashMap;
@@ -46,23 +44,5 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
             return;
         }
         handlerMap.get(msg.getCommand()).channelRead(ctx, msg);
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        logger.error("server exception: ", cause);
-        if (cause instanceof ReadTimeoutException) {
-            logger.info("read or write timeout");
-        }
-        ctx.channel().close();
-    }
-
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        boolean hashLogin = SessionUtil.hasLogin(ctx.channel());
-        if (hashLogin) {
-            SessionUtil.unBindSession(ctx.channel());
-        }
-        ctx.channel().close();
     }
 }
