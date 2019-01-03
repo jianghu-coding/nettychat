@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-
+<data>
+    <variable
+        name="data"
+        type="com.chat.androidclient.mvvm.model.Conversation"/>
+</data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="175pt"
@@ -13,7 +17,7 @@
             android:layout_width="135pt"
             android:layout_height="135pt"
             android:layout_centerVertical="true"
-            android:src="@drawable/ukv"
+            android:src="@drawable/otherhead"
             />
 
         <TextView
@@ -24,7 +28,7 @@
             android:layout_marginRight="115pt"
             android:layout_marginTop="33pt"
             android:layout_toRightOf="@+id/icon"
-            android:text="张三"
+            android:text=""
             android:textColor="@color/color000000"
             android:textSize="18sp"
             />
@@ -38,7 +42,7 @@
             android:layout_marginLeft="33pt"
             android:layout_marginRight="115pt"
             android:layout_toRightOf="@+id/icon"
-            android:text="helloworld"
+            android:text=""
             android:textColor="@color/color808080"
             android:textSize="14sp"
             />
@@ -68,7 +72,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="33pt"
             android:layout_marginLeft="33pt"
-            android:text="99+"
+            android:text="1"
             android:gravity="center"
             android:background="@drawable/shape_circle_red"
             android:textColor="@color/colorffffff"

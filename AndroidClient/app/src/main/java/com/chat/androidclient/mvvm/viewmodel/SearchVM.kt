@@ -10,7 +10,9 @@ import com.chat.androidclient.mvvm.view.activity.SearchActivity
 class SearchVM(var view: SearchActivity) : BaseViewModel() {
     fun getInputWatcher(): TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable) {
-            search(s.toString())
+//            if (s.isNotEmpty()) {
+//                search(s.toString())
+//            }
         }
         
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

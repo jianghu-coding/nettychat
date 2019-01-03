@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chat.androidclient.R;
@@ -73,12 +74,14 @@ public class FriendAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend_group, null);
             vh.name = convertView.findViewById(R.id.groupname);
             vh.online = convertView.findViewById(R.id.grouponline);
+            vh.openstate = convertView.findViewById(R.id.iv_open_state);
             convertView.setTag(vh);
         } else {
             vh = (GroupVH) convertView.getTag();
         }
         vh.name.setText(getGroup(groupPosition).getName());
-        vh.online.setText("0/0");
+        vh.online.setText(getChildrenCount(groupPosition)+"/"+getChildrenCount(groupPosition));
+        vh.openstate.setImageResource(isExpanded?R.drawable.skin_aio_arrowdown_nor:R.drawable.right_arrow1_disable);
         return convertView;
     }
 
@@ -88,10 +91,12 @@ public class FriendAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, null);
             vh = new ChildVH();
+            vh.name=convertView.findViewById(R.id.name);
             convertView.setTag(vh);
         } else {
             vh = (ChildVH) convertView.getTag();
         }
+        vh.name.setText(getChild(groupPosition,childPosition).getNickname());
         convertView.setOnClickListener(v ->
            ChatActivity.startActivity(parent.getContext(),getChild(groupPosition,childPosition).getUserId())
         );
@@ -142,9 +147,10 @@ public class FriendAdapter extends BaseExpandableListAdapter {
     class GroupVH {
         TextView name;
         TextView online;
+        ImageView openstate;
     }
 
     class ChildVH {
-
+ TextView name;
     }
 }

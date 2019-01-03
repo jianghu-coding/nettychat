@@ -45,14 +45,13 @@
                         />
 
                     <EditText
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20pt"
                         android:layout_toRightOf="@+id/iv_search"
                         android:background="@null"
                         android:hint="QQ号/手机号/群/公众号"
-                        android:singleLine="true"
                         android:textSize="14sp"
                         app:textWatcher="@{vm.inputWatcher}"
                         />

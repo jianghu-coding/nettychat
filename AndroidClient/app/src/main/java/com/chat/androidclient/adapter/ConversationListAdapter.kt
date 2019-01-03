@@ -8,8 +8,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.chat.androidclient.BR
 import com.chat.androidclient.R
+import com.chat.androidclient.databinding.ItemConversationlistBinding
+import com.chat.androidclient.greendao.ConversationDao
+import com.chat.androidclient.greendao.DaoMaster
+import com.chat.androidclient.greendao.FriendDao
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
@@ -21,12 +26,16 @@ import com.chat.androidclient.mvvm.view.activity.ChatActivity
 class ConversationListAdapter(var context: Context) : RecyclerView.Adapter<VH<*>>() {
     override fun onBindViewHolder(holder: VH<*>, position: Int) {
         holder.binding.setVariable(BR.data,messageList[position])
-        holder.binding.root.setOnClickListener {
-            var id=messageList[position].fromId
-            if (id==SPUtils.getInstance().getLong(Constant.id)){
-                id=messageList[position].fromId
-            }
-            ChatActivity.startActivity(context,messageList[position].fromId) }
+        val binding = holder.binding as ItemConversationlistBinding
+        val devSession = DaoMaster.newDevSession(context, Constant.DBNAME)
+        val friendBuilder = devSession.friendDao.queryBuilder()
+        val nickname =   friendBuilder .where(FriendDao.Properties.UserId.eq(messageList[position].fromId)) .unique().nickname
+        val convBuilder = devSession.conversationDao.queryBuilder()
+        val conversation = convBuilder.where(ConversationDao.Properties.FromId.eq(messageList[position].fromId)).unique()
+        binding.name.text = nickname
+        binding.content.text = conversation.lastcontent
+        binding.time.text = TimeUtils.getFriendlyTimeSpanByNow(conversation.time)
+        holder.binding.root.setOnClickListener { ChatActivity.startActivity(context,messageList[position].fromId) }
     }
     
     private val messageList:MutableList<Conversation> = mutableListOf()

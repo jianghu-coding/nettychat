@@ -14,7 +14,7 @@
         android:layout_width="105pt"
         android:layout_height="105pt"
         android:layout_centerVertical="true"
-        android:src="@drawable/ukv"
+        android:src="@drawable/otherhead"
         />
 
     <TextView

@@ -10,6 +10,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding,SearchVM>() {
     
     override fun getLayoutRes()=R.layout.activity_search
     override fun init() {
-    
+    mDataBinding.vm=mVM
     }
 }
