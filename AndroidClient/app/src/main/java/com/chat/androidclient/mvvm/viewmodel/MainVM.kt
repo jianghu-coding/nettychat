@@ -3,12 +3,23 @@ package com.chat.androidclient.mvvm.viewmodel
 import android.app.Fragment
 import android.databinding.ObservableField
 import android.os.Bundle
+import android.os.Handler
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
+import com.chat.androidclient.App
 import com.chat.androidclient.R
+import com.chat.androidclient.event.LoginResponseEvent
+import com.chat.androidclient.im.ChatIM
+import com.chat.androidclient.mvvm.model.Constant
+import com.chat.androidclient.mvvm.model.LoginRequest
+import com.chat.androidclient.mvvm.procotol.response.LoginResponse
 import com.chat.androidclient.mvvm.view.activity.MainActivity
 import com.chat.androidclient.mvvm.view.fragment.ContactsFragment
 import com.chat.androidclient.mvvm.view.fragment.ConversationFragment
 import com.chat.androidclient.mvvm.view.fragment.DynamicFragment
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.HashMap
 
 /**
@@ -22,6 +33,25 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
     
     var fragments: HashMap<String, Fragment> = hashMapOf()
     var currentFragment: Fragment? = null
+    
+    
+    fun connect(){
+        //这里可以根据是否在线。在重连。不然从login进来。会重复调用登陆
+        if (!App.CONNECT)
+        Handler().postDelayed({        ChatIM.instance.cmd(LoginRequest(SPUtils.getInstance().getString(Constant.LoginUserName), SPUtils.getInstance().getString(Constant.LoginUserName))) },500)
+    }
+    /**
+     * 登陆的结果
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun loginResponse(event: LoginResponseEvent) {
+        val response = event.msg as LoginResponse
+        if (response.error){
+            view.showMsg(""+response.errorInfo)
+        }else{
+            view.hideLoading()
+        }
+    }
     /**
      * 选中会话
      */

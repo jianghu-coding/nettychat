@@ -2,6 +2,7 @@ package com.chat.androidclient.mvvm.viewmodel
 
 import android.content.Intent
 import com.blankj.utilcode.util.SPUtils
+import com.chat.androidclient.App
 import com.chat.androidclient.event.LoginResponseEvent
 import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
@@ -37,11 +38,13 @@ class LoginVM(var view: LoginActivity) : BaseViewModel() {
             view.showMsg("登陆失败${event.msg.errorInfo}")
         }
         else {
+            App.CONNECT=true
             val response = event.msg as LoginResponse
             view.showMsg("登陆成功")
             SPUtils.getInstance().put(Constant.LoginUserName,name)
             SPUtils.getInstance().put(Constant.LoginUserPass,pass)
             SPUtils.getInstance().put(Constant.id,response.userId!!)
+            SPUtils.getInstance().put(Constant.LoginState,true)
             view.startActivity(Intent(view, MainActivity::class.java))
             view.finish()
         }

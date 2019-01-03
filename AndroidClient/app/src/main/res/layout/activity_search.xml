@@ -69,6 +69,7 @@
                 android:layout_marginLeft="50pt"
                 android:layout_marginRight="50pt"
                 android:text="取消"
+                android:onClick="onClick"
                 android:textColor="@color/color41c5f6"
                 android:textSize="18sp"
                 />

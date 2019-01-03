@@ -1,6 +1,6 @@
 package com.chat.androidclient.mvvm.view.activity
 
-import android.os.Bundle
+import android.view.View
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivitySearchBinding
 import com.chat.androidclient.mvvm.viewmodel.SearchVM
@@ -11,5 +11,13 @@ class SearchActivity : BaseActivity<ActivitySearchBinding,SearchVM>() {
     override fun getLayoutRes()=R.layout.activity_search
     override fun init() {
     mDataBinding.vm=mVM
+    }
+    
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.tv_cancle->{
+                finish()
+            }
+        }
     }
 }

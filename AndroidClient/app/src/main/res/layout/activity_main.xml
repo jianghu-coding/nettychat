@@ -2,12 +2,15 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-<data>
-    <import type="android.view.View"/>
-    <variable
-        name="vm"
-        type="com.chat.androidclient.mvvm.viewmodel.MainVM"/>
-</data>
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="vm"
+            type="com.chat.androidclient.mvvm.viewmodel.MainVM"/>
+    </data>
 
     <RelativeLayout
 
@@ -31,12 +34,23 @@
                 />
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@{vm.titleText}"
                 android:textColor="@color/colorffffff"
                 android:textSize="18sp"
+                />
+
+            <ImageView
+                android:id="@+id/connectloading"
+                android:layout_width="70pt"
+                android:layout_height="70pt"
+                android:layout_marginRight="30pt"
+                android:layout_toLeftOf="@+id/tv_title"
+                android:layout_centerVertical="true"
+                android:src="@drawable/loading"
                 />
 
             <ImageView
@@ -48,27 +62,29 @@
                 android:src="@drawable/wkj"
                 android:visibility="@{vm.conversationSelected?View.VISIBLE:View.GONE}"
                 />
+
             <ImageView
+                android:id="@+id/add_conversation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20pt"
                 android:onClick="onClick"
-                android:id="@+id/add_conversation"
-                android:visibility="@{vm.contactsSelected?View.VISIBLE:View.GONE}"
                 android:src="@drawable/friends_btn_add_nor"
+                android:visibility="@{vm.contactsSelected?View.VISIBLE:View.GONE}"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20pt"
-               android:text="更多"
-                android:visibility="@{vm.dynamicSelected?View.VISIBLE:View.GONE}"
+                android:text="更多"
                 android:textColor="@color/colorffffff"
                 android:textSize="18sp"
+                android:visibility="@{vm.dynamicSelected?View.VISIBLE:View.GONE}"
                 />
 
         </RelativeLayout>
@@ -89,98 +105,99 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:onClick="onClick"
                 android:id="@+id/re_conversation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:gravity="center"
+                android:onClick="onClick">
 
                 <ImageView
                     android:id="@+id/ic_conversation"
                     android:layout_width="70pt"
                     android:layout_height="70pt"
-                    android:src="@{vm.conversationSelected?@drawable/conversationpress:@drawable/conversation}"
                     android:layout_centerHorizontal="true"
+                    android:src="@{vm.conversationSelected?@drawable/conversationpress:@drawable/conversation}"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ic_conversation"
+                    android:layout_centerHorizontal="true"
                     android:text="消息"
                     android:textColor="@{vm.conversationSelected?@color/color41c5f6:@color/color808392}"
                     android:textSize="16sp"
-                    android:layout_centerHorizontal="true"
                     />
             </RelativeLayout>
 
             <RelativeLayout
-                android:onClick="onClick"
                 android:id="@+id/re_contacts"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:gravity="center"
+                android:onClick="onClick">
 
                 <ImageView
-                    android:layout_centerHorizontal="true"
                     android:id="@+id/ic_contacts"
                     android:layout_width="70pt"
                     android:layout_height="70pt"
+                    android:layout_centerHorizontal="true"
                     android:src="@{vm.contactsSelected?@drawable/contactspress:@drawable/contacts}"
                     />
 
                 <TextView
-                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ic_contacts"
+                    android:layout_centerHorizontal="true"
                     android:text="联系人"
                     android:textColor="@{vm.contactsSelected?@color/color41c5f6:@color/color808392}"
-                    android:layout_centerHorizontal="true"
+                    android:textSize="16sp"
 
                     />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/re_dynamic"
-                android:onClick="onClick"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:gravity="center"
+                android:onClick="onClick">
 
                 <ImageView
                     android:id="@+id/ic_dynamic"
                     android:layout_width="70pt"
                     android:layout_height="70pt"
-                    android:src="@{vm.dynamicSelected?@drawable/dynamicpress:@drawable/dynamic}"
                     android:layout_centerHorizontal="true"
+                    android:src="@{vm.dynamicSelected?@drawable/dynamicpress:@drawable/dynamic}"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ic_dynamic"
+                    android:layout_centerHorizontal="true"
                     android:text="动态"
                     android:textColor="@{vm.dynamicSelected?@color/color41c5f6:@color/color808392}"
-                    android:layout_centerHorizontal="true"
                     android:textSize="16sp"
 
                     />
             </RelativeLayout>
 
         </LinearLayout>
-<FrameLayout
-    android:layout_below="@+id/title_layout"
-    android:layout_above="@+id/bottom_layout"
-    android:layout_width="match_parent"
-    android:id="@+id/main_content"
-    android:layout_marginBottom="2pt"
-    android:layout_height="match_parent"/>
+
+        <FrameLayout
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_layout"
+            android:layout_below="@+id/title_layout"
+            android:layout_marginBottom="2pt"/>
     </RelativeLayout>
 </layout>

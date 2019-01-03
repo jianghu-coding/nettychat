@@ -10,6 +10,9 @@ import org.greenrobot.greendao.query.QueryBuilder
  * Created by 李培生 on 2018/12/21 14:08.
  */
 class App:Application() {
+    companion object {
+        var CONNECT=false
+    }
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(this)

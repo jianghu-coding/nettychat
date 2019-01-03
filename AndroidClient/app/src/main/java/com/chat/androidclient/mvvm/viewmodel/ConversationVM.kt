@@ -3,6 +3,7 @@ package com.chat.androidclient.mvvm.viewmodel
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.databinding.ObservableField
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -13,14 +14,19 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.chat.androidclient.R
+import com.chat.androidclient.event.LoginResponseEvent
 import com.chat.androidclient.event.MessageEvent
 import com.chat.androidclient.event.RefreshConversationEvent
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.DaoSession
+import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
+import com.chat.androidclient.mvvm.model.LoginRequest
+import com.chat.androidclient.mvvm.procotol.response.LoginResponse
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
+import com.chat.androidclient.mvvm.view.activity.MainActivity
 import com.chat.androidclient.mvvm.view.fragment.ConversationFragment
 import org.greenrobot.eventbus.Subscribe
 
@@ -43,6 +49,18 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         view.refreshConversation(conversationList)
         isEmpty.set(conversationList.isEmpty())
         
+    }
+    /**
+     * 登陆的结果
+     */
+    @Subscribe
+    fun loginResponse(event: LoginResponseEvent) {
+        if (event.msg.error) {
+        
+        }
+        else {
+        
+        }
     }
     //更新这个列表的时候。比如和某人的会话。有新的消息发送或接收。
     @Subscribe
