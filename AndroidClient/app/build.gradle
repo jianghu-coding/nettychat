@@ -4,6 +4,14 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
+    signingConfigs {
+        config {
+            keyAlias '123456'
+            keyPassword '123456'
+            storeFile file('./chat.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
     defaultConfig {
         multiDexEnabled true
@@ -14,11 +22,11 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     dataBinding {
@@ -28,7 +36,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
 }
 greendao {
     schemaVersion 5//数据库版本号
@@ -68,11 +75,9 @@ dependencies {
     implementation dependencies.smartRefresh
     implementation dependencies.circleimageview
     implementation dependencies.greendao
-    compile group: 'io.netty', name: 'netty-all', version: '4.1.6.Final'
-    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.29'
+    compile 'io.netty:netty-all:4.1.6.Final'
+    compile 'com.alibaba:fastjson:1.2.29'
     debugCompile 'com.amitshekhar.android:debug-db:1.0.0'
-
-
 }
 repositories {
     mavenCentral()

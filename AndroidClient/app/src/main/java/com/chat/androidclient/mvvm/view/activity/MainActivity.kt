@@ -47,4 +47,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         mDataBinding.connectloading.visibility = View.VISIBLE
     
     }
+    
+    override fun onBackPressed() {
+        moveTaskToBack(false)
+    }
 }
