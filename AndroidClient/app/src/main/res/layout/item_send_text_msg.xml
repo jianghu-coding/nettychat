@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50pt">
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20pt"
+            android:textColor="@color/colorf1f2f7"
+            android:textSize="12sp"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_below="@+id/time"
+            android:layout_marginTop="20pt"
+            android:id="@+id/head"
+            android:layout_width="100pt"
+            android:layout_height="100pt"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="20pt"
+            android:layout_marginRight="20pt"
+            android:src="@drawable/myheader"
+            />
+
+        <TextView
+            android:id="@+id/content"
+            android:gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/head"
+            android:layout_marginLeft="100pt"
+            android:text="卡技能分离开你阿拉基弗兰克"
+            android:background="@drawable/wdm"
+            android:layout_toLeftOf="@+id/head"
+            />
+    </RelativeLayout>
+</FrameLayout>

@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.TimeUtils
@@ -19,6 +20,7 @@ import com.chat.androidclient.greendao.DaoSession
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
+import com.chat.androidclient.mvvm.view.activity.ChatActivity
 import com.chat.androidclient.mvvm.view.fragment.ConversationFragment
 import org.greenrobot.eventbus.Subscribe
 
@@ -56,12 +58,6 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         
         }
         else {
-            //发送通知
-            notification(response)
-            //写入聊天消息的db
-            response.toUserId=SPUtils.getInstance().getLong(Constant.id)
-            response.time=System.currentTimeMillis()
-            session.messageResponseDao.insert(response)
             //更新最近会话列表的DB
             val conversation = Conversation()
             conversation.fromId = response.fromUserId
@@ -71,11 +67,22 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
             session.conversationDao.insertOrReplace(conversation)
             //更新RecyclerView
             loadConversationFormDB()
+//            如果在ChatActivity，发送通知 和 写入聊天消息的db将由[com.chat.androidclient.mvvm.viewmodel.ChatVM]处理
+            if (ActivityUtils.getTopActivity()::class.java.name==ChatActivity::class.java.name){
+                return
+            }
+            //发送通知
+            notification(response)
+            //写入聊天消息的db
+            response.toUserId=SPUtils.getInstance().getLong(Constant.id)
+            response.time=System.currentTimeMillis()
+            session.messageResponseDao.insert(response)
             
         }
     }
     
     private fun notification(response: MessageResponse) {
+    
         if (builder == null)
             builder = NotificationCompat.Builder(view.activity, "recivemessage")
         builder!!.setContentTitle("收到新的消息")

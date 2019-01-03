@@ -3,6 +3,7 @@ package com.chat.androidclient.mvvm.view.activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.chat.androidclient.R
@@ -31,7 +32,9 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
         mDataBinding.vm = mVM
         mDataBinding.ivCall.setColorFilter(Color.WHITE)
         mDataBinding.ivInfo.setColorFilter(Color.WHITE)
-        mDataBinding.messageRecyclerView.layoutManager=LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.stackFromEnd=true
+        mDataBinding.messageRecyclerView.layoutManager=layoutManager
         adapter= ConversationAdapter(this)
         mDataBinding.messageRecyclerView.adapter=adapter
         mVM.loadMessageFromDB()
@@ -52,7 +55,16 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
     
     fun addMessage(msg:MessageResponse){
         adapter.addMessage(msg)
+        scrollToDown()
     }
+    
+    /**
+     * 滚动到底部
+     */
+    private fun scrollToDown() {
+        Handler().postDelayed( { mDataBinding.messageRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)},100)
+    }
+    
     fun addMessages(msgs:List<MessageResponse>){
         adapter.addMessages(msgs)
     }

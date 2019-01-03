@@ -17,15 +17,20 @@ import com.chat.androidclient.mvvm.procotol.response.MessageResponse
  */
 class ConversationAdapter(var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
-        val TYPE_SEND_TEXT = 1
-        val TYPE_REC_TEXT = 2
+        const val TYPE_SEND_TEXT = 1
+        const val TYPE_REC_TEXT = 2
     }
     
-    var messageList: MutableList<MessageResponse> = mutableListOf()
+    private var messageList: MutableList<MessageResponse> = mutableListOf()
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         when(getItemViewType(position)){
             TYPE_SEND_TEXT->{
-                val vH_SEND = holder as VH_SEND
+                val vH_SEND = holder as VH_SEND_Text
+                vH_SEND.content.text=messageList[position].message
+                vH_SEND.time.text=TimeUtils.getFriendlyTimeSpanByNow(messageList[position].time)
+            }
+            TYPE_REC_TEXT->{
+                val vH_SEND = holder as VH_REC_Text
                 vH_SEND.content.text=messageList[position].message
                 vH_SEND.time.text=TimeUtils.getFriendlyTimeSpanByNow(messageList[position].time)
             }
@@ -35,8 +40,12 @@ class ConversationAdapter(var context: Context) : RecyclerView.Adapter<RecyclerV
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
             TYPE_SEND_TEXT -> {
-                val inflate = LayoutInflater.from(context).inflate(R.layout.item_sendmsg, null)
-                return VH_SEND(inflate)
+                val inflate = LayoutInflater.from(context).inflate(R.layout.item_send_text_msg, null)
+                return VH_SEND_Text(inflate)
+            }
+            TYPE_REC_TEXT->{
+                val inflate = LayoutInflater.from(context).inflate(R.layout.item_rec_textmsg, null)
+                return VH_REC_Text(inflate)
             }
             else -> {
                 throw Exception("没有匹配的类型")
@@ -54,7 +63,6 @@ class ConversationAdapter(var context: Context) : RecyclerView.Adapter<RecyclerV
         }
         return super.getItemViewType(position)
     }
-    
     override fun getItemCount() = messageList.size
     
     fun addMessage(msg:MessageResponse){
@@ -67,12 +75,13 @@ class ConversationAdapter(var context: Context) : RecyclerView.Adapter<RecyclerV
         notifyDataSetChanged()
     }
     
-    class VH_SEND(view: View) : RecyclerView.ViewHolder(view) {
+    class VH_SEND_Text(view: View) : RecyclerView.ViewHolder(view) {
      var content=view.findViewById<TextView>(R.id.content)
      var time=view.findViewById<TextView>(R.id.time)
     }
     
-    class VH_REC(view: View) : RecyclerView.ViewHolder(view) {
-    
+    class VH_REC_Text(view: View) : RecyclerView.ViewHolder(view) {
+        var content=view.findViewById<TextView>(R.id.content)
+        var time=view.findViewById<TextView>(R.id.time)
     }
 }

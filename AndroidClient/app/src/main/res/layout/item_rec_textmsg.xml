@@ -24,22 +24,21 @@
             android:id="@+id/head"
             android:layout_width="100pt"
             android:layout_height="100pt"
-            android:layout_alignParentRight="true"
             android:layout_marginLeft="20pt"
             android:layout_marginRight="20pt"
-            android:src="@drawable/myheader"
+            android:src="@drawable/otherhead"
             />
 
         <TextView
             android:id="@+id/content"
-            android:gravity="center"
+            android:gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/head"
-            android:layout_marginLeft="100pt"
+            android:layout_marginRight="100pt"
             android:text="卡技能分离开你阿拉基弗兰克"
-            android:background="@drawable/a8u"
-            android:layout_toLeftOf="@+id/head"
+            android:background="@drawable/wtz"
+            android:layout_toRightOf="@+id/head"
             />
     </RelativeLayout>
 </FrameLayout>

@@ -99,7 +99,7 @@
         <RelativeLayout
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
-            android:layout_height="310pt"
+            android:layout_height="215pt"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="20pt"
             >
