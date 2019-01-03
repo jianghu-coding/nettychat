@@ -118,6 +118,15 @@
     ---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表
     h
     成功: [ GetFriendResponse(friends=[User(id=2, username=888888, password=null, name=系统用户-2, icon=null, desc=null)]) ]
+    
+ 
+## Android 第一版基础版即将完成，效果图
+
+![image1](https://github.com/hejianglong/nettychat/blob/master/AndroidClient/pic/Screenshot_20190103-131011.jpg)
+![image2](https://github.com/hejianglong/nettychat/blob/master/AndroidClient/pic/Screenshot_20190103-131013.jpg)
+![image3](https://github.com/hejianglong/nettychat/blob/master/AndroidClient/pic/Screenshot_20190103-131020.jpg)
+
+
  ## 待更新内容:    
     表情, 图片传输
     自动扫描装载handler和对应指令避免每次手动操作
