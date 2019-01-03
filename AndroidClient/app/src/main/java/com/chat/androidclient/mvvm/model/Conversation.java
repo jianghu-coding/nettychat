@@ -16,10 +16,10 @@ public class Conversation {
     @Unique
     private Long fromId;
     private String lastcontent;
-    private String time;
+    private Long time;
     private int msgcount;
-    @Generated(hash = 2116595450)
-    public Conversation(Long id, Long fromId, String lastcontent, String time,
+    @Generated(hash = 413244062)
+    public Conversation(Long id, Long fromId, String lastcontent, Long time,
             int msgcount) {
         this.id = id;
         this.fromId = fromId;
@@ -48,10 +48,10 @@ public class Conversation {
     public void setLastcontent(String lastcontent) {
         this.lastcontent = lastcontent;
     }
-    public String getTime() {
+    public Long getTime() {
         return this.time;
     }
-    public void setTime(String time) {
+    public void setTime(Long time) {
         this.time = time;
     }
     public int getMsgcount() {
@@ -60,4 +60,5 @@ public class Conversation {
     public void setMsgcount(int msgcount) {
         this.msgcount = msgcount;
     }
+
 }

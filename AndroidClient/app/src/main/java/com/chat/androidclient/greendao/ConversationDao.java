@@ -27,7 +27,7 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property FromId = new Property(1, Long.class, "fromId", false, "FROM_ID");
         public final static Property Lastcontent = new Property(2, String.class, "lastcontent", false, "LASTCONTENT");
-        public final static Property Time = new Property(3, String.class, "time", false, "TIME");
+        public final static Property Time = new Property(3, Long.class, "time", false, "TIME");
         public final static Property Msgcount = new Property(4, int.class, "msgcount", false, "MSGCOUNT");
     }
 
@@ -47,7 +47,7 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"FROM_ID\" INTEGER UNIQUE ," + // 1: fromId
                 "\"LASTCONTENT\" TEXT," + // 2: lastcontent
-                "\"TIME\" TEXT," + // 3: time
+                "\"TIME\" INTEGER," + // 3: time
                 "\"MSGCOUNT\" INTEGER NOT NULL );"); // 4: msgcount
     }
 
@@ -76,9 +76,9 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
             stmt.bindString(3, lastcontent);
         }
  
-        String time = entity.getTime();
+        Long time = entity.getTime();
         if (time != null) {
-            stmt.bindString(4, time);
+            stmt.bindLong(4, time);
         }
         stmt.bindLong(5, entity.getMsgcount());
     }
@@ -102,9 +102,9 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
             stmt.bindString(3, lastcontent);
         }
  
-        String time = entity.getTime();
+        Long time = entity.getTime();
         if (time != null) {
-            stmt.bindString(4, time);
+            stmt.bindLong(4, time);
         }
         stmt.bindLong(5, entity.getMsgcount());
     }
@@ -120,7 +120,7 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // fromId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // lastcontent
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // time
+            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // time
             cursor.getInt(offset + 4) // msgcount
         );
         return entity;
@@ -131,7 +131,7 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setFromId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setLastcontent(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setTime(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTime(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
         entity.setMsgcount(cursor.getInt(offset + 4));
      }
     

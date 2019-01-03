@@ -3,6 +3,7 @@ package com.chat.androidclient.mvvm.view.fragment
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,5 +34,8 @@ open abstract class BaseFragment<T:ViewDataBinding,D:BaseViewModel>:RxFragment()
     abstract fun getLayoutRes(): Int
     override fun onClick(v: View) {
     
+    }
+    fun showDevMessage(){
+        Snackbar.make(mDataBinding.root,"功能正在开发，敬请期待",Snackbar.LENGTH_SHORT).show()
     }
 }

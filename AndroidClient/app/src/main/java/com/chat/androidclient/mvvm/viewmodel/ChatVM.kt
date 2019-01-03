@@ -63,7 +63,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         val conversation = Conversation()
         conversation.fromId = id
         conversation.lastcontent = msg
-        conversation.time = System.currentTimeMillis().toString()
+        conversation.time = System.currentTimeMillis()
         conversationDao.insertOrReplace(conversation)
         //通知最近会话列表更新
         EventBus.getDefault().post(RefreshConversationEvent())

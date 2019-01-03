@@ -81,7 +81,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
             conversation.fromId = response.fromUserId
             conversation.msgcount += 1
             conversation.lastcontent = response.message
-            conversation.time = TimeUtils.getFriendlyTimeSpanByNow(System.currentTimeMillis())
+            conversation.time = System.currentTimeMillis()
             session.conversationDao.insertOrReplace(conversation)
             //更新RecyclerView
             loadConversationFormDB()

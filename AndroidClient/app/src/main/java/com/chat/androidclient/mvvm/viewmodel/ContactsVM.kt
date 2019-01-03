@@ -25,10 +25,8 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
         testData()
     }
     
-    private fun loadFriendListFromNetWork() {
+     fun loadFriendListFromNetWork() {
         ChatIM.instance.cmd(GetFriendRequest())
-     
-        
         
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -69,6 +67,7 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
 //
         
         view.refreshData(groups)
+        view.refreshComplet()
     }
     
 }

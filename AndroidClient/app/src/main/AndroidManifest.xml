@@ -28,7 +28,9 @@
         <activity
             android:name=".mvvm.view.activity.LoginActivity"
             android:theme="@style/fullscreen"/>
-        <activity android:name=".mvvm.view.activity.MainActivity"/>
+        <activity android:name=".mvvm.view.activity.MainActivity"
+            android:launchMode="singleTask"
+            />
         <activity
             android:name=".mvvm.view.activity.SignUpActivity"
             android:theme="@style/signupstyle">

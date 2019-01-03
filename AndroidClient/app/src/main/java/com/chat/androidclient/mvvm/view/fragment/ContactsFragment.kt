@@ -1,6 +1,7 @@
 package com.chat.androidclient.mvvm.view.fragment
 
 
+import android.view.View
 import com.chat.androidclient.R
 import com.chat.androidclient.adapter.FriendAdapter
 import com.chat.androidclient.databinding.FragmentContactsBinding
@@ -19,6 +20,9 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
     override fun getLayoutRes() = R.layout.fragment_contacts
     override fun init() {
         initFriendList()
+        mDataBinding.refreshlayout.setOnRefreshListener {
+            mVM.loadFriendListFromNetWork()
+        }
         mVM.init()
     }
     
@@ -32,4 +36,15 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
         friendAdapter.setData(datas)
     }
     
+    override fun onClick(v: View) {
+        when(v.id){
+        R.id.create_group->showDevMessage()
+        R.id.new_friend->showDevMessage()
+        R.id.re_tanbaishuo->showDevMessage()
+        }
+    }
+    
+    fun refreshComplet() {
+        mDataBinding.refreshlayout.finishRefresh()
+    }
 }

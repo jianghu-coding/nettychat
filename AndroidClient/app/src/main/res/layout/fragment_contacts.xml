@@ -70,6 +70,8 @@
                 </FrameLayout>
                 <!--坦白说-->
                 <RelativeLayout
+                    android:onClick="onClick"
+                    android:id="@+id/re_tanbaishuo"
                     android:layout_width="match_parent"
                     android:layout_height="210pt"
                     android:layout_marginBottom="30pt"
@@ -113,6 +115,8 @@
                 </RelativeLayout>
                 <!--新朋友-->
                 <RelativeLayout
+                    android:id="@+id/new_friend"
+                    android:onClick="onClick"
                     android:background="@color/colorffffff"
                     android:layout_width="match_parent"
                     android:layout_height="120pt"
@@ -150,6 +154,8 @@
                 </RelativeLayout>
                 <!--创建群聊-->
                 <RelativeLayout
+                    android:id="@+id/create_group"
+                    android:onClick="onClick"
                     android:layout_marginBottom="30pt"
                     android:background="@color/colorffffff"
                     android:layout_width="match_parent"

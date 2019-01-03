@@ -37,8 +37,11 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
     
     fun connect(){
         //这里可以根据是否在线。在重连。不然从login进来。会重复调用登陆
-        if (!App.CONNECT)
-        Handler().postDelayed({        ChatIM.instance.cmd(LoginRequest(SPUtils.getInstance().getString(Constant.LoginUserName), SPUtils.getInstance().getString(Constant.LoginUserName))) },500)
+        if (!App.CONNECT) {
+            Handler().postDelayed({ ChatIM.instance.cmd(LoginRequest(SPUtils.getInstance().getString(Constant.LoginUserName), SPUtils.getInstance().getString(Constant.LoginUserName))) }, 500)
+        }else{
+            view.hideLoading()
+        }
     }
     /**
      * 登陆的结果
@@ -48,7 +51,10 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
         val response = event.msg as LoginResponse
         if (response.error){
             view.showMsg(""+response.errorInfo)
+            view.showLoading()
         }else{
+            App.CONNECT=true
+            SPUtils.getInstance().put(Constant.id,response.userId!!)
             view.hideLoading()
         }
     }

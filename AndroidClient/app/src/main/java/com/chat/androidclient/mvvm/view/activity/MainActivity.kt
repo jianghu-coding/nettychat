@@ -34,10 +34,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             R.id.add_conversation -> {
                 startActivity(Intent(this, SearchActivity::class.java))
             }
+            R.id.head->showDevlopingMsg()
+            R.id.titlt_more->showDevlopingMsg()
+            R.id.tv_more->showDevlopingMsg()
         }
     }
     
     fun hideLoading() {
         mDataBinding.connectloading.visibility = View.GONE
+    }
+    fun showLoading(){
+        mDataBinding.connectloading.visibility = View.VISIBLE
+    
     }
 }
