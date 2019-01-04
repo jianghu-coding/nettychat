@@ -2,6 +2,7 @@ package com.chat.androidclient.mvvm.viewmodel
 
 import android.content.Intent
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chat.androidclient.App
 import com.chat.androidclient.event.DestroyLoginEvent
 import com.chat.androidclient.event.LoginResponseEvent
@@ -38,7 +39,7 @@ class LoginVM(var view: LoginActivity) : BaseViewModel() {
     @Subscribe
     fun loginResponse(event: LoginResponseEvent) {
         if (event.msg.error) {
-            view.showMsg("登陆失败${event.msg.errorInfo}")
+            view.showMsg("登陆失败了a${event.msg.errorInfo}")
         }
         else {
             App.CONNECT = true
