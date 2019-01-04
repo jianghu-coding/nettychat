@@ -11,12 +11,11 @@ import com.chat.androidclient.mvvm.model.RegisterRequest
 import com.chat.androidclient.mvvm.procotol.response.RegisterResponse
 import com.chat.androidclient.mvvm.view.activity.MainActivity
 import com.chat.androidclient.mvvm.view.activity.SignUpActivity
-import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 /**
- * Created by 李培生 on 2018/12/21 10:22.
+ * Created by lps on 2018/12/21 10:22.
  */
 class SignUpVM(var view: SignUpActivity) : BaseViewModel() {
     private var name=""
@@ -25,8 +24,6 @@ class SignUpVM(var view: SignUpActivity) : BaseViewModel() {
         this.name=name
         this.pass=password
         ChatIM.instance.cmd( RegisterRequest(name,username,password))
-//        SPUtils.getInstance().put(Constant.LoginUserName,name)
-//        SPUtils.getInstance().put(Constant.LoginUserPass,pass)
     }
     @Subscribe
     fun onSignupResponse(event: SignUpResponseEvent){

@@ -1,20 +1,14 @@
 package com.chat.androidclient
 
-import android.app.Application
-import android.support.multidex.MultiDex
-import com.blankj.utilcode.util.LogUtils
-import com.chat.androidclient.im.ChatIM
 import com.tencent.tinker.loader.app.TinkerApplication
 import com.tencent.tinker.loader.shareutil.ShareConstants
-import org.greenrobot.greendao.query.QueryBuilder
 
 /**
  * Created by 李培生 on 2018/12/21 14:08.
+ * 接入了tinker 初始化的逻辑写入[AppLike]
  */
-class App : TinkerApplication {
-    constructor() :  super(ShareConstants.TINKER_ENABLE_ALL, "com.chat.androidclient.AppLike",
-            "com.tencent.tinker.loader.TinkerLoader", false)
-    
+class App : TinkerApplication(ShareConstants.TINKER_ENABLE_ALL, "com.chat.androidclient.AppLike",
+        "com.tencent.tinker.loader.TinkerLoader", false) {
     companion object {
         var CONNECT=false
     }

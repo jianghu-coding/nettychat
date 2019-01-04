@@ -12,6 +12,10 @@ import com.chat.androidclient.databinding.ActivityConversationBinding
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.viewmodel.ChatVM
 
+/**
+ * @author lps
+ * 聊天界面
+ */
 class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
     lateinit var adapter:ConversationAdapter
     companion object {

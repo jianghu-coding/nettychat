@@ -39,7 +39,7 @@ class LoginVM(var view: LoginActivity) : BaseViewModel() {
     @Subscribe
     fun loginResponse(event: LoginResponseEvent) {
         if (event.msg.error) {
-            view.showMsg("登陆失败了a${event.msg.errorInfo}")
+            view.showMsg("登陆失败了${event.msg.errorInfo}")
         }
         else {
             App.CONNECT = true

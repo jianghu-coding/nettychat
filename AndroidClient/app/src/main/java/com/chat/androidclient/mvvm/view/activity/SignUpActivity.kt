@@ -5,6 +5,10 @@ import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivitySignUpBinding
 import com.chat.androidclient.mvvm.viewmodel.SignUpVM
 
+/**
+ * @author lps
+ * 注册界面
+ */
 class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpVM>() {
     override fun getViewModel() = SignUpVM(this)
     

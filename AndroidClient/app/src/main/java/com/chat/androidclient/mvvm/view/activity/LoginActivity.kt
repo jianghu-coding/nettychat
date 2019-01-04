@@ -6,6 +6,10 @@ import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityLoginBinding
 import com.chat.androidclient.mvvm.viewmodel.LoginVM
 
+/**
+ * @author lps
+ * 登陆Activity
+ */
 class LoginActivity : BaseActivity<ActivityLoginBinding,LoginVM>() {
     override fun getViewModel()= LoginVM (this)
     

@@ -44,6 +44,14 @@ ext {
             utilcode              : 'com.blankj:utilcode:1.22.3',
             smartRefresh          : 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18',
             circleimageview       : 'de.hdodenhof:circleimageview:2.2.0',
-            greendao              :'org.greenrobot:greendao:3.2.0'
+            greendao              :'org.greenrobot:greendao:3.2.0',
+            netty                 :'io.netty:netty-all:4.1.6.Final',
+            fastjson              :'com.alibaba:fastjson:1.2.29',
+            debugdb               :'com.amitshekhar.android:debug-db:1.0.0',
+            bugly_upgrade         :'com.tencent.bugly:crashreport_upgrade:latest.release',
+            bugly_crash_report    :'com.tencent.bugly:nativecrashreport:latest.release',
+            bugly_tinker          :'com.tencent.tinker:tinker-android-lib:1.9.9',
+
+
     ]
 }

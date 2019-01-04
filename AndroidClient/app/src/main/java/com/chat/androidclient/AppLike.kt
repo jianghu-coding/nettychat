@@ -16,24 +16,23 @@ import org.greenrobot.greendao.query.QueryBuilder
 /**
  * Created by lps on 2019/1/4 10:03.
  */
-class AppLike : DefaultApplicationLike {
-    constructor(application: Application?, tinkerFlags: Int, tinkerLoadVerifyFlag: Boolean, applicationStartElapsedTime: Long, applicationStartMillisTime: Long, tinkerResultIntent: Intent?) : super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent)
+class AppLike(application: Application?, tinkerFlags: Int, tinkerLoadVerifyFlag: Boolean, applicationStartElapsedTime: Long, applicationStartMillisTime: Long, tinkerResultIntent: Intent?) : DefaultApplicationLike(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent) {
     
     override fun onCreate() {
         super.onCreate()
         ChatIM.init()
-        Bugly.init(application,"bfa8de2062",true)
-Bugly.setIsDevelopmentDevice(application,true)
+        Bugly.init(application, "bfa8de2062", true)
+        Bugly.setIsDevelopmentDevice(application, true)
 //        LogUtils.getConfig().setBorderSwitch(false)
-        QueryBuilder.LOG_SQL=true
-        QueryBuilder.LOG_VALUES=true
+        QueryBuilder.LOG_SQL = true
+        QueryBuilder.LOG_VALUES = true
     }
     
     override fun onBaseContextAttached(base: Context?) {
         super.onBaseContextAttached(base)
         MultiDex.install(base)
         Beta.installTinker(this)
-    
+        
     }
     
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
