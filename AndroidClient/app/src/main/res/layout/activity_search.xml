@@ -5,6 +5,10 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
+        <import type="android.text.TextUtils"/>
+
         <variable
             name="vm"
             type="com.chat.androidclient.mvvm.viewmodel.SearchVM"/>
@@ -14,11 +18,14 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorf3f3f3"
         tools:context=".mvvm.view.activity.SearchActivity">
         <!--搜索-->
         <RelativeLayout
+            android:id="@+id/re_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorffffff"
             android:paddingBottom="20pt"
             android:paddingTop="20pt">
 
@@ -41,6 +48,7 @@
                         android:layout_width="35pt"
                         android:layout_height="35pt"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="20pt"
                         android:src="@drawable/qb_group_menu_search_group"
                         />
 
@@ -68,11 +76,120 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="50pt"
                 android:layout_marginRight="50pt"
-                android:text="取消"
                 android:onClick="onClick"
+                android:text="取消"
                 android:textColor="@color/color41c5f6"
                 android:textSize="18sp"
                 />
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/re_search"
+            android:background="@color/colorffffff"
+            android:orientation="vertical"
+            android:visibility="@{TextUtils.isEmpty(vm.text)?View.GONE:View.VISIBLE}">
+
+            <RelativeLayout
+                android:id="@+id/re_se_person"
+                android:layout_width="match_parent"
+                android:layout_height="150pt"
+                android:onClick="onClick">
+
+                <ImageView
+                    android:id="@+id/iv_vza"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50pt"
+                    android:layout_marginRight="50pt"
+                    android:src="@drawable/vza"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_vza"
+                    android:text="@{`找人：`+vm.text}"
+                    android:textColor="@color/color000000"
+                    android:textSize="16sp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1pt"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorf1f2f7"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_se_group"
+                android:layout_width="match_parent"
+                android:layout_height="150pt"
+                android:onClick="onClick">
+
+                <ImageView
+                    android:id="@+id/iv_vyy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50pt"
+                    android:layout_marginRight="50pt"
+                    android:src="@drawable/vyy"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_vyy"
+                    android:text="@{`找群：`+vm.text}"
+                    android:textColor="@color/color000000"
+                    android:textSize="16sp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1pt"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorf1f2f7"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_se_subscription"
+                android:layout_width="match_parent"
+                android:layout_height="150pt"
+                android:onClick="onClick">
+
+                <ImageView
+                    android:id="@+id/iv_wbg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50pt"
+                    android:layout_marginRight="50pt"
+                    android:src="@drawable/wbg"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_wbg"
+                    android:text="@{`找公众号：`+vm.text}"
+                    android:textColor="@color/color000000"
+                    android:textSize="16sp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1pt"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorf1f2f7"/>
+            </RelativeLayout>
+
+        </LinearLayout>
     </RelativeLayout>
 </layout>

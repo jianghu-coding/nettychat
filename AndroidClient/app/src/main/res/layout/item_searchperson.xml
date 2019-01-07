@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160pt"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="145pt"
+        android:background="@color/colorffffff">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon"
+            android:layout_width="105pt"
+            android:layout_height="105pt"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50pt"
+            android:src="@drawable/otherhead"
+            />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="33pt"
+            android:layout_marginRight="115pt"
+            android:layout_marginTop="20pt"
+            android:layout_toRightOf="@+id/icon"
+            android:text="张三"
+            android:textColor="@color/color000000"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/address"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/name"
+            android:layout_marginBottom="20pt"
+            android:layout_marginLeft="33pt"
+            android:layout_marginRight="50pt"
+            android:layout_toRightOf="@+id/re_sex_age"
+            android:singleLine="true"
+            android:text="四川成都"
+            android:textColor="@color/color808080"
+            android:textSize="12sp"
+            />
+
+        <RelativeLayout
+            android:layout_alignTop="@+id/address"
+            android:id="@+id/re_sex_age"
+            android:layout_toRightOf="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorff4076">
+
+            <ImageView
+                android:id="@+id/iv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/twj"
+                />
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_sex"
+                android:text="30"
+                android:textColor="@color/colorffffff"
+                />
+
+        </RelativeLayout>
+
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="0.5pt"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colordee0df">
+
+        </View>
+    </RelativeLayout>
+</FrameLayout>
