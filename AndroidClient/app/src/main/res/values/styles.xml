@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -15,12 +15,22 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:fitsSystemWindows">true</item>
     </style>
+
     <style name="fullscreen" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
     <style name="signupstyle" parent="AppTheme">
-     <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="profilestyle" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="windowNoTitle">true</item>
+       <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="colorPrimary">@android:color/transparent</item>
     </style>
 </resources>
