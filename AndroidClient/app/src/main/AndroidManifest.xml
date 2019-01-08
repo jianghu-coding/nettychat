@@ -77,6 +77,8 @@
         </activity>
         <activity android:name=".mvvm.view.activity.SearchPersonActivity">
         </activity>
+        <activity android:name=".mvvm.view.activity.FriendDetailActivity">
+        </activity>
     </application>
 
 </manifest>

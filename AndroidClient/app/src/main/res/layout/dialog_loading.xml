@@ -12,13 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150pt"
+        android:layout_marginTop="100pt"
         android:id="@+id/iv_load"
         android:src="@drawable/loading"
         />
     <TextView
         android:layout_below="@+id/iv_load"
         android:id="@+id/tv_load"
+        android:layout_marginTop="50pt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="正在加载"
