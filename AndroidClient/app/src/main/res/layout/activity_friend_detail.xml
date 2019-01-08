@@ -413,6 +413,38 @@
                         android:layout_alignLeft="@+id/music_name"
                         />
                 </RelativeLayout>
+                <!--精选照片-->
+                <RelativeLayout
+                    android:layout_below="@+id/re_music"
+                    android:id="@+id/re_picture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                   >
+
+                    <TextView
+                        android:id="@+id/tv_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="精选照片"
+                        android:layout_marginLeft="50pt"
+                        android:textColor="@color/color000000"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        />
+
+
+
+                    <ImageView
+                        android:id="@+id/iv_pic"
+                        android:layout_width="match_parent"
+                        android:layout_height="400pt"
+                        android:scaleType="centerCrop"
+                        android:layout_below="@+id/tv_picture"
+                        android:layout_marginTop="45pt"
+                        android:src="@drawable/profile_music"
+                        />
+
+                </RelativeLayout>
             </RelativeLayout>
         </ScrollView>
         <!--bottomlayout-->
