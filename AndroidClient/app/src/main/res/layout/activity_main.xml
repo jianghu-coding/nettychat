@@ -17,6 +17,206 @@
         android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <!--mainView-->
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".mvvm.view.activity.MainActivity">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/color41c5f6"
+                android:id="@+id/fakebar"/>
+            <RelativeLayout
+
+                android:id="@+id/title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="140pt"
+                android:background="@color/color41c5f6">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/head"
+                    android:layout_width="95pt"
+                    android:layout_height="95pt"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20pt"
+                    android:onClick="onClick"
+                    android:src="@drawable/myheader"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@{vm.titleText}"
+                    android:textColor="@color/colorffffff"
+                    android:textSize="18sp"
+                    />
+
+                <ImageView
+                    android:id="@+id/connectloading"
+                    android:layout_width="70pt"
+                    android:layout_height="70pt"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30pt"
+                    android:layout_toLeftOf="@+id/tv_title"
+                    android:src="@drawable/loading"
+                    />
+
+                <ImageView
+                    android:id="@+id/titlt_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20pt"
+                    android:onClick="onClick"
+                    android:src="@drawable/wkj"
+                    android:visibility="@{vm.conversationSelected?View.VISIBLE:View.GONE}"
+                    />
+
+                <ImageView
+                    android:id="@+id/add_conversation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20pt"
+                    android:onClick="onClick"
+                    android:src="@drawable/friends_btn_add_nor"
+                    android:visibility="@{vm.contactsSelected?View.VISIBLE:View.GONE}"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20pt"
+                    android:onClick="onClick"
+                    android:text="更多"
+                    android:textColor="@color/colorffffff"
+                    android:textSize="18sp"
+                    android:visibility="@{vm.dynamicSelected?View.VISIBLE:View.GONE}"
+                    />
+
+            </RelativeLayout>
+
+
+            <include
+                layout="@layout/hdivlayout"
+                android:layout_width="match_parent"
+                android:layout_height="2pt"
+                android:layout_above="@+id/bottom_layout"
+                />
+
+            <LinearLayout
+                android:id="@+id/bottom_layout"
+                android:layout_width="match_parent"
+                android:layout_height="150pt"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/re_conversation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:id="@+id/ic_conversation"
+                        android:layout_width="70pt"
+                        android:layout_height="70pt"
+                        android:layout_centerHorizontal="true"
+                        android:src="@{vm.conversationSelected?@drawable/conversationpress:@drawable/conversation}"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ic_conversation"
+                        android:layout_centerHorizontal="true"
+                        android:text="消息"
+                        android:textColor="@{vm.conversationSelected?@color/color41c5f6:@color/color808392}"
+                        android:textSize="16sp"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/re_contacts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:id="@+id/ic_contacts"
+                        android:layout_width="70pt"
+                        android:layout_height="70pt"
+                        android:layout_centerHorizontal="true"
+                        android:src="@{vm.contactsSelected?@drawable/contactspress:@drawable/contacts}"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ic_contacts"
+                        android:layout_centerHorizontal="true"
+                        android:text="联系人"
+                        android:textColor="@{vm.contactsSelected?@color/color41c5f6:@color/color808392}"
+                        android:textSize="16sp"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/re_dynamic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:id="@+id/ic_dynamic"
+                        android:layout_width="70pt"
+                        android:layout_height="70pt"
+                        android:layout_centerHorizontal="true"
+                        android:src="@{vm.dynamicSelected?@drawable/dynamicpress:@drawable/dynamic}"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ic_dynamic"
+                        android:layout_centerHorizontal="true"
+                        android:text="动态"
+                        android:textColor="@{vm.dynamicSelected?@color/color41c5f6:@color/color808392}"
+                        android:textSize="16sp"
+
+                        />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/main_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottom_layout"
+                android:layout_below="@+id/title_layout"
+                android:layout_marginBottom="2pt"/>
+        </RelativeLayout>
         <!--navigation View-->
         <RelativeLayout
             android:layout_width="882pt"
@@ -42,6 +242,7 @@
                     android:layout_height="match_parent">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                       android:onClick="onClick"
                         android:id="@+id/iv_myhead"
                         android:layout_width="90pt"
                         android:layout_height="90pt"
@@ -62,6 +263,7 @@
                         />
 
                     <LinearLayout
+                        android:layout_marginTop="15pt"
                         android:id="@+id/ll_level"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -72,13 +274,28 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/gqm"
+                            android:src="@drawable/hdr"
+                            />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/hdr"
                             />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/gqm"
+                            android:src="@drawable/hdu"
+                            />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/hds"
+                            />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/hdt"
                             />
                     </LinearLayout>
 
@@ -346,206 +563,7 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-        <!--mainView-->
-        <RelativeLayout
 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".mvvm.view.activity.MainActivity">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/color41c5f6"
-                android:id="@+id/fakebar"/>
-            <RelativeLayout
-
-                android:id="@+id/title_layout"
-                android:layout_width="match_parent"
-                android:layout_height="140pt"
-                android:background="@color/color41c5f6">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/head"
-                    android:layout_width="95pt"
-                    android:layout_height="95pt"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20pt"
-                    android:onClick="onClick"
-                    android:src="@drawable/myheader"
-
-                    />
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@{vm.titleText}"
-                    android:textColor="@color/colorffffff"
-                    android:textSize="18sp"
-                    />
-
-                <ImageView
-                    android:id="@+id/connectloading"
-                    android:layout_width="70pt"
-                    android:layout_height="70pt"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="30pt"
-                    android:layout_toLeftOf="@+id/tv_title"
-                    android:src="@drawable/loading"
-                    />
-
-                <ImageView
-                    android:id="@+id/titlt_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20pt"
-                    android:onClick="onClick"
-                    android:src="@drawable/wkj"
-                    android:visibility="@{vm.conversationSelected?View.VISIBLE:View.GONE}"
-                    />
-
-                <ImageView
-                    android:id="@+id/add_conversation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20pt"
-                    android:onClick="onClick"
-                    android:src="@drawable/friends_btn_add_nor"
-                    android:visibility="@{vm.contactsSelected?View.VISIBLE:View.GONE}"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20pt"
-                    android:onClick="onClick"
-                    android:text="更多"
-                    android:textColor="@color/colorffffff"
-                    android:textSize="18sp"
-                    android:visibility="@{vm.dynamicSelected?View.VISIBLE:View.GONE}"
-                    />
-
-            </RelativeLayout>
-
-
-            <include
-                layout="@layout/hdivlayout"
-                android:layout_width="match_parent"
-                android:layout_height="2pt"
-                android:layout_above="@+id/bottom_layout"
-                />
-
-            <LinearLayout
-                android:id="@+id/bottom_layout"
-                android:layout_width="match_parent"
-                android:layout_height="150pt"
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/re_conversation"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="onClick">
-
-                    <ImageView
-                        android:id="@+id/ic_conversation"
-                        android:layout_width="70pt"
-                        android:layout_height="70pt"
-                        android:layout_centerHorizontal="true"
-                        android:src="@{vm.conversationSelected?@drawable/conversationpress:@drawable/conversation}"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ic_conversation"
-                        android:layout_centerHorizontal="true"
-                        android:text="消息"
-                        android:textColor="@{vm.conversationSelected?@color/color41c5f6:@color/color808392}"
-                        android:textSize="16sp"
-                        />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/re_contacts"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="onClick">
-
-                    <ImageView
-                        android:id="@+id/ic_contacts"
-                        android:layout_width="70pt"
-                        android:layout_height="70pt"
-                        android:layout_centerHorizontal="true"
-                        android:src="@{vm.contactsSelected?@drawable/contactspress:@drawable/contacts}"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ic_contacts"
-                        android:layout_centerHorizontal="true"
-                        android:text="联系人"
-                        android:textColor="@{vm.contactsSelected?@color/color41c5f6:@color/color808392}"
-                        android:textSize="16sp"
-
-                        />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/re_dynamic"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="onClick">
-
-                    <ImageView
-                        android:id="@+id/ic_dynamic"
-                        android:layout_width="70pt"
-                        android:layout_height="70pt"
-                        android:layout_centerHorizontal="true"
-                        android:src="@{vm.dynamicSelected?@drawable/dynamicpress:@drawable/dynamic}"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ic_dynamic"
-                        android:layout_centerHorizontal="true"
-                        android:text="动态"
-                        android:textColor="@{vm.dynamicSelected?@color/color41c5f6:@color/color808392}"
-                        android:textSize="16sp"
-
-                        />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/main_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/bottom_layout"
-                android:layout_below="@+id/title_layout"
-                android:layout_marginBottom="2pt"/>
-        </RelativeLayout>
 
     </android.support.v4.widget.DrawerLayout>
 </layout>

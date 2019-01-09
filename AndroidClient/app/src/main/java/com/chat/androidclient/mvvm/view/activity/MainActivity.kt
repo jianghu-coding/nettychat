@@ -1,6 +1,7 @@
 package com.chat.androidclient.mvvm.view.activity
 
 import android.content.Intent
+import android.view.Gravity
 import android.view.View
 import com.blankj.utilcode.util.BarUtils
 import com.chat.androidclient.R
@@ -17,6 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         mVM.checkConversation()
         //处理状态栏效果
         initStatusBar()
+//        mDataBinding.drawerlayout.tou
     }
     
     private fun initStatusBar() {
@@ -39,10 +41,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
                 startActivity(Intent(this, SearchActivity::class.java))
             }
             R.id.head -> {
-                startActivity(Intent(this, FriendDetailActivity::class.java))
+                if (mDataBinding.drawerlayout.isDrawerOpen(Gravity.LEFT))
+                mDataBinding.drawerlayout.closeDrawer(Gravity.LEFT)
+                else{
+                    mDataBinding.drawerlayout.openDrawer(Gravity.LEFT)
+                }
             }
             R.id.titlt_more -> showDevloadingMsg()
             R.id.tv_more -> showDevloadingMsg()
+            R.id.iv_myhead->{
+                startActivity(Intent(this, FriendDetailActivity::class.java))
+            }
         }
     }
     

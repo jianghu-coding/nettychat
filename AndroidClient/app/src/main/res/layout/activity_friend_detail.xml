@@ -7,10 +7,10 @@
     >
 
     <RelativeLayout
-        android:background="@color/colorffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-     >
+        android:background="@color/colorffffff"
+        >
 
 
         <android.support.design.widget.CoordinatorLayout
@@ -26,13 +26,13 @@
                 android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-               >
+                >
 
                 <android.support.design.widget.CollapsingToolbarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
                     android:id="@+id/collapslayout"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
                     app:contentScrim="#41c5f6"
                     app:expandedTitleMarginEnd="64dp"
                     app:expandedTitleMarginStart="20dp"
@@ -47,10 +47,10 @@
 
 
                         <ImageView
-                            android:background="@color/colorffffff"
                             android:id="@+id/img_bg"
                             android:layout_width="match_parent"
                             android:layout_height="466pt"
+                            android:background="@color/colorffffff"
 
                             android:scaleType="centerCrop"
                             android:src="@drawable/friendbg"
@@ -88,62 +88,62 @@
                     </RelativeLayout>
 
                     <android.support.v7.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:fitsSystemWindows="false"
-app:contentInsetStart="0dp"
-                        app:layout_collapseMode="pin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        app:contentInsetStart="0dp"
+                        app:layout_collapseMode="pin">
 
 
-                    <!--title-->
-                    <RelativeLayout
-                        android:paddingLeft="25pt"
-                        android:id="@+id/title_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="140pt"
-                        android:background="@android:color/transparent"
+                        <!--title-->
+                        <RelativeLayout
+                            android:id="@+id/title_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="140pt"
+                            android:background="@android:color/transparent"
+                            android:paddingLeft="25pt"
 
-                        >
+                            >
 
-                        <TextView
-                            android:id="@+id/back"
-                            android:layout_width="wrap_content"
-                            android:layout_height="95pt"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="0pt"
-                            android:drawableLeft="@drawable/back"
-                            android:gravity="center"
-                            android:onClick="onClick"
-                            android:text="返回"
-                            android:textColor="@color/colorffffff"
-                            android:textSize="18sp"
-                            />
+                            <TextView
+                                android:id="@+id/back"
+                                android:layout_width="wrap_content"
+                                android:layout_height="95pt"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="0pt"
+                                android:drawableLeft="@drawable/back"
+                                android:gravity="center"
+                                android:onClick="onClick"
+                                android:text="返回"
+                                android:textColor="@color/colorffffff"
+                                android:textSize="18sp"
+                                />
 
-                        <TextView
-                            android:id="@+id/tv_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="个人资料"
-                            android:textColor="@color/colorffffff"
-                            android:textSize="18sp"
-                            />
+                            <TextView
+                                android:id="@+id/tv_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="个人资料"
+                                android:textColor="@color/colorffffff"
+                                android:textSize="18sp"
+                                />
 
 
-                        <TextView
-                            android:id="@+id/tv_more"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="20pt"
-                            android:onClick="onClick"
-                            android:text="更多"
-                            android:textColor="@color/colorffffff"
-                            android:textSize="18sp"
-                            />
+                            <TextView
+                                android:id="@+id/tv_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="20pt"
+                                android:onClick="onClick"
+                                android:text="更多"
+                                android:textColor="@color/colorffffff"
+                                android:textSize="18sp"
+                                />
 
-                    </RelativeLayout>
+                        </RelativeLayout>
                     </android.support.v7.widget.Toolbar>
 
                 </android.support.design.widget.CollapsingToolbarLayout>
@@ -257,15 +257,29 @@ app:contentInsetStart="0dp"
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/gqm"
+                                android:src="@drawable/hdr"
                                 />
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/gqm"
+                                android:src="@drawable/hdr"
                                 />
-
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/hdu"
+                                />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/hds"
+                                />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/hdt"
+                                />
                             <TextView
                                 android:id="@+id/tv_level"
                                 android:layout_width="wrap_content"
@@ -531,6 +545,7 @@ app:contentInsetStart="0dp"
                 android:background="@color/colorc2c2c2"/>
 
             <TextView
+                android:id="@+id/add_friend"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -540,9 +555,8 @@ app:contentInsetStart="0dp"
                 android:layout_marginTop="20pt"
                 android:background="@drawable/shape_round_5dp"
                 android:gravity="center"
-                android:text="加好友"
-                android:id="@+id/add_friend"
                 android:onClick="onClick"
+                android:text="加好友"
                 android:textColor="@color/color000000"
                 android:textSize="18sp"
                 />
