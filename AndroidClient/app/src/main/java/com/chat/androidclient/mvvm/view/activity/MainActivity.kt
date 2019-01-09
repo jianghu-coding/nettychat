@@ -2,6 +2,7 @@ package com.chat.androidclient.mvvm.view.activity
 
 import android.content.Intent
 import android.view.View
+import com.blankj.utilcode.util.BarUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityMainBinding
 import com.chat.androidclient.mvvm.viewmodel.MainVM
@@ -14,6 +15,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         mVM.connect()
         mDataBinding.vm = mVM
         mVM.checkConversation()
+        //处理状态栏效果
+        initStatusBar()
+    }
+    
+    private fun initStatusBar() {
+        BarUtils.setStatusBarAlpha4Drawer(this, mDataBinding.drawerlayout, mDataBinding.fakebar, 0, false)
+        BarUtils.addMarginTopEqualStatusBarHeight(mDataBinding.titleLayout)
     }
     
     override fun onClick(v: View) {
@@ -30,18 +38,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             R.id.add_conversation -> {
                 startActivity(Intent(this, SearchActivity::class.java))
             }
-            R.id.head->{startActivity(Intent(this,FriendDetailActivity::class.java))}
-            R.id.titlt_more->showDevloadingMsg()
-            R.id.tv_more->showDevloadingMsg()
+            R.id.head -> {
+                startActivity(Intent(this, FriendDetailActivity::class.java))
+            }
+            R.id.titlt_more -> showDevloadingMsg()
+            R.id.tv_more -> showDevloadingMsg()
         }
     }
     
     fun hideLoading() {
         mDataBinding.connectloading.visibility = View.GONE
     }
-    fun showLoading(){
-        mDataBinding.connectloading.visibility = View.VISIBLE
     
+    fun showLoading() {
+        mDataBinding.connectloading.visibility = View.VISIBLE
+        
     }
     
     override fun onBackPressed() {

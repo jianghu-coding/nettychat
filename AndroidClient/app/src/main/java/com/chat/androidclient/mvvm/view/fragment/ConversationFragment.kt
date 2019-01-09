@@ -2,6 +2,7 @@ package com.chat.androidclient.mvvm.view.fragment
 
 
 import android.support.v7.widget.LinearLayoutManager
+import com.blankj.utilcode.util.BarUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.adapter.ConversationListAdapter
 import com.chat.androidclient.databinding.FragmentConversationBinding
