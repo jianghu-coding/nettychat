@@ -1,14 +1,11 @@
 package com.chat.androidclient.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.TimeUtils
 import com.chat.androidclient.BR
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ItemConversationlistBinding
@@ -18,6 +15,7 @@ import com.chat.androidclient.greendao.FriendDao
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
+import com.chat.androidclient.util.TimeUtils
 
 /**
  * Created by lps on 2018/12/27 14:52.
@@ -34,7 +32,7 @@ class ConversationListAdapter(var context: Context) : RecyclerView.Adapter<VH<*>
         val conversation = convBuilder.where(ConversationDao.Properties.FromId.eq(messageList[position].fromId)).unique()
         binding.name.text = nickname
         binding.content.text = conversation.lastcontent
-        binding.time.text = TimeUtils.getFriendlyTimeSpanByNow(conversation.time)
+        binding.time.text = TimeUtils.getTimeFriend(conversation.time)
         holder.binding.root.setOnClickListener { ChatActivity.startActivity(context,messageList[position].fromId) }
     }
     
