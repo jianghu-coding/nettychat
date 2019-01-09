@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.App
 import com.chat.androidclient.R
 import com.chat.androidclient.event.LoginResponseEvent
+import com.chat.androidclient.event.ReConnectEvent
 import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.LoginRequest
@@ -35,29 +36,39 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
     var currentFragment: Fragment? = null
     
     
-    fun connect(){
+    fun connect() {
         //这里可以根据是否在线。在重连。不然从login进来。会重复调用登陆
         if (!App.CONNECT) {
+            view.showLoading()
             Handler().postDelayed({ ChatIM.instance.cmd(LoginRequest(SPUtils.getInstance().getString(Constant.LoginUserName), SPUtils.getInstance().getString(Constant.LoginUserName))) }, 500)
-        }else{
+        }
+        else {
             view.hideLoading()
         }
     }
+    
+    @Subscribe
+    fun reconnectEvent(event: ReConnectEvent) {
+        connect()
+    }
+    
     /**
      * 登陆的结果
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun loginResponse(event: LoginResponseEvent) {
         val response = event.msg as LoginResponse
-        if (response.error){
-            view.showMsg(""+response.errorInfo)
+        if (response.error) {
+            view.showMsg("" + response.errorInfo)
             view.showLoading()
-        }else{
-            App.CONNECT=true
-            SPUtils.getInstance().put(Constant.id,response.userId!!)
+        }
+        else {
+            App.CONNECT = true
+            SPUtils.getInstance().put(Constant.id, response.userId!!)
             view.hideLoading()
         }
     }
+    
     /**
      * 选中会话
      */
@@ -112,7 +123,7 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
             currentFragment = fragment
             return
         }
-        if (currentFragment!=fragment) {
+        if (currentFragment != fragment) {
             if (fragment.isAdded) {
                 view.fragmentManager
                         .beginTransaction()
@@ -129,8 +140,8 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
             }
             currentFragment = fragment
         }
-    
+        
     }
- 
+    
     
 }

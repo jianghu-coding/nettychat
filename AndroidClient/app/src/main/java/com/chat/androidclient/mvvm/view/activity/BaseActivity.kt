@@ -49,7 +49,7 @@ open abstract class BaseActivity<T : ViewDataBinding, D : BaseViewModel> : RxApp
         Snackbar.make(mDataBinding.root,msg,Snackbar.LENGTH_SHORT).show()
     }
     
-    fun showDevlopingMsg() {
+    fun showDevloadingMsg() {
         Snackbar.make(mDataBinding.root,"此功能正在开发",Snackbar.LENGTH_SHORT).show()
     }
     override fun onDestroy() {

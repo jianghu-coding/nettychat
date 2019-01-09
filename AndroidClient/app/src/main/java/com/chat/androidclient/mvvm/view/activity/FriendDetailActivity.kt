@@ -1,15 +1,13 @@
 package com.chat.androidclient.mvvm.view.activity
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.view.WindowManager
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.SpanUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityFriendDetailBinding
 import com.chat.androidclient.mvvm.viewmodel.FriendDetailVM
+import kotlinx.android.synthetic.main.activity_friend_detail.view.*
 
 class FriendDetailActivity : BaseActivity<ActivityFriendDetailBinding,FriendDetailVM>() {
     override fun getViewModel()= FriendDetailVM (this)
@@ -17,20 +15,24 @@ class FriendDetailActivity : BaseActivity<ActivityFriendDetailBinding,FriendDeta
     
     override fun init() {
         super.init()
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-//        BarUtils.setStatusBarColor(this,Color.TRANSPARENT)
-//        BarUtils.setStatusBarAlpha(this,15)
         mDataBinding.appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-            LogUtils.e(""+verticalOffset)
-//            LogUtils.e(""+mDataBinding.appBar.totalScrollRange)
             if (Math.abs(verticalOffset)>=mDataBinding.appBar.totalScrollRange){
-//                mDataBinding.collapslayout.contentScrim=ColorDrawable(Color.parseColor("#41c5f6"))
-//            mDataBinding.titleLayout.setBackgroundColor(resources.getColor(R.color.color41c5f6))
+//                收起
+                mDataBinding.titleLayout.tv_title.visibility= VISIBLE
+                BarUtils.setStatusBarColor(this,resources.getColor(R.color.color41c5f6),0)
             }else{
-//                mDataBinding.titleLayout.setBackgroundColor(0)
-    
+//                展开
+                BarUtils.setStatusBarColor(this,resources.getColor(android.R.color.transparent),0)
+                mDataBinding.titleLayout.tv_title.visibility=GONE
             }
+        }
+    }
+    
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.back->{finish()}
+            R.id.add_friend->{showDevloadingMsg()}
+            
         }
     }
 }

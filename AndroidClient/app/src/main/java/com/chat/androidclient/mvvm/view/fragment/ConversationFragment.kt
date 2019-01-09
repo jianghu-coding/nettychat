@@ -5,10 +5,10 @@ import android.support.v7.widget.LinearLayoutManager
 import com.chat.androidclient.R
 import com.chat.androidclient.adapter.ConversationListAdapter
 import com.chat.androidclient.databinding.FragmentConversationBinding
+import com.chat.androidclient.event.ReConnectEvent
 import com.chat.androidclient.mvvm.model.Conversation
 import com.chat.androidclient.mvvm.viewmodel.ConversationVM
-import com.scwang.smartrefresh.layout.api.RefreshLayout
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
+import org.greenrobot.eventbus.EventBus
 
 /**
  * @author lps
@@ -21,8 +21,11 @@ class ConversationFragment : BaseFragment<FragmentConversationBinding, Conversat
     override fun getLayoutRes() = R.layout.fragment_conversation
     override fun init() {
         initRecyclerView()
-        mDataBinding.vm=mVM
-        mDataBinding.refreshlayout.setOnRefreshListener { mVM.init() }
+        mDataBinding.vm = mVM
+        mDataBinding.refreshlayout.setOnRefreshListener {
+            mVM.init()
+            EventBus.getDefault().post(ReConnectEvent())
+        }
         mVM.init()
     }
     

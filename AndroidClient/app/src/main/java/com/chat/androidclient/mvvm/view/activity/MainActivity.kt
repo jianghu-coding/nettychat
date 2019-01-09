@@ -2,12 +2,8 @@ package com.chat.androidclient.mvvm.view.activity
 
 import android.content.Intent
 import android.view.View
-import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityMainBinding
-import com.chat.androidclient.im.ChatIM
-import com.chat.androidclient.mvvm.model.Constant
-import com.chat.androidclient.mvvm.model.LoginRequest
 import com.chat.androidclient.mvvm.viewmodel.MainVM
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
@@ -35,8 +31,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
                 startActivity(Intent(this, SearchActivity::class.java))
             }
             R.id.head->{startActivity(Intent(this,FriendDetailActivity::class.java))}
-            R.id.titlt_more->showDevlopingMsg()
-            R.id.tv_more->showDevlopingMsg()
+            R.id.titlt_more->showDevloadingMsg()
+            R.id.tv_more->showDevloadingMsg()
         }
     }
     
