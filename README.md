@@ -121,7 +121,7 @@
     
  
 ## Android 第一版基础版即将完成，效果图
-
+![image1](https://github.com/hejianglong/nettychat/blob/master/AndroidClient/pic/Screenshot_20190109-170721.jpg)
 ![image1](https://github.com/hejianglong/nettychat/blob/master/AndroidClient/pic/Screenshot_20190103-131011.jpg)
 ![image2](https://github.com/hejianglong/nettychat/blob/master/AndroidClient/pic/Screenshot_20190103-131013.jpg)
 ![image3](https://github.com/hejianglong/nettychat/blob/master/AndroidClient/pic/Screenshot_20190103-131020.jpg)
