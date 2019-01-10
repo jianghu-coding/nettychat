@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.im.nettychat.domain.mapper.FriendMapper">
+    <insert
+            id="save"
+            parameterType="Friend"
+            flushCache="true"
+            statementType="PREPARED"
+            keyProperty="id"
+            keyColumn="id"
+            useGeneratedKeys="true"
+            timeout="20">
+        INSERT INTO friend (`from_user_id`, `to_user_id`)
+        VALUES (#{fromUserId}, #{toUserId})
+    </insert>
+</mapper>

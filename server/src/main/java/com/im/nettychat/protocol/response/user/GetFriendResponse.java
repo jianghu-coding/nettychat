@@ -14,9 +14,8 @@
 package com.im.nettychat.protocol.response.user;
 
 import com.im.nettychat.common.Command;
-import com.im.nettychat.model.User;
+import com.im.nettychat.protocol.dto.UserDTO;
 import lombok.Data;
-
 import java.util.List;
 
 /**
@@ -27,7 +26,7 @@ import java.util.List;
 @Data
 public class GetFriendResponse extends UserResponse {
 
-    private List<User> friends;
+    private List<UserDTO> friends;
 
     @Override
     public Byte getCommand() {

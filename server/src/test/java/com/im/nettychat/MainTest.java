@@ -62,7 +62,7 @@ public class MainTest {
     private static final String TEST_B_PASSWORD = "999999";
     private static final String TEST_B_NAME = "宝六";
     private static final String HOST = "127.0.0.1";
-    private static final int PORT = 8888;
+    private static final int PORT = 9999;
 
     public static void main(String[] args) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();

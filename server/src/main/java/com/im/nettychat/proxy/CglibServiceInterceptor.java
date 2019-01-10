@@ -4,12 +4,14 @@ import com.im.nettychat.config.ServerConfig;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import org.apache.ibatis.session.SqlSession;
 import redis.clients.jedis.Jedis;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import static com.im.nettychat.cache.LocalRSession.LOCAL_JEDIS;
+import static com.im.nettychat.cache.LocalRSession.LOCAL_SESSIONS;
 import static com.im.nettychat.executor.AsyncTaskPool.TASK_POOL;
 
 /**
@@ -48,6 +50,11 @@ public class CglibServiceInterceptor implements MethodInterceptor {
                     if (jedis != null) {
                         LOCAL_JEDIS.remove();
                         jedis.close();
+                    }
+                    SqlSession sqlSession = LOCAL_SESSIONS.get();
+                    if (sqlSession != null) {
+                        LOCAL_SESSIONS.remove();
+                        sqlSession.close();
                     }
                 }
                 return result;
