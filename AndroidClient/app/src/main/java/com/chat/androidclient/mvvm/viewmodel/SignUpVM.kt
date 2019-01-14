@@ -29,13 +29,13 @@ class SignUpVM(var view: SignUpActivity) : BaseViewModel() {
     fun onSignupResponse(event: SignUpResponseEvent){
         val response = event.msg as RegisterResponse
         if (!response.error){
+            EventBus.getDefault().post(DestroyLoginEvent())
             view.showMsg("注册成功")
             SPUtils.getInstance().put(Constant.LoginUserName,name)
             SPUtils.getInstance().put(Constant.LoginUserPass,pass)
             SPUtils.getInstance().put(Constant.id,response.userId!!)
             SPUtils.getInstance().put(Constant.LoginState,true)
             // 销毁登陆Activity,不然以现在的逻辑在MainActivity连接的时候会调用LoginVM的方法
-            EventBus.getDefault().post(DestroyLoginEvent())
             view.startActivity(Intent(view,MainActivity::class.java))
             view.finish()
         }else{

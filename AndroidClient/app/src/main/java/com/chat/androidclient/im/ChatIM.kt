@@ -23,7 +23,7 @@ class ChatIM private constructor() {
         private var channel: Channel? = null
         private val HOST = "192.168.0.145"
         private val TAG = "ChatService"
-        private val PORT = 8888
+        private val PORT = 9999
     
         /**
          * 初始化

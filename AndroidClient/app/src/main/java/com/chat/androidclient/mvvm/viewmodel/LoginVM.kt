@@ -54,8 +54,14 @@ class LoginVM(var view: LoginActivity) : BaseViewModel() {
         }
     }
     
+    /**
+     * 这里必须要销毁解除注册，否则会调用到[loginResponse]
+     * 重复写入sp信息。重复拉起MainActivity，而且sp name 和pass 被写为默认空。导致第二次Main登陆报错
+     * 用户不存在
+     */
     @Subscribe
     fun destroyThisVM(event: DestroyLoginEvent) {
+        super.destroy()
         view.finish()
     }
 }

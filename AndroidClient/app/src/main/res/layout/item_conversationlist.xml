@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
 <data>
+    <import type="android.view.View"/>
     <variable
         name="data"
         type="com.chat.androidclient.mvvm.model.Conversation"/>
@@ -62,6 +63,7 @@
             />
 
         <TextView
+            android:visibility="@{data.msgcount>0?View.VISIBLE:View.GONE}"
             android:padding="5pt"
             android:id="@+id/count"
             android:layout_width="wrap_content"
@@ -72,7 +74,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="33pt"
             android:layout_marginLeft="33pt"
-            android:text="1"
+            android:text="@{``+data.msgcount}"
             android:gravity="center"
             android:background="@drawable/shape_circle_red"
             android:textColor="@color/colorffffff"
