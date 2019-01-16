@@ -2,79 +2,88 @@
 <layout>
 
     <data>
+
         <import type="android.view.View"/>
-<variable
-    name="vm"
-    type="com.chat.androidclient.mvvm.viewmodel.ConversationVM"/>
+
+        <variable
+            name="vm"
+            type="com.chat.androidclient.mvvm.viewmodel.ConversationVM"/>
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                 xmlns:tools="http://schemas.android.com/tools"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:background="@color/colorffffff"
-                 tools:context=".mvvm.view.fragment.ConversationFragment">
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="match_parent"
+                    tools:context=".mvvm.view.fragment.ConversationFragment">
 
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="?attr/ui_background">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-        <!--搜索-->
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="80pt"
-            android:layout_marginLeft="30pt"
-            android:layout_marginRight="30pt"
-            android:layout_marginTop="20pt"
-            android:background="@drawable/shape_search"
-           >
-            <RelativeLayout
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/iv_search"
-                    android:layout_width="35pt"
-                    android:layout_height="35pt"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/qb_group_menu_search_group"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/iv_search"
-                    android:text="搜索"
-                    android:layout_centerVertical="true"
-                    android:singleLine="true"
-                    android:textSize="14sp"
-                    />
-            </RelativeLayout>
-
-
-
-        </RelativeLayout>
-            <include
-                layout="@layout/conversation_empty"
-                android:visibility="@{vm.isEmpty?View.VISIBLE:View.GONE}"
-                />
-            <android.support.v7.widget.RecyclerView
-                android:visibility="@{vm.isEmpty?View.GONE:View.VISIBLE}"
-                android:id="@+id/message_recycler_view"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
+
+                <!--搜索-->
+
+                <RelativeLayout
+                    android:id="@+id/re_conversation_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="80pt"
+                    android:layout_marginLeft="30pt"
+                    android:layout_marginRight="30pt"
+                    android:layout_marginTop="20pt"
+                    android:background="?attr/search_bg"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:id="@+id/iv_search"
+                            android:layout_width="35pt"
+                            android:layout_height="35pt"
+                            android:layout_centerVertical="true"
+                            android:src="?attr/search_icon"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/tv_search"
+                            android:layout_toRightOf="@+id/iv_search"
+                            android:singleLine="true"
+                            android:text="搜索"
+                            android:textColor="?attr/search_tv_color"
+                            android:textSize="14sp"
+                            />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <include
+                    layout="@layout/conversation_empty"
+                    android:visibility="@{vm.isEmpty?View.VISIBLE:View.GONE}"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/message_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{vm.isEmpty?View.GONE:View.VISIBLE}">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     </RelativeLayout>

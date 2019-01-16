@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="ui_background" format="color"/>
+    <attr name="tv_color" format="color"/>
+    <attr name="search_bg" format="reference"/>
+    <attr name="img_svip" format="reference"/>
+    <attr name="img_qianbao" format="reference"/>
+    <attr name="img_zhuangban" format="reference"/>
+    <attr name="img_shoucang" format="reference"/>
+    <attr name="img_xiangce" format="reference"/>
+    <attr name="img_wenjian" format="reference"/>
+    <attr name="img_freetraffic" format="reference"/>
+    <attr name="img_setting" format="reference"/>
+    <attr name="img_daynight" format="reference"/>
+    <attr name="search_tv_color" format="color"/>
+    <attr name="search_icon" format="reference"/>
+    <attr name="div_color" format="color"/>
+</resources>

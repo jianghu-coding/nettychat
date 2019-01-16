@@ -17,6 +17,7 @@ import com.chat.androidclient.R
 import com.chat.androidclient.event.LoginResponseEvent
 import com.chat.androidclient.event.MessageEvent
 import com.chat.androidclient.event.RefreshConversationEvent
+import com.chat.androidclient.event.ThemeEvent
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.DaoSession
 import com.chat.androidclient.im.ChatIM
@@ -127,6 +128,10 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         }
     }
     
+    @Subscribe
+    fun  themeChange(event:ThemeEvent){
+        view.refreshUI()
+    }
     override fun destroy() {
         super.destroy()
         //to do 关闭数据库

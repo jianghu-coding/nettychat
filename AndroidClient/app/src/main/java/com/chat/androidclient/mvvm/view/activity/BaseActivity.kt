@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.View
 import com.blankj.utilcode.util.AdaptScreenUtils
+import com.blankj.utilcode.util.SPUtils
+import com.chat.androidclient.R
+import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.view.IView
 import com.chat.androidclient.mvvm.viewmodel.BaseViewModel
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
@@ -19,6 +22,12 @@ open abstract class BaseActivity<T : ViewDataBinding, D : BaseViewModel> : RxApp
     
     
     override fun onCreate(savedInstanceState: Bundle?) {
+        //恢复上次保存的夜间模式效果
+        if (SPUtils.getInstance().getBoolean(Constant.daynightmode)) {
+            setTheme(R.style.NightTheme)
+        }else{
+            setTheme(R.style.DayTheme)
+        }
         super.onCreate(savedInstanceState)
         initDatabinding()
         mVM = getViewModel()

@@ -52,16 +52,16 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="@{vm.titleText}"
-                    android:textColor="@color/colorffffff"
+                    android:textColor="?attr/tv_color"
                     android:textSize="18sp"
                     />
 
                 <ImageView
                     android:id="@+id/connectloading"
-                    android:layout_width="70pt"
-                    android:layout_height="70pt"
+                    android:layout_width="50pt"
+                    android:layout_height="50pt"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="30pt"
+                    android:layout_marginRight="20pt"
                     android:layout_toLeftOf="@+id/tv_title"
                     android:src="@drawable/loading"
                     />
@@ -99,7 +99,7 @@
                     android:layout_marginRight="20pt"
                     android:onClick="onClick"
                     android:text="更多"
-                    android:textColor="@color/colorffffff"
+                    android:textColor="?attr/tv_color"
                     android:textSize="18sp"
                     android:visibility="@{vm.dynamicSelected?View.VISIBLE:View.GONE}"
                     />
@@ -219,10 +219,11 @@
         </RelativeLayout>
         <!--navigation View-->
         <RelativeLayout
+            android:id="@+id/navigation_view"
             android:layout_width="882pt"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="@color/colorffffff"
+            android:background="?attr/ui_background"
             >
             <!--头像背景模块-->
             <FrameLayout
@@ -258,6 +259,7 @@
                         android:layout_toRightOf="@+id/iv_myhead"
                         android:singleLine="true"
                         android:text="Saber"
+                        android:id="@+id/tv_draw_nickname"
                         android:textColor="@color/colorffffff"
                         android:textSize="22sp"
                         />
@@ -307,6 +309,7 @@
                         android:layout_below="@+id/ll_level"
                         android:singleLine="true"
                         android:text="神说他们爱世人，所以给他们苦难"
+                        android:id="@+id/tv_draw_sign"
                         android:textColor="@color/colorffffff"
                         />
 
@@ -331,15 +334,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60pt"
+                        android:id="@+id/iv_svip"
                         android:layout_marginRight="43pt"
-                        android:src="@drawable/qq_setting_svip"
+                        android:src="?attr/img_svip"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="激活会员"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_vip"
+                        android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />
                 </LinearLayout>
@@ -356,14 +361,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60pt"
                         android:layout_marginRight="43pt"
-                        android:src="@drawable/qq_setting_qianbao"
+                        android:id="@+id/iv_qianbao"
+                        android:src="?attr/img_qianbao"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="QQ钱包"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_qianbao"
+                        android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />
                 </LinearLayout>
@@ -379,14 +386,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60pt"
                         android:layout_marginRight="43pt"
-                        android:src="@drawable/qq_setting_zhuangban"
+                        android:id="@+id/iv_zhuangban"
+                        android:src="?attr/img_zhuangban"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="个性装扮"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_zhuangban"
+                        android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />
                 </LinearLayout>
@@ -402,14 +411,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60pt"
                         android:layout_marginRight="43pt"
-                        android:src="@drawable/qq_setting_shoucang"
+                        android:id="@+id/iv_shoucang"
+                        android:src="?attr/img_shoucang"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="我的收藏"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_shoucang"
+                        android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />
                 </LinearLayout>
@@ -425,14 +436,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60pt"
                         android:layout_marginRight="43pt"
-                        android:src="@drawable/qq_setting_xiangce"
+                        android:id="@+id/iv_xiangce"
+                        android:src="?attr/img_xiangce"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="我的相册"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_xiangce"
+                        android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />
                 </LinearLayout>
@@ -448,14 +461,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60pt"
                         android:layout_marginRight="43pt"
-                        android:src="@drawable/qq_setting_wenjian"
+                        android:id="@+id/iv_wenjian"
+                        android:src="?attr/img_wenjian"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="我的文件"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_wenjian"
+                        android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />
                 </LinearLayout>
@@ -471,14 +486,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60pt"
                         android:layout_marginRight="43pt"
-                        android:src="@drawable/qq_setting_freetraffic"
+                        android:id="@+id/iv_freetraffic"
+                        android:src="?attr/img_freetraffic"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="免流量特权"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_freetraffic"
+                        android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />
                 </LinearLayout>
@@ -503,7 +520,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/qb_group_menu_groupmsg_setting"
+                        android:id="@+id/iv_setting"
+                        android:src="?attr/img_setting"
                         />
 
                     <TextView
@@ -511,11 +529,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20pt"
                         android:text="设置"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_setting"
+                        android:textColor="?attr/tv_color"
                         />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_night_mode"
+                    android:onClick="onClick"
                     android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -525,7 +546,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/qq_setting_me_nightmode_on"
+                        android:id="@+id/iv_nignt_mode"
+                        android:src="?attr/img_daynight"
                         />
 
                     <TextView
@@ -533,7 +555,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20pt"
                         android:text="夜间"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_nignt_mode"
+                        android:textColor="?attr/tv_color"
                         />
                 </LinearLayout>
 
@@ -550,7 +573,8 @@
                         android:text="8℃"
                         android:layout_marginTop="-8pt"
                         android:textSize="22sp"
-                        android:textColor="@color/color5e6377"
+                        android:id="@+id/tv_draw_temperature"
+                        android:textColor="?attr/tv_color"
                         />
 
                     <TextView
@@ -558,7 +582,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15pt"
                         android:text="天气"
-                        android:textColor="@color/color000000"
+                        android:id="@+id/tv_draw_weather"
+                        android:textColor="?attr/tv_color"
                         />
                 </LinearLayout>
             </LinearLayout>

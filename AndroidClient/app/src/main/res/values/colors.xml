@@ -16,4 +16,14 @@
     <color name="colorff4076">#ff4076</color>
     <color name="colorf5c84b">#f5c84b</color>
     <color name="color5e6377">#5e6377</color>
+    <color name="colorbdbdbd">#bdbdbd</color>
+    <color name="colore3e4e6">#e3e4e6</color>
+    <!--下面是夜间模式适配的色值-->
+    <color name="viewbg_colornight">#09182d</color>
+    <color name="tv_colornight">#475f85</color>
+    <color name="search_colornight">#0D1E3A</color>
+    <color name="title_colornight">#122c51</color>
+    <color name="tv_search_colornight">#3c495c</color>
+    <color name="div_colornight">#0a192e</color>
+
 </resources>

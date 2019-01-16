@@ -3,7 +3,11 @@ package com.chat.androidclient
 import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
+import android.support.v7.app.AppCompatDelegate
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.im.ChatIM
+import com.chat.androidclient.mvvm.model.Constant
 import com.tencent.bugly.Bugly
 import com.tencent.bugly.beta.Beta
 import org.greenrobot.greendao.query.QueryBuilder
@@ -19,7 +23,9 @@ class App:Application() {
         super.onCreate()
         MultiDex.install(this)
         ChatIM.init()
-//        LogUtils.getConfig().setBorderSwitch(false)
+        LogUtils.getConfig()
+                .setBorderSwitch(false)
+                .setLogHeadSwitch(false)
         QueryBuilder.LOG_SQL=true
         QueryBuilder.LOG_VALUES=true
         Bugly.init(this,"bfa8de2062",true)

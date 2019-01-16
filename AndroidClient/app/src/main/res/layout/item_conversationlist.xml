@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-<data>
-    <import type="android.view.View"/>
-    <variable
-        name="data"
-        type="com.chat.androidclient.mvvm.model.Conversation"/>
-</data>
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="data"
+            type="com.chat.androidclient.mvvm.model.Conversation"/>
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="175pt"
         android:layout_marginLeft="30pt"
-        android:layout_marginRight="30pt">
+        android:layout_marginRight="30pt"
+        android:background="?attr/ui_background">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/icon"
@@ -63,31 +67,31 @@
             />
 
         <TextView
-            android:visibility="@{data.msgcount>0?View.VISIBLE:View.GONE}"
-            android:padding="5pt"
             android:id="@+id/count"
             android:layout_width="wrap_content"
-            android:maxWidth="80pt"
-            android:minWidth="60pt"
             android:layout_height="60pt"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="33pt"
             android:layout_marginLeft="33pt"
-            android:text="@{``+data.msgcount}"
-            android:gravity="center"
             android:background="@drawable/shape_circle_red"
+            android:gravity="center"
+            android:maxWidth="80pt"
+            android:minWidth="60pt"
+            android:padding="5pt"
+            android:text="@{``+data.msgcount}"
             android:textColor="@color/colorffffff"
             android:textSize="14sp"
+            android:visibility="@{data.msgcount>0?View.VISIBLE:View.GONE}"
 
             />
 
         <View
-
+            android:id="@+id/divview"
             android:layout_width="match_parent"
-            android:layout_height="2pt"
+            android:layout_height="1pt"
             android:layout_alignParentBottom="true"
-            android:background="@color/colordee0df">
+            android:background="?attr/div_color">
 
         </View>
     </RelativeLayout>
