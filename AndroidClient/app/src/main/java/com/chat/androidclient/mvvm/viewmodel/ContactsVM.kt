@@ -1,6 +1,7 @@
 package com.chat.androidclient.mvvm.viewmodel
 
 import com.chat.androidclient.event.FriendResponseEvent
+import com.chat.androidclient.event.ThemeEvent
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.GroupDao
 import com.chat.androidclient.im.ChatIM
@@ -69,5 +70,8 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
         view.refreshData(groups)
         view.refreshComplet()
     }
-    
+    @Subscribe
+    fun  themeChange(event: ThemeEvent){
+        view.refreshUI()
+    }
 }

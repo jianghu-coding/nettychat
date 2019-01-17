@@ -9,6 +9,7 @@
         <item name="colorAccent">@color/color41c5f6</item>
         <item name="tv_color">@color/color000000</item>
         <item name="ui_background">@color/colorffffff</item>
+        <item name="ui_gray_background">@color/colorf1f2f7</item>
         <item name="img_svip">@drawable/qq_setting_svip</item>
         <item name="img_qianbao">@drawable/qq_setting_qianbao</item>
         <item name="img_zhuangban">@drawable/qq_setting_zhuangban</item>
@@ -22,6 +23,10 @@
         <item name="search_tv_color">@color/colorbdbdbd</item>
         <item name="search_icon">@drawable/qb_group_menu_search_group</item>
         <item name="div_color">@color/colore3e4e6</item>
+        <item name="view_bg">@color/colorffffff</item>
+        <item name="shape_5dp_bg">@drawable/shape_msg_input</item>
+
+
     </style>
     <style name="NightTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -30,7 +35,8 @@
         <item name="colorPrimaryDark">@color/color41c5f6</item>
         <item name="colorAccent">@color/color41c5f6</item>
         <item name="tv_color">@color/colorffffff</item>
-        <item name="ui_background">@color/color5e6377</item>
+        <item name="ui_background">@color/color09182d</item>
+        <item name="ui_gray_background">@color/color09182d</item>
         <item name="img_svip">@drawable/qq_setting_svip_white</item>
         <item name="img_qianbao">@drawable/qq_setting_qianbao_white</item>
         <item name="img_zhuangban">@drawable/qq_setting_zhuangban_white</item>
@@ -44,6 +50,9 @@
         <item name="search_tv_color">@color/tv_search_colornight</item>
         <item name="search_icon">@drawable/skin_qvip_individuation_search_white</item>
         <item name="div_color">@color/div_colornight</item>
+        <item name="view_bg">@color/title_colornight</item>
+        <item name="shape_5dp_bg">@drawable/shape_msg_input_night</item>
+
     </style>
 
     <style name="splashTheme" parent="Theme.AppCompat.DayNight.NoActionBar">

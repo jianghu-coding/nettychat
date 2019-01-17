@@ -2,7 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/colorffffff">
+             android:background="?attr/ui_background"
+             android:id="@+id/root_view"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_open_state"
-            android:textColor="@color/color000000"
+            android:textColor="?attr/tv_color"
+
             android:textSize="16sp"
             />
 

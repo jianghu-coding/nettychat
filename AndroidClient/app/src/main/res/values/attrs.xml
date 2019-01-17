@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="ui_background" format="color"/>
+    <attr name="ui_gray_background" format="color"/>
     <attr name="tv_color" format="color"/>
     <attr name="search_bg" format="reference"/>
     <attr name="img_svip" format="reference"/>
@@ -15,4 +16,6 @@
     <attr name="search_tv_color" format="color"/>
     <attr name="search_icon" format="reference"/>
     <attr name="div_color" format="color"/>
+    <attr name="view_bg" format="color"/>
+    <attr name="shape_5dp_bg" format="reference"/>
 </resources>

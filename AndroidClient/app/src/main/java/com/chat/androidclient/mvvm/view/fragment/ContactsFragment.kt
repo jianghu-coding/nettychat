@@ -1,6 +1,7 @@
 package com.chat.androidclient.mvvm.view.fragment
 
 
+import android.util.TypedValue
 import android.view.View
 import com.chat.androidclient.R
 import com.chat.androidclient.adapter.FriendAdapter
@@ -32,19 +33,58 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
         mDataBinding.listviewFriends.setGroupIndicator(null)
     }
     
-    fun refreshData(datas:MutableList<Group>){
+    fun refreshData(datas: MutableList<Group>) {
         friendAdapter.setData(datas)
     }
     
     override fun onClick(v: View) {
-        when(v.id){
-        R.id.create_group->showDevMessage()
-        R.id.new_friend->showDevMessage()
-        R.id.re_tanbaishuo->showDevMessage()
+        when (v.id) {
+            R.id.re_create_group -> showDevMessage()
+            R.id.re_new_friend -> showDevMessage()
+            R.id.re_tanbaishuo -> showDevMessage()
         }
     }
     
     fun refreshComplet() {
         mDataBinding.refreshlayout.finishRefresh()
+    }
+    
+    /**
+     * 夜间模式触发更新ui
+     */
+    fun refreshUI() {
+        val tanbaishuobg = TypedValue()
+        val bgcolor = TypedValue()
+        val bggraycolor = TypedValue()
+        val divcolor = TypedValue()
+        val tvcolor = TypedValue()
+        activity.theme.resolveAttribute(R.attr.ui_background, bgcolor, true)
+        activity.theme.resolveAttribute(R.attr.ui_gray_background, bggraycolor, true)
+        activity.theme.resolveAttribute(R.attr.tv_color, tvcolor, true)
+        activity.theme.resolveAttribute(R.attr.div_color, divcolor, true)
+        activity.theme.resolveAttribute(R.attr.shape_5dp_bg, tanbaishuobg, true)
+        mDataBinding.reTanbaishuo.setBackgroundResource(tanbaishuobg.resourceId)
+        mDataBinding.reNewFriend.setBackgroundResource(bgcolor.resourceId)
+        mDataBinding.reCreateGroup.setBackgroundResource(bgcolor.resourceId)
+        mDataBinding.llRootview.setBackgroundResource(bggraycolor.resourceId)
+        mDataBinding.frSearch.setBackgroundResource(bgcolor.resourceId)
+        mDataBinding.tvTanbaishuo.setTextColor(resources.getColor(tvcolor.resourceId))
+        mDataBinding.tvTanbaishuoContent.setTextColor(resources.getColor(tvcolor.resourceId))
+        mDataBinding.tvCreateGroup.setTextColor(resources.getColor(tvcolor.resourceId))
+        mDataBinding.tvNewFriend.setTextColor(resources.getColor(tvcolor.resourceId))
+        mDataBinding.divCreateGroupBottom.setBackgroundResource(divcolor.resourceId)
+        mDataBinding.divNewFriendBottom.setBackgroundResource(divcolor.resourceId)
+        val searchbgId = TypedValue()
+        activity.theme.resolveAttribute(R.attr.search_bg, searchbgId, true)
+        mDataBinding.reSearch.setBackgroundResource(searchbgId.resourceId)
+        
+        val searchtvcolor = TypedValue()
+        activity.theme.resolveAttribute(R.attr.search_tv_color, searchtvcolor, true)
+        mDataBinding.tvSearch.setTextColor(resources.getColor(searchtvcolor.resourceId))
+        val searchiv = TypedValue()
+        activity.theme.resolveAttribute(R.attr.search_icon, searchiv, true)
+        mDataBinding.ivSearch.setImageResource(searchiv.resourceId)
+        
+        friendAdapter.refreshUI()
     }
 }

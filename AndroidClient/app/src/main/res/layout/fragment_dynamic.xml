@@ -9,22 +9,25 @@
                   xmlns:tools="http://schemas.android.com/tools"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  android:background="@color/colorf1f2f7"
+                  android:id="@+id/root_view"
+                  android:background="?attr/ui_gray_background"
                   android:orientation="vertical"
                   tools:context=".mvvm.view.fragment.ConversationFragment">
         <!--搜索-->
         <FrameLayout
+            android:id="@+id/fr_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorffffff">
+            android:background="?attr/ui_background">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="80pt"
+                android:id="@+id/re_search"
                 android:layout_marginLeft="30pt"
                 android:layout_marginRight="30pt"
                 android:layout_marginTop="20pt"
-                android:background="@drawable/shape_search"
+                android:background="?attr/search_bg"
                 >
 
                 <RelativeLayout
@@ -37,7 +40,7 @@
                         android:layout_width="35pt"
                         android:layout_height="35pt"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/qb_group_menu_search_group"
+                        android:src="?attr/search_icon"
                         />
 
                     <TextView
@@ -46,8 +49,10 @@
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/iv_search"
                         android:singleLine="true"
+                        android:id="@+id/tv_search"
                         android:text="网络搜索：2262年有2个春节"
                         android:textSize="14sp"
+                        android:textColor="?attr/search_tv_color"
                         />
                 </RelativeLayout>
 
@@ -58,7 +63,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="240pt"
-            android:background="@color/colorffffff"
+            android:id="@+id/ll_item"
+            android:background="?attr/ui_background"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -80,7 +86,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="好友动态"
-                    android:textColor="@color/color000000"
+                    android:id="@+id/tv_qzone"
+                    android:textColor="?attr/tv_color"
                     />
             </LinearLayout>
 
@@ -103,7 +110,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="附近"
-                    android:textColor="@color/color000000"
+                    android:id="@+id/tv_near"
+                    android:textColor="?attr/tv_color"
                     />
             </LinearLayout>
 
@@ -125,7 +133,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="兴趣部落"
-                    android:textColor="@color/color000000"
+                    android:id="@+id/tv_interest"
+                    android:textColor="?attr/tv_color"
                     />
             </LinearLayout>
 

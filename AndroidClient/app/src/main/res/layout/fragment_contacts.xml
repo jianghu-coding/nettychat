@@ -9,8 +9,6 @@
                  xmlns:tools="http://schemas.android.com/tools"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
-
-                 android:background="@color/colorf3f3f3"
                  tools:context=".mvvm.view.fragment.ConversationFragment">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -18,29 +16,31 @@
             android:layout_width="match_parent"
 
             android:layout_height="match_parent"
-            android:background="@color/colorf3f3f3">
+            >
 
             <LinearLayout
+                android:id="@+id/ll_rootview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorf3f3f3"
-
+                android:background="?attr/ui_gray_background"
                 android:orientation="vertical">
                 <!--搜索-->
                 <FrameLayout
+                    android:id="@+id/fr_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorffffff">
+                    android:background="?attr/ui_background">
 
 
                     <RelativeLayout
+                        android:id="@+id/re_search"
                         android:layout_width="match_parent"
                         android:layout_height="80pt"
                         android:layout_marginBottom="30pt"
                         android:layout_marginLeft="30pt"
                         android:layout_marginRight="30pt"
                         android:layout_marginTop="20pt"
-                        android:background="@drawable/shape_search"
+                        android:background="?attr/search_bg"
                         >
 
                         <RelativeLayout
@@ -53,16 +53,18 @@
                                 android:layout_width="35pt"
                                 android:layout_height="35pt"
                                 android:layout_centerVertical="true"
-                                android:src="@drawable/qb_group_menu_search_group"
+                                android:src="?attr/search_icon"
                                 />
 
                             <TextView
+                                android:id="@+id/tv_search"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_toRightOf="@+id/iv_search"
                                 android:singleLine="true"
                                 android:text="搜索"
+                                android:textColor="?attr/search_tv_color"
                                 android:textSize="14sp"
                                 />
                         </RelativeLayout>
@@ -70,7 +72,6 @@
                 </FrameLayout>
                 <!--坦白说-->
                 <RelativeLayout
-                    android:onClick="onClick"
                     android:id="@+id/re_tanbaishuo"
                     android:layout_width="match_parent"
                     android:layout_height="210pt"
@@ -78,7 +79,8 @@
                     android:layout_marginLeft="30pt"
                     android:layout_marginRight="30pt"
                     android:layout_marginTop="30pt"
-                    android:background="@drawable/shape_msg_input">
+                    android:background="?attr/shape_5dp_bg"
+                    android:onClick="onClick">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -88,18 +90,20 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_tanbaishuo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="坦白说"
-                            android:textColor="@color/color000000"
+                            android:textColor="?attr/tv_color"
                             android:textSize="18sp"
                             />
 
                         <TextView
+                            android:id="@+id/tv_tanbaishuo_content"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="原来我的好友都是如此优秀"
-                            android:textColor="@color/color333333"
+                            android:textColor="?attr/tv_color"
                             android:textSize="12sp"
                             />
                     </LinearLayout>
@@ -115,90 +119,87 @@
                 </RelativeLayout>
                 <!--新朋友-->
                 <RelativeLayout
-                    android:id="@+id/new_friend"
-                    android:onClick="onClick"
-                    android:background="@color/colorffffff"
+                    android:id="@+id/re_new_friend"
                     android:layout_width="match_parent"
                     android:layout_height="120pt"
-                    android:gravity="center_vertical">
+                    android:background="?attr/view_bg"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1pt"
-                        android:background="@color/colorf3f3f3"/>
 
                     <TextView
-                        android:layout_centerVertical="true"
+                        android:id="@+id/tv_new_friend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="50pt"
                         android:text="新朋友"
-                        android:textColor="@color/color000000"
+                        android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />
 
                     <ImageView
-                        android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="50pt"
                         android:src="@drawable/right_arrow1_disable"
                         />
 
                     <View
+                        android:id="@+id/div_new_friend_bottom"
                         android:layout_width="match_parent"
                         android:layout_height="1pt"
                         android:layout_alignParentBottom="true"
-                        android:background="@color/colorf3f3f3"/>
+                        android:background="?attr/div_color"/>
                 </RelativeLayout>
                 <!--创建群聊-->
                 <RelativeLayout
-                    android:id="@+id/create_group"
-                    android:onClick="onClick"
-                    android:layout_marginBottom="30pt"
-                    android:background="@color/colorffffff"
+                    android:id="@+id/re_create_group"
                     android:layout_width="match_parent"
                     android:layout_height="120pt"
-                    android:gravity="center_vertical">
+                    android:layout_marginBottom="30pt"
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1pt"
-                        android:background="@color/colorf3f3f3"/>
+                    android:background="?attr/view_bg"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick">
+
 
                     <TextView
-                        android:layout_centerVertical="true"
+                        android:id="@+id/tv_create_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="50pt"
                         android:text="创建群聊"
-                        android:textColor="@color/color000000"
+                        android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />
 
                     <ImageView
-                        android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="50pt"
                         android:src="@drawable/right_arrow1_disable"
                         />
 
                     <View
+                        android:id="@+id/div_create_group_bottom"
                         android:layout_width="match_parent"
                         android:layout_height="1pt"
                         android:layout_alignParentBottom="true"
-                        android:background="@color/colorf3f3f3"/>
+                        android:background="?attr/div_color"/>
                 </RelativeLayout>
                 <!--好友的RecyclerView-->
                 <ExpandableListView
-                    android:divider="@null"
-                    android:dividerHeight="0dp"
                     android:id="@+id/listview_friends"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:dividerHeight="0dp">
 
                 </ExpandableListView>
             </LinearLayout>

@@ -3,11 +3,14 @@ package com.chat.androidclient.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chat.androidclient.R;
@@ -75,10 +78,17 @@ public class FriendAdapter extends BaseExpandableListAdapter {
             vh.name = convertView.findViewById(R.id.groupname);
             vh.online = convertView.findViewById(R.id.grouponline);
             vh.openstate = convertView.findViewById(R.id.iv_open_state);
+            vh.rootview=convertView.findViewById(R.id.root_view);
             convertView.setTag(vh);
         } else {
             vh = (GroupVH) convertView.getTag();
         }
+        TypedValue bgcolor = new TypedValue();
+        TypedValue tvcolor = new TypedValue();
+        mContext.getTheme().resolveAttribute(R.attr.ui_background, bgcolor, true);
+        mContext.getTheme().resolveAttribute(R.attr.tv_color, tvcolor, true);
+        vh.name.setTextColor(mContext.getResources().getColor(tvcolor.resourceId));
+        vh.rootview.setBackgroundResource(bgcolor.resourceId);
         vh.name.setText(getGroup(groupPosition).getName());
         vh.online.setText(getChildrenCount(groupPosition)+"/"+getChildrenCount(groupPosition));
         vh.openstate.setImageResource(isExpanded?R.drawable.skin_aio_arrowdown_nor:R.drawable.right_arrow1_disable);
@@ -92,10 +102,21 @@ public class FriendAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, null);
             vh = new ChildVH();
             vh.name=convertView.findViewById(R.id.name);
+            vh.rootview=convertView.findViewById(R.id.root_view);
+            vh.div_friend=convertView.findViewById(R.id.div_friend);
             convertView.setTag(vh);
         } else {
             vh = (ChildVH) convertView.getTag();
         }
+        TypedValue bgcolor = new TypedValue();
+        TypedValue divcolor = new TypedValue();
+        TypedValue tvcolor = new TypedValue();
+        mContext.getTheme().resolveAttribute(R.attr.ui_background, bgcolor, true);
+        mContext.getTheme().resolveAttribute(R.attr.tv_color, tvcolor, true);
+        mContext.getTheme().resolveAttribute(R.attr.div_color, divcolor, true);
+        vh.name.setTextColor(mContext.getResources().getColor(tvcolor.resourceId));
+        vh.div_friend.setBackgroundResource(divcolor.resourceId);
+        vh.rootview.setBackgroundResource(bgcolor.resourceId);
         vh.name.setText(getChild(groupPosition,childPosition).getNickname());
         convertView.setOnClickListener(v ->
            ChatActivity.startActivity(parent.getContext(),getChild(groupPosition,childPosition).getUserId())
@@ -144,13 +165,20 @@ public class FriendAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
+    public void refreshUI() {
+        notifyDataSetChanged();
+    }
+
     class GroupVH {
         TextView name;
         TextView online;
         ImageView openstate;
+        FrameLayout rootview;
     }
 
     class ChildVH {
  TextView name;
+ RelativeLayout rootview;
+ View div_friend;
     }
 }

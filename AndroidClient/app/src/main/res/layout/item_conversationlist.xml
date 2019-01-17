@@ -34,7 +34,7 @@
             android:layout_marginTop="33pt"
             android:layout_toRightOf="@+id/icon"
             android:text=""
-            android:textColor="@color/color000000"
+            android:textColor="?attr/tv_color"
             android:textSize="18sp"
             />
 

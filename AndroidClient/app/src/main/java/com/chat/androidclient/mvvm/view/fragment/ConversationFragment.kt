@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.RecycledViewPool
 import android.util.TypedValue
 import android.view.View
+import android.widget.TextView
 import com.blankj.utilcode.util.BarUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.adapter.ConversationListAdapter
@@ -56,13 +57,16 @@ class ConversationFragment : BaseFragment<FragmentConversationBinding, Conversat
         val childCount = mDataBinding.messageRecyclerView.childCount
         val bgcolor = TypedValue()
         val divcolor = TypedValue()
+        val tvcolor = TypedValue()
         activity.theme.resolveAttribute(R.attr.ui_background, bgcolor, true)
+        activity.theme.resolveAttribute(R.attr.tv_color, tvcolor, true)
         activity.theme.resolveAttribute(R.attr.div_color, divcolor, true)
         mDataBinding.refreshlayout.setBackgroundColor(resources.getColor(bgcolor.resourceId))
         for (i in 0 until childCount) {
             val view = mDataBinding.messageRecyclerView.getChildAt(i)
             view.setBackgroundColor(resources.getColor(bgcolor.resourceId))
             view.findViewById<View>(R.id.divview).setBackgroundColor(resources.getColor(divcolor.resourceId))
+            view.findViewById<TextView>(R.id.name).setTextColor(resources.getColor(tvcolor.resourceId))
         }
         val searchbgId = TypedValue()
         activity.theme.resolveAttribute(R.attr.search_bg, searchbgId, true)
