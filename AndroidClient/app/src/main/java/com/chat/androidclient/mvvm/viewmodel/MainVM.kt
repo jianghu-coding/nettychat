@@ -2,8 +2,10 @@ package com.chat.androidclient.mvvm.viewmodel
 
 import android.app.Fragment
 import android.databinding.ObservableField
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.App
@@ -142,6 +144,16 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
         }
         
     }
-    
+    fun getCacheBitMapFromView(view:View):Bitmap?{
+        view.isDrawingCacheEnabled=true
+        view.buildDrawingCache(true)
+        val drawingCache = view.getDrawingCache()
+        var bitmap:Bitmap?=null
+        if (drawingCache!=null){
+            bitmap= Bitmap.createBitmap(drawingCache)
+            view.isDrawingCacheEnabled=false
+        }
+        return  bitmap
+    }
     
 }

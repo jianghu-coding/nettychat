@@ -1,9 +1,14 @@
 package com.chat.androidclient.mvvm.view.activity
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
@@ -23,7 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         mVM.checkConversation()
         //处理状态栏效果
         initStatusBar()
- 
+        
     }
     
     private fun initStatusBar() {
@@ -75,12 +80,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
     }
     
     private fun refreshUI() {
+        showAnimation()
+//        下面是更新各种UI的效果
         val value_tv_color = TypedValue()
         val bgcolor = TypedValue()
         theme.resolveAttribute(R.attr.ui_background, bgcolor, true)
         theme.resolveAttribute(R.attr.tv_color, value_tv_color, true)
 //        侧边栏背景色
         mDataBinding.navigationView.setBackgroundColor(resources.getColor(bgcolor.resourceId))
+        mDataBinding.bottomLayout.setBackgroundColor(resources.getColor(bgcolor.resourceId))
 //        侧边栏和标题栏文本颜色
         mDataBinding.tvDrawFreetraffic.setTextColor(resources.getColor(value_tv_color.resourceId))
         mDataBinding.tvDrawNigntMode.setTextColor(resources.getColor(value_tv_color.resourceId))
@@ -123,6 +131,28 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         val nightmodeid = TypedValue()
         theme.resolveAttribute(R.attr.img_daynight, nightmodeid, true)
         mDataBinding.ivNigntMode.setImageResource(nightmodeid.resourceId)
+    }
+    
+    /**
+     * 更换夜间模式的动画。
+     */
+    private fun showAnimation() {
+        val fromView = mVM.getCacheBitMapFromView(window.decorView)
+        if (window.decorView is ViewGroup && fromView != null) {
+            val view = View(this)
+            view.setBackgroundDrawable(BitmapDrawable(resources, fromView))
+            val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            (window.decorView as ViewGroup).addView(view, layoutParams)
+            val animator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
+            animator.setDuration(800)
+            animator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    (window.decorView as ViewGroup).removeView(view)
+                }
+            })
+            animator.start()
+        }
     }
     
     fun hideLoading() {
