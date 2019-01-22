@@ -11,6 +11,11 @@
         select * from user where username = #{username}
     </select>
 
+    <select id="findByLikeName" resultType="User">
+       <bind name="pattern" value="'%' + _parameter + '%'" />
+        select * from user where name like #{pattern}
+    </select>
+
     <insert
             id="save"
             parameterType="User"

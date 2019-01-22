@@ -16,17 +16,21 @@ import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
+import com.im.nettychat.protocol.request.user.SearchFriendRequest;
 import com.im.nettychat.protocol.response.LoginResponse;
 import com.im.nettychat.protocol.response.MessageResponse;
 import com.im.nettychat.protocol.response.RegisterResponse;
 import com.im.nettychat.protocol.response.offline.OfflineMessageResponse;
 import com.im.nettychat.protocol.response.user.AddFriendResponse;
 import com.im.nettychat.protocol.response.user.GetFriendResponse;
+import com.im.nettychat.protocol.response.user.SearchFriendResponse;
 import com.im.nettychat.proxy.CglibServiceInterceptor;
 import com.im.nettychat.service.BaseService;
 import com.im.nettychat.service.UserService;
+import com.im.nettychat.util.BeanUtil;
 import com.im.nettychat.util.CollectionUtils;
 import com.im.nettychat.util.SessionUtil;
+import com.im.nettychat.util.StringUtils;
 import com.im.nettychat.util.Util;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -36,6 +40,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import static com.im.nettychat.common.AttributeKeys.SESSION_ATTRIBUTE_KEY;
 import static com.im.nettychat.model.RedisRepository.redisRepository;
 
@@ -45,7 +50,7 @@ import static com.im.nettychat.model.RedisRepository.redisRepository;
  */
 public class UserServiceImpl extends BaseService implements UserService {
 
-    private static final InternalLogger logger = InternalLoggerFactory.getInstance(UserServiceImpl3.class);
+    private static final InternalLogger logger = InternalLoggerFactory.getInstance(UserServiceImpl.class);
 
     public static final UserService userService = (UserServiceImpl) CglibServiceInterceptor.getCglibProxy(UserServiceImpl.class);
 
@@ -178,6 +183,38 @@ public class UserServiceImpl extends BaseService implements UserService {
         response.setMessage(message);
         response.setFromUserId(fromUserId);
         toChannel.writeAndFlush(response);
+    }
+
+    @Override
+    public void searchFriends(ChannelHandlerContext ctx, SearchFriendRequest msg) {
+        SearchFriendResponse response = new SearchFriendResponse();
+        List<UserDTO> userDTOS = new ArrayList<>();
+        SqlSession sqlSession = DBUtil.getSession(true);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        // 根据用户名搜索
+        if (StringUtils.isNotEmpty(msg.getUsername())) {
+            User user = userMapper.findByUsername(msg.getUsername());
+            if (user != null) {
+                UserDTO userDTO = new UserDTO();
+                BeanUtil.copyProperties(user, userDTO);
+                userDTOS.add(userDTO);
+            }
+            response.setUsers(userDTOS);
+            ctx.writeAndFlush(response);
+            return;
+        }
+        // 根据名字搜索
+        if (StringUtils.isNotEmpty(msg.getName())) {
+            List<User> users = userMapper.findByLikeName(msg.getName());
+            userDTOS = users.stream().map(user -> {
+                UserDTO userDTO = new UserDTO();
+                BeanUtil.copyProperties(user, userDTO);
+                return userDTO;
+            }).collect(Collectors.toList());
+            response.setUsers(userDTOS);
+            ctx.writeAndFlush(response);
+            return;
+        }
     }
 
     private void bindSession(User user, Channel channel) {

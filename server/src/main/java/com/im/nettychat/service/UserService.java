@@ -18,6 +18,7 @@ import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
+import com.im.nettychat.protocol.request.user.SearchFriendRequest;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -36,4 +37,6 @@ public interface UserService {
     void getFriends(ChannelHandlerContext ctx, GetFriendRequest msg);
 
     void sendMessage(ChannelHandlerContext ctx, MessageRequest request);
+
+    void searchFriends(ChannelHandlerContext ctx, SearchFriendRequest msg);
 }
