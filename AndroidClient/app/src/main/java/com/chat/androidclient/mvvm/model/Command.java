@@ -27,6 +27,7 @@ public interface Command {
 
     Byte GET_USER_GROUP_LIST = 18;
 
+    Byte SEARCH_FRIEND = 20;
     // response
     Byte LOGIN_RESPONSE = 3;
 
@@ -47,4 +48,5 @@ public interface Command {
     Byte GET_FRIENDS_RESPONSE = 19;
 
     Byte GET_USER_GROUP_LIST_RESPONSE = 21;
+    Byte SEARCH_FRIEND_RESPONSE = 31;
 }

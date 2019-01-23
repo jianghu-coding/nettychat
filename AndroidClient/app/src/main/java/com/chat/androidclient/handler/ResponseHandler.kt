@@ -1,10 +1,7 @@
 package com.chat.androidclient.handler
 
 import com.blankj.utilcode.util.LogUtils
-import com.chat.androidclient.event.FriendResponseEvent
-import com.chat.androidclient.event.LoginResponseEvent
-import com.chat.androidclient.event.MessageEvent
-import com.chat.androidclient.event.SignUpResponseEvent
+import com.chat.androidclient.event.*
 import com.chat.androidclient.mvvm.model.Command
 import com.chat.androidclient.mvvm.model.PacketResponse
 import io.netty.channel.ChannelHandlerContext
@@ -30,6 +27,10 @@ class ResponseHandler : SimpleChannelInboundHandler<PacketResponse>() {
        }
         Command.GET_FRIENDS_RESPONSE->{
            EventBus.getDefault().post(FriendResponseEvent(msg))
+       }
+       Command.SEARCH_FRIEND_RESPONSE->{
+           EventBus.getDefault().post(SearchFriendResponseEvent(msg))
+    
        }
        
    }

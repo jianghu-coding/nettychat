@@ -7,6 +7,9 @@ import com.chat.androidclient.databinding.ActivitySearchPersonBinding
 import com.chat.androidclient.mvvm.model.SearchSimpleResult
 import com.chat.androidclient.mvvm.viewmodel.SearchPersonVM
 
+/**
+ * 二级搜索界面
+ */
 class SearchPersonActivity : BaseActivity<ActivitySearchPersonBinding,SearchPersonVM>() {
     override fun getViewModel()= SearchPersonVM (this)
     lateinit var adapter: SearchSimpleAdapter

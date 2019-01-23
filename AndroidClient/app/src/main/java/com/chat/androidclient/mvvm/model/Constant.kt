@@ -16,4 +16,8 @@ object Constant {
     //用户id
     val UserId="userid"
     val DBNAME="chatDB"
+    
+    
+    val SEARCH_PERSON_INPUT="SEARCH_PERSON_INPUT"
+    val SEARCH_PERSON_LIST="SEARCH_PERSON_LIST"
 }

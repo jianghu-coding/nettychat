@@ -22,12 +22,7 @@ open abstract class BaseActivity<T : ViewDataBinding, D : BaseViewModel> : RxApp
     
     
     override fun onCreate(savedInstanceState: Bundle?) {
-        //恢复上次保存的夜间模式效果
-        if (SPUtils.getInstance().getBoolean(Constant.daynightmode)) {
-            setTheme(R.style.NightTheme)
-        }else{
-            setTheme(R.style.DayTheme)
-        }
+    
         super.onCreate(savedInstanceState)
         initDatabinding()
         mVM = getViewModel()

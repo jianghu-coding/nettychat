@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -21,7 +22,15 @@ import org.greenrobot.eventbus.EventBus
 class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
     override fun getLayoutRes() = R.layout.activity_main
     override fun getViewModel() = MainVM(this)
-    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        //恢复上次保存的夜间模式效果
+        if (SPUtils.getInstance().getBoolean(Constant.daynightmode)) {
+            setTheme(R.style.NightTheme)
+        }else{
+            setTheme(R.style.DayTheme)
+        }
+        super.onCreate(savedInstanceState)
+    }
     override fun init() {
         mVM.connect()
         mDataBinding.vm = mVM

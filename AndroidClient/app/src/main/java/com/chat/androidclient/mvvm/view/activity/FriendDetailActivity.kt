@@ -1,5 +1,6 @@
 package com.chat.androidclient.mvvm.view.activity
 
+import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -12,7 +13,10 @@ import kotlinx.android.synthetic.main.activity_friend_detail.view.*
 class FriendDetailActivity : BaseActivity<ActivityFriendDetailBinding,FriendDetailVM>() {
     override fun getViewModel()= FriendDetailVM (this)
     override fun getLayoutRes()=R.layout.activity_friend_detail
-    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.profilestyle)
+        super.onCreate(savedInstanceState)
+    }
     override fun init() {
         super.init()
         mDataBinding.appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
