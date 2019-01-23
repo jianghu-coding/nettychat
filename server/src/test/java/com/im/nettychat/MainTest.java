@@ -27,6 +27,7 @@ import com.im.nettychat.protocol.request.group.JoinGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
+import com.im.nettychat.protocol.request.user.SearchFriendRequest;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -93,7 +94,7 @@ public class MainTest {
                         while(!Thread.interrupted()) {
                             try {
                                 System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组, f: 发送群组消息");
-                                System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表, i: 获取我的群组列表");
+                                System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表, i: 获取我的群组列表, j: 查找好友");
                                 String command = scanner.nextLine();
                                 if (command.equals("a")) {
                                     System.out.println("开始登录");
@@ -140,6 +141,10 @@ public class MainTest {
                                     getFriends(channel);
                                 } else if (command.equals("i")) {
                                     getUserGroupList(channel);
+                                } else if (command.equals("j")) {
+                                    System.out.println("请输入名称");
+                                    String name = scanner.nextLine();
+                                    searchFriends(channel, name);
                                 }
                             } catch (Exception e) {
                                 System.out.println("输入格式错误");
@@ -151,6 +156,12 @@ public class MainTest {
             }
         });
         channelFuture.sync().channel().closeFuture().sync();
+    }
+
+    private static void searchFriends(Channel channel, String name) {
+        SearchFriendRequest request = new SearchFriendRequest();
+        request.setName(name);
+        channel.writeAndFlush(request);
     }
 
     private static void getUserGroupList(Channel channel) {

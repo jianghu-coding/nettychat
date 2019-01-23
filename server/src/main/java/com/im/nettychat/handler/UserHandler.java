@@ -16,6 +16,7 @@ package com.im.nettychat.handler;
 import com.im.nettychat.common.Command;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
+import com.im.nettychat.protocol.request.user.SearchFriendRequest;
 import com.im.nettychat.protocol.request.user.UserRequest;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -38,6 +39,8 @@ public class UserHandler extends SimpleChannelInboundHandler<UserRequest> {
             userService.addFriend(ctx, (AddFriendRequest) msg);
         } else if (Command.GET_FRIENDS.equals(msg.getCommand())) {
             userService.getFriends(ctx, (GetFriendRequest) msg);
+        } else if (Command.SEARCH_FRIEND.equals(msg.getCommand())) {
+            userService.searchFriends(ctx, (SearchFriendRequest) msg);
         }
     }
 }

@@ -27,6 +27,8 @@ public interface Command {
 
     Byte GET_USER_GROUP_LIST = 18;
 
+    Byte SEARCH_FRIEND = 20;
+
     // response
     Byte LOGIN_RESPONSE = 3;
 
@@ -55,4 +57,6 @@ public interface Command {
     Byte WRITE_TIME_OUT = 27;
 
     Byte FORBIDDEN_RESPONSE = 29;
+
+    Byte SEARCH_FRIEND_RESPONSE = 31;
 }
