@@ -224,6 +224,7 @@
             android:layout_width="882pt"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:clickable="true"
             android:background="?attr/ui_background"
             >
             <!--头像背景模块-->
