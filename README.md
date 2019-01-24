@@ -1,7 +1,7 @@
 ## nettychat
     服务端：基于netty4.16, redis, java8编写
     客户端: 安卓
-
+ [AndroidAPP下载地址](https://fir.im/4sc6)
 ## 开始项目重构
 存储层用 mysql + redis, 纯 redis 实现， 分支 1.0
 
