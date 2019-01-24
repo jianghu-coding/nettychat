@@ -567,6 +567,23 @@
                 android:textColor="@color/color000000"
                 android:textSize="18sp"
                 />
+            <TextView
+                android:id="@+id/send_msg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20pt"
+                android:layout_marginLeft="40pt"
+                android:layout_marginRight="40pt"
+                android:layout_marginTop="20pt"
+                android:background="@drawable/shape_round_5dp"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="发消息"
+                android:visibility="gone"
+                android:textColor="@color/color000000"
+                android:textSize="18sp"
+                />
         </FrameLayout>
     </RelativeLayout>
 </layout>

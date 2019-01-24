@@ -21,9 +21,9 @@ class ChatIM private constructor() {
         val instance = SignletonHolder.holder
         private lateinit var bootstrap: Bootstrap
         private var channel: Channel? = null
-        private val HOST = "192.168.0.145"
+        private val HOST = "132.232.151.6"
         private val TAG = "ChatService"
-        private val PORT = 9999
+        private val PORT = 8888
     
         /**
          * 初始化

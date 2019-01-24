@@ -3,6 +3,7 @@ package com.chat.androidclient.mvvm.view.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -34,10 +35,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         super.onCreate(savedInstanceState)
     }
     
+    @SuppressLint("MissingSuperCall")
+    override fun onSaveInstanceState(outState: Bundle?) {
+    
+//        super.onSaveInstanceState(outState)
+    }
     override fun init() {
         mVM.connect()
         mDataBinding.vm = mVM
         mVM.checkConversation()
+        mDataBinding.tvDrawNickname.text=SPUtils.getInstance().getString(Constant.LoginUserName)
         //处理状态栏效果
         initStatusBar()
         
