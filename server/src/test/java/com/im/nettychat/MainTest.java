@@ -38,8 +38,11 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.junit.Test;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -94,7 +97,7 @@ public class MainTest {
                         while(!Thread.interrupted()) {
                             try {
                                 System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组, f: 发送群组消息");
-                                System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表, i: 获取我的群组列表, j: 查找好友");
+                                System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表, i: 获取我的群组列表, j: 查找名称好友, k: 通过用户名查找好友");
                                 String command = scanner.nextLine();
                                 if (command.equals("a")) {
                                     System.out.println("开始登录");
@@ -145,6 +148,10 @@ public class MainTest {
                                     System.out.println("请输入名称");
                                     String name = scanner.nextLine();
                                     searchFriends(channel, name);
+                                } else if (command.equals("k")) {
+                                    System.out.println("请输入用户名");
+                                    String username = scanner.nextLine();
+                                    searchFriendsByUsername(channel, username);
                                 }
                             } catch (Exception e) {
                                 System.out.println("输入格式错误");
@@ -156,6 +163,12 @@ public class MainTest {
             }
         });
         channelFuture.sync().channel().closeFuture().sync();
+    }
+
+    private static void searchFriendsByUsername(Channel channel, String username) {
+        SearchFriendRequest request = new SearchFriendRequest();
+        request.setUsername(username);
+        channel.writeAndFlush(request);
     }
 
     private static void searchFriends(Channel channel, String name) {
