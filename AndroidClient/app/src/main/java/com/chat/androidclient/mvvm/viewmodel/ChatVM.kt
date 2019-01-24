@@ -13,7 +13,6 @@ import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.event.MessageEvent
 import com.chat.androidclient.event.RefreshConversationEvent
-import com.chat.androidclient.event.SayHelloEvent
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.MessageResponseDao
 import com.chat.androidclient.im.ChatIM
@@ -36,7 +35,12 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     private var builder: NotificationCompat.Builder? = null
     private var notification: NotificationManager? = null
     
-    
+    fun init(){
+        loadMessageFromDB()
+        if (!view.intent.getStringExtra(ChatActivity.MSG).isNullOrEmpty()){
+            sendMsg(view.intent.getStringExtra(ChatActivity.MSG))
+        }
+    }
     fun loadMessageFromDB() {
         val qb = msgDao.queryBuilder()
         val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()))
@@ -46,15 +50,12 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         val list = qb.list()
         view.addMessages(list)
     }
-    @Subscribe
-    fun sayHello(event: SayHelloEvent) {
-        sendMsg("我们已经是好友了，开始聊天吧！！")
-    }
+ 
     fun sendMsg(msg: String) {
         ChatIM.instance.cmd(SendMessageRequest(id, msg))
 //清空输入框
         view.clearInput()
-//        todo insert db
+//         insert db
         val message = MessageResponse()
         message.fromUserId = getMyId()
         message.message = msg

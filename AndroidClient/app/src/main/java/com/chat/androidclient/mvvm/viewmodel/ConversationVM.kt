@@ -18,6 +18,7 @@ import com.chat.androidclient.event.LoginResponseEvent
 import com.chat.androidclient.event.MessageEvent
 import com.chat.androidclient.event.RefreshConversationEvent
 import com.chat.androidclient.event.ThemeEvent
+import com.chat.androidclient.greendao.ConversationDao
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.DaoSession
 import com.chat.androidclient.im.ChatIM
@@ -45,8 +46,8 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
     }
     
     private fun loadConversationFormDB() {
-        // load msg from db
-        val conversationList = session.conversationDao.queryBuilder().list()
+        // load msg from db 以时间降序排序
+        val conversationList = session.conversationDao.queryBuilder().orderDesc(ConversationDao.Properties.Time).list()
         view.refreshConversation(conversationList)
         isEmpty.set(conversationList.isEmpty())
         

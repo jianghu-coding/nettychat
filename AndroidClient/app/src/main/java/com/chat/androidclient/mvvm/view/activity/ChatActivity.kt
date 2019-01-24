@@ -21,10 +21,17 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
     
     companion object {
         val ID = "id"
+        val MSG = "msg"
         @JvmStatic
         fun startActivity(context: Context, chatId: Long) {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra(ID, chatId)
+            context.startActivity(intent)
+        } @JvmStatic
+        fun startActivity(context: Context, chatId: Long,msg:String) {
+            val intent = Intent(context, ChatActivity::class.java)
+            intent.putExtra(ID, chatId)
+            intent.putExtra(MSG, msg)
             context.startActivity(intent)
         }
         
@@ -44,7 +51,7 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
         mDataBinding.messageRecyclerView.layoutManager = layoutManager
         adapter = ConversationAdapter(this)
         mDataBinding.messageRecyclerView.adapter = adapter
-        mVM.loadMessageFromDB()
+        mVM.init()
     }
     
     fun canClickSendBtn(canSend: Boolean) {
