@@ -38,6 +38,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         mVM.connect()
         mDataBinding.vm = mVM
         mVM.checkConversation()
+        mDataBinding.tvDrawNickname.text=SPUtils.getInstance().getString(Constant.LoginUserName)
         //处理状态栏效果
         initStatusBar()
         

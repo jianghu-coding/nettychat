@@ -10,6 +10,8 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityFriendDetailBinding
+import com.chat.androidclient.greendao.DaoMaster
+import com.chat.androidclient.greendao.FriendDao
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.User
 import com.chat.androidclient.mvvm.viewmodel.FriendDetailVM
@@ -40,6 +42,7 @@ class FriendDetailActivity : BaseActivity<ActivityFriendDetailBinding, FriendDet
 //        如果是自己进自己的主页。不显示。。其他情况显示
 //        （to do） 以后需要优化为如果不是好友。显示。如果已经是好友了。显示发送消息。是自己就什么都不显示
         mDataBinding.bottomLayout.run {
+            
             if (mVM.user.get()!!.id == SPUtils.getInstance().getLong(Constant.id))
                 this.visibility = GONE
             else
@@ -66,8 +69,20 @@ class FriendDetailActivity : BaseActivity<ActivityFriendDetailBinding, FriendDet
             }
             R.id.add_friend -> {
                 mVM.addFriend()
+            }  R.id.send_msg -> {
+                mVM.toChat()
             }
             
         }
+    }
+    
+    fun showAddFriend() {
+    mDataBinding.addFriend.visibility= VISIBLE
+    mDataBinding.sendMsg.visibility= GONE
+    }
+    
+    fun showChat() {
+        mDataBinding.addFriend.visibility= GONE
+        mDataBinding.sendMsg.visibility= VISIBLE
     }
 }

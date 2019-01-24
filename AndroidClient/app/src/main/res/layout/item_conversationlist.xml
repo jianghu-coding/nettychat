@@ -48,6 +48,7 @@
             android:layout_marginRight="115pt"
             android:layout_toRightOf="@+id/icon"
             android:text=""
+            android:singleLine="true"
             android:textColor="@color/color808080"
             android:textSize="14sp"
             />

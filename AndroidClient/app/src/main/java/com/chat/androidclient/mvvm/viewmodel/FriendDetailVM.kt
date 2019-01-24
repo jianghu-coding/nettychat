@@ -4,6 +4,7 @@ import android.databinding.ObservableField
 import com.chat.androidclient.event.AddFriendResponseEvent
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.DaoSession
+import com.chat.androidclient.greendao.FriendDao
 import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Friend
@@ -23,6 +24,14 @@ class FriendDetailVM(var view: FriendDetailActivity) : BaseViewModel() {
     fun init() {
        
         user.set( view.intent.getSerializableExtra(Constant.FRIENDDETAIL_USER_INFO) as User)
+        val dao = DaoMaster.newDevSession(view, Constant.DBNAME).friendDao
+        val friend = dao.queryBuilder().where(FriendDao.Properties.UserId.eq(user.get()!!.id)).unique()
+        if (friend==null){
+            view.showAddFriend()
+        }else{
+            view.showChat()
+    
+        }
     }
     
     var dialog: LoadingDialog? = null
@@ -58,5 +67,9 @@ class FriendDetailVM(var view: FriendDetailActivity) : BaseViewModel() {
         if (dialog != null && dialog!!.isShowing) {
             dialog?.dismiss()
         }
+    }
+    
+    fun toChat() {
+        ChatActivity.startActivity(view, user.get()!!.id!!)
     }
 }

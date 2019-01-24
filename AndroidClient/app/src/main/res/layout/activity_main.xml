@@ -263,6 +263,7 @@
                         android:id="@+id/tv_draw_nickname"
                         android:textColor="@color/colorffffff"
                         android:textSize="22sp"
+                        android:layout_marginLeft="20pt"
                         />
 
                     <LinearLayout
