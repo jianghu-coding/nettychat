@@ -39,7 +39,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.junit.Test;
+
+import javax.crypto.spec.IvParameterSpec;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,8 +68,8 @@ public class MainTest {
     private static final String TEST_B_USERNAME = "888888";
     private static final String TEST_B_PASSWORD = "999999";
     private static final String TEST_B_NAME = "宝六";
-    private static final String HOST = "127.0.0.1";
-    private static final int PORT = 9999;
+    private static final String HOST = "132.232.151.6";
+    private static final int PORT = 8888;
 
     public static void main(String[] args) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();

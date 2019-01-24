@@ -28,4 +28,6 @@ public interface ErrorCode {
     String GROUP_USER_ALREADY_EXIST = "groupUserAlreadyExist";
 
     String GROUP_NOT_THIS_USER = "groupNotThisUser";
+
+    String FRIEND_EXITS = "friendExits";
 }

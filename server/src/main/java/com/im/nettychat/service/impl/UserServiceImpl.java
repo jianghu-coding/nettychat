@@ -117,6 +117,11 @@ public class UserServiceImpl extends BaseService implements UserService {
             return;
         }
         Long userId = ctx.channel().attr(SESSION_ATTRIBUTE_KEY).get().getUserId();
+        boolean friendExits = redisRepository.sExist(CacheName.USER_FRIEND, String.valueOf(userId), String.valueOf(friendUserId));
+        if (friendExits) {
+            exceptionResponse(ctx, ErrorCode.FRIEND_EXITS, response);
+            return;
+        }
         SqlSession sqlSession = DBUtil.getSession(true);
         FriendMapper friendMapper = sqlSession.getMapper(FriendMapper.class);
         Friend friend = new Friend();
