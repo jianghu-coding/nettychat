@@ -14,3 +14,6 @@ CREATE TABLE `friend` (
   `to_user_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `friend`
+ADD UNIQUE INDEX `from_to_user_id` (`from_user_id`, `to_user_id`) ;

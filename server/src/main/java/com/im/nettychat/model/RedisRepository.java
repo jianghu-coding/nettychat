@@ -30,11 +30,11 @@ public class RedisRepository {
         return null;
     }
 
-    public boolean sExist(CacheName cacheName, String field) {
+    public boolean sExist(CacheName cacheName, String field, String val) {
         if (cacheName.getType() != CacheType.S) {
             throw new IllegalArgumentException("expected S found " + cacheName.getType());
         }
-        return getJedis().sismember(cacheName.name(), field);
+        return getJedis().sismember(cacheName.getPrefix().concat(field), val);
     }
 
     public void hSet(CacheName cacheName, String field, String val) {
