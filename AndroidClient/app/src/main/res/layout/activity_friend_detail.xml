@@ -5,7 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     >
-
+<data>
+    <variable
+        name="vm"
+        type="com.chat.androidclient.mvvm.viewmodel.FriendDetailVM"/>
+    <import type="com.blankj.utilcode.util.SPUtils"/>
+    <import type="com.chat.androidclient.mvvm.model.Constant"/>
+    <import type="android.view.View"/>
+</data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -80,7 +87,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/head"
                                 android:layout_centerHorizontal="true"
-                                android:text="Saber"
+                                android:text="@{vm.user.username}"
                                 android:textColor="@color/color000000"
                                 android:textSize="20sp"
                                 />

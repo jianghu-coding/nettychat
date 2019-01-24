@@ -1,11 +1,8 @@
 package com.chat.androidclient.mvvm.view.activity
 
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.chat.androidclient.R
-import com.chat.androidclient.adapter.SearchSimpleAdapter
 import com.chat.androidclient.databinding.ActivitySearchBinding
-import com.chat.androidclient.mvvm.model.SearchSimpleResult
 import com.chat.androidclient.mvvm.viewmodel.SearchVM
 
 /**

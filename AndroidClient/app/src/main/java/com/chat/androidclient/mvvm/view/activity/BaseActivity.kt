@@ -49,8 +49,8 @@ open abstract class BaseActivity<T : ViewDataBinding, D : BaseViewModel> : RxApp
     /**
      * 统一显示提示消息
      */
-    fun showMsg(msg: String) {
-        Snackbar.make(mDataBinding.root,msg,Snackbar.LENGTH_SHORT).show()
+    fun showMsg(msg: String?) {
+        Snackbar.make(mDataBinding.root,"$msg",Snackbar.LENGTH_SHORT).show()
     }
     
     fun showDevloadingMsg() {

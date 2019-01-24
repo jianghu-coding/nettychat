@@ -94,9 +94,7 @@ class SearchVM(var view: SearchActivity) : BaseViewModel() {
             /**
              * 如果只有唯一的结果。进入他的详情页
              */
-            val intent = Intent(view, FriendDetailActivity::class.java)
-            intent.putExtra(Constant.SEARCH_PERSON_LIST, response)
-            view.startActivity(intent)
+         FriendDetailActivity.launchActivity(view,response.users[0])
         }
         else {
             view.showMsg("没有搜索到你要找的人")

@@ -17,30 +17,33 @@ import com.chat.androidclient.mvvm.viewmodel.ChatVM
  * 聊天界面
  */
 class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
-    lateinit var adapter:ConversationAdapter
+    lateinit var adapter: ConversationAdapter
+    
     companion object {
-         val ID = "id"
+        val ID = "id"
         @JvmStatic
         fun startActivity(context: Context, chatId: Long) {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra(ID, chatId)
             context.startActivity(intent)
         }
+        
     }
     
     override fun getViewModel() = ChatVM(this)
     
     override fun getLayoutRes() = R.layout.activity_conversation
+
     
     override fun init() {
         mDataBinding.vm = mVM
         mDataBinding.ivCall.setColorFilter(Color.WHITE)
         mDataBinding.ivInfo.setColorFilter(Color.WHITE)
         val layoutManager = LinearLayoutManager(this)
-        layoutManager.stackFromEnd=true
-        mDataBinding.messageRecyclerView.layoutManager=layoutManager
-        adapter= ConversationAdapter(this)
-        mDataBinding.messageRecyclerView.adapter=adapter
+        layoutManager.stackFromEnd = true
+        mDataBinding.messageRecyclerView.layoutManager = layoutManager
+        adapter = ConversationAdapter(this)
+        mDataBinding.messageRecyclerView.adapter = adapter
         mVM.loadMessageFromDB()
     }
     
@@ -50,14 +53,14 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
     }
     
     override fun onClick(v: View) {
-    when(v.id){
-        R.id.btn_send_msg->{
-            mVM.sendMsg(mDataBinding.msgInput.text.toString())
+        when (v.id) {
+            R.id.btn_send_msg -> {
+                mVM.sendMsg(mDataBinding.msgInput.text.toString())
+            }
         }
     }
-    }
     
-    fun addMessage(msg:MessageResponse){
+    fun addMessage(msg: MessageResponse) {
         adapter.addMessage(msg)
         scrollToDown()
     }
@@ -66,12 +69,13 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
      * 滚动到底部
      */
     private fun scrollToDown() {
-        Handler().postDelayed( { mDataBinding.messageRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)},100)
+        Handler().postDelayed({ mDataBinding.messageRecyclerView.smoothScrollToPosition(adapter.itemCount - 1) }, 100)
     }
     
-    fun addMessages(msgs:List<MessageResponse>){
+    fun addMessages(msgs: List<MessageResponse>) {
         adapter.addMessages(msgs)
     }
+    
     fun clearInput() {
         mDataBinding.msgInput.setText("")
     }

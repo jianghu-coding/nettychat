@@ -16,6 +16,7 @@ import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityMainBinding
 import com.chat.androidclient.event.ThemeEvent
 import com.chat.androidclient.mvvm.model.Constant
+import com.chat.androidclient.mvvm.model.User
 import com.chat.androidclient.mvvm.viewmodel.MainVM
 import org.greenrobot.eventbus.EventBus
 
@@ -26,11 +27,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         //恢复上次保存的夜间模式效果
         if (SPUtils.getInstance().getBoolean(Constant.daynightmode)) {
             setTheme(R.style.NightTheme)
-        }else{
+        }
+        else {
             setTheme(R.style.DayTheme)
         }
         super.onCreate(savedInstanceState)
     }
+    
     override fun init() {
         mVM.connect()
         mDataBinding.vm = mVM
@@ -69,7 +72,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             R.id.titlt_more -> showDevloadingMsg()
             R.id.tv_more -> showDevloadingMsg()
             R.id.iv_myhead -> {
-                startActivity(Intent(this, FriendDetailActivity::class.java))
+                var user: User = User()
+                user.username = SPUtils.getInstance().getString(Constant.LoginUserName)
+                user.id = SPUtils.getInstance().getLong(Constant.id)
+                FriendDetailActivity.launchActivity(this, user)
             }
             R.id.ll_night_mode -> {
                 val oldMode = SPUtils.getInstance().getBoolean(Constant.daynightmode)

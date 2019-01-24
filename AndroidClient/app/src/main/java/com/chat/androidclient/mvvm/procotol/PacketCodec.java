@@ -5,8 +5,10 @@ package com.chat.androidclient.mvvm.procotol;
 import com.blankj.utilcode.util.LogUtils;
 import com.chat.androidclient.mvvm.model.Command;
 import com.chat.androidclient.mvvm.model.LoginRequest;
+import com.chat.androidclient.mvvm.procotol.request.AddFriendRequest;
 import com.chat.androidclient.mvvm.procotol.request.SearchFriendRequest;
 import com.chat.androidclient.mvvm.procotol.request.SendMessageRequest;
+import com.chat.androidclient.mvvm.procotol.response.AddFriendResponse;
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse;
 import com.chat.androidclient.mvvm.model.RegisterRequest;
 import com.chat.androidclient.mvvm.procotol.response.RegisterResponse;
@@ -42,6 +44,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.SEND_MESSAGE_RESPONSE, MessageResponse.class);
         packetTypeMap.put(Command.SEND_MESSAGE, SendMessageRequest.class);
         packetTypeMap.put(Command.SEARCH_FRIEND, SearchFriendRequest.class);
+        packetTypeMap.put(Command.ADD_FRIEND, AddFriendRequest.class);
 //        packetTypeMap.put(Command.CREATE_GROUP, CreateGroupRequest.class);
 //        packetTypeMap.put(Command.JOIN_GROUP, JoinGroupRequest.class);
 //        packetTypeMap.put(Command.GET_USER_GROUP, GetUserGroupRequest.class);
@@ -50,6 +53,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.GET_FRIENDS, GetFriendRequest.class);
         packetTypeMap.put(Command.GET_FRIENDS_RESPONSE, GetFriendResponse.class);
         packetTypeMap.put(Command.SEARCH_FRIEND_RESPONSE, SearchFriendResponse.class);
+        packetTypeMap.put(Command.ADD_FRIEND_RESPONSE, AddFriendResponse.class);
 //        packetTypeMap.put(Command.GET_USER_GROUP_LIST, GetUserGroupListRequest.class);
 
         serializerMap = new HashMap<>();

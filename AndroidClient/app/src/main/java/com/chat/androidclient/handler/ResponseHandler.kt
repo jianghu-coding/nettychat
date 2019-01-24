@@ -12,28 +12,30 @@ import org.greenrobot.eventbus.EventBus
  * Created by lps on 2018/12/25 13:27.
  */
 class ResponseHandler : SimpleChannelInboundHandler<PacketResponse>() {
- 
+    
     override fun channelRead0(ctx: ChannelHandlerContext, msg: PacketResponse) {
         LogUtils.e(msg.toString())
-   when(msg.command){
-       Command.LOGIN_RESPONSE->{
-         EventBus.getDefault().post(LoginResponseEvent(msg))
-       }
-       Command.REGISTER_RESPONSE->{
-           EventBus.getDefault().post(SignUpResponseEvent(msg))
-       }
-       Command.SEND_MESSAGE_RESPONSE->{
-           EventBus.getDefault().post(MessageEvent(msg))
-       }
-        Command.GET_FRIENDS_RESPONSE->{
-           EventBus.getDefault().post(FriendResponseEvent(msg))
-       }
-       Command.SEARCH_FRIEND_RESPONSE->{
-           EventBus.getDefault().post(SearchFriendResponseEvent(msg))
-    
-       }
-       
-   }
+        when (msg.command) {
+            Command.LOGIN_RESPONSE -> {
+                EventBus.getDefault().post(LoginResponseEvent(msg))
+            }
+            Command.REGISTER_RESPONSE -> {
+                EventBus.getDefault().post(SignUpResponseEvent(msg))
+            }
+            Command.SEND_MESSAGE_RESPONSE -> {
+                EventBus.getDefault().post(MessageEvent(msg))
+            }
+            Command.GET_FRIENDS_RESPONSE -> {
+                EventBus.getDefault().post(FriendResponseEvent(msg))
+            }
+            Command.SEARCH_FRIEND_RESPONSE -> {
+                EventBus.getDefault().post(SearchFriendResponseEvent(msg))
+            }
+            Command.ADD_FRIEND_RESPONSE -> {
+                EventBus.getDefault().post(AddFriendResponseEvent(msg))
+            }
+            
+        }
     }
     
 }
