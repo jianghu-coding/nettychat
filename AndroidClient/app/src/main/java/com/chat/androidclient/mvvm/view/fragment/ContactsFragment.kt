@@ -24,7 +24,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
         mDataBinding.refreshlayout.setOnRefreshListener {
             mVM.loadFriendListFromNetWork()
         }
-        mVM.init()
+       
     }
     
     private fun initFriendList() {
@@ -86,5 +86,10 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
         mDataBinding.ivSearch.setImageResource(searchiv.resourceId)
         
         friendAdapter.refreshUI()
+    }
+    
+    override fun onResume() {
+        super.onResume()
+        mVM.loadFriendFromDB()
     }
 }

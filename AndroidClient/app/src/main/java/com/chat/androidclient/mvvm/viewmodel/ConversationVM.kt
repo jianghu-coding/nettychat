@@ -110,6 +110,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
                 .setLargeIcon(BitmapFactory.decodeResource(view.resources, R.mipmap.fsf))
                 .setSmallIcon(R.mipmap.fsf)
                 .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
         if (notification == null)
             notification = view.activity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

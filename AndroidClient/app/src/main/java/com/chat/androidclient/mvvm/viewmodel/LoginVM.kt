@@ -1,6 +1,7 @@
 package com.chat.androidclient.mvvm.viewmodel
 
 import android.content.Intent
+import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chat.androidclient.App
@@ -12,6 +13,7 @@ import com.chat.androidclient.mvvm.model.LoginRequest
 import com.chat.androidclient.mvvm.procotol.response.LoginResponse
 import com.chat.androidclient.mvvm.view.activity.LoginActivity
 import com.chat.androidclient.mvvm.view.activity.MainActivity
+import com.chat.androidclient.mvvm.view.custom.LoadingDialog
 import org.greenrobot.eventbus.Subscribe
 
 /**
@@ -31,6 +33,11 @@ class LoginVM(var view: LoginActivity) : BaseViewModel() {
         ChatIM.instance.cmd(LoginRequest(name, pass))
         this.name = name
         this.pass = pass
+        if (dialog==null){
+            dialog= LoadingDialog(view)
+        }
+        dialog?.show()
+        KeyboardUtils.hideSoftInput(view)
     }
     
     /**
@@ -38,6 +45,8 @@ class LoginVM(var view: LoginActivity) : BaseViewModel() {
      */
     @Subscribe
     fun loginResponse(event: LoginResponseEvent) {
+        name = SPUtils.getInstance().getString(Constant.LoginUserName)
+        pass = SPUtils.getInstance().getString(Constant.LoginUserPass)
         if (event.msg.error) {
             view.showMsg("登陆失败了${event.msg.errorInfo}")
         }
@@ -61,7 +70,7 @@ class LoginVM(var view: LoginActivity) : BaseViewModel() {
      */
     @Subscribe
     fun destroyThisVM(event: DestroyLoginEvent) {
-        super.destroy()
+        destroy()
         view.finish()
     }
 }

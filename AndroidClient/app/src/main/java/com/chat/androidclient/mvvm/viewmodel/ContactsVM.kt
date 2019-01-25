@@ -21,9 +21,8 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
     val session = DaoMaster.newDevSession(view.activity, Constant.DBNAME)
     
     fun init() {
-        // to do 从数据库或网络加载联系人
-        loadFriendListFromNetWork()
-        testData()
+        // to do 从数据库加载联系人
+        loadFriendFromDB()
     }
     
      fun loadFriendListFromNetWork() {
@@ -38,7 +37,8 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
             group=Group()
             group.name="好友"
         }
-        val groupId = session.groupDao.insertOrReplace(group)
+        session.groupDao.insertOrReplace(group)
+        val groupId = group.id
         response.friends.forEach {
             var friend = Friend()
             friend.userId=it.id
@@ -48,25 +48,16 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
             friend.sign=it.desc
             session.friendDao.insertOrReplace(friend)
         }
-        testData()
+     
+      
+        loadFriendFromDB()
     }
-    private fun testData() {
-        val groups = session.groupDao.queryBuilder().list()
-//        val group = Group()
-//        group.__setDaoSession(session)
-//        group.name="好友"
-//        val friendid = session.groupDao.insert(group)
-//        for (i in 1..10){
-//           val friend = Friend()
-//           friend.userId=friendid
-//           friend.devicesAndState="Iphone 在线"
-//           friend.nickname="测试用户啊$i"
-//           session.friendDao.insert(friend)
-//
-//
-//       }
-//
-        
+     fun loadFriendFromDB() {
+         /**
+          * 可能是缓存的问题。没有及时更新、
+          */
+         session.clear()
+        val groups = session.groupDao.loadAll()
         view.refreshData(groups)
         view.refreshComplet()
     }

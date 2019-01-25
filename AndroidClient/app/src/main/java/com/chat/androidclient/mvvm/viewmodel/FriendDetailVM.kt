@@ -5,9 +5,11 @@ import com.chat.androidclient.event.AddFriendResponseEvent
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.DaoSession
 import com.chat.androidclient.greendao.FriendDao
+import com.chat.androidclient.greendao.GroupDao
 import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Friend
+import com.chat.androidclient.mvvm.model.Group
 import com.chat.androidclient.mvvm.model.User
 import com.chat.androidclient.mvvm.procotol.request.AddFriendRequest
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
@@ -34,7 +36,6 @@ class FriendDetailVM(var view: FriendDetailActivity) : BaseViewModel() {
         }
     }
     
-    var dialog: LoadingDialog? = null
     fun addFriend() {
         if (dialog == null) {
             dialog = LoadingDialog(view)
@@ -51,23 +52,31 @@ class FriendDetailVM(var view: FriendDetailActivity) : BaseViewModel() {
             view.showMsg(event.msg.errorInfo)
         }
         else {
-            val session = DaoMaster.newDevSession(view, Constant.DBNAME)
-            val friend = Friend()
-            friend.userId=user.get()!!.id
-            friend.nickname=user.get()?.username
-            session.friendDao.insertOrReplace(friend)
+            insertGroupFriendDB()
             ChatActivity.startActivity(view, user.get()!!.id!!,"我们已经是好友了，快来聊天吧！！")
             view.finish()
         }
     }
-
     
-    override fun destroy() {
-        super.destroy()
-        if (dialog != null && dialog!!.isShowing) {
-            dialog?.dismiss()
+    /**
+     * 写入数据库
+     */
+    private fun insertGroupFriendDB() {
+        val session = DaoMaster.newDevSession(view, Constant.DBNAME)
+        val friend = Friend()
+        friend.userId = user.get()!!.id
+        friend.nickname = user.get()?.username
+        var group = session.groupDao.queryBuilder().where(GroupDao.Properties.Name.eq("好友")).unique()
+        if (group == null) {
+            group = Group()
+            group.name = "好友"
         }
+        session.groupDao.insertOrReplace(group)
+        val groupId = group.id
+        friend.customid = groupId
+        session.friendDao.insertOrReplace(friend)
     }
+    
     
     fun toChat() {
         ChatActivity.startActivity(view, user.get()!!.id!!)

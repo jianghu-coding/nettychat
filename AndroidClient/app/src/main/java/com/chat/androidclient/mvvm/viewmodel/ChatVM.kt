@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.event.MessageEvent
 import com.chat.androidclient.event.RefreshConversationEvent
+import com.chat.androidclient.greendao.ConversationDao
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.MessageResponseDao
 import com.chat.androidclient.im.ChatIM
@@ -35,22 +36,27 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     private var builder: NotificationCompat.Builder? = null
     private var notification: NotificationManager? = null
     
-    fun init(){
+    fun init() {
         loadMessageFromDB()
-        if (!view.intent.getStringExtra(ChatActivity.MSG).isNullOrEmpty()){
+        if (!view.intent.getStringExtra(ChatActivity.MSG).isNullOrEmpty()) {
             sendMsg(view.intent.getStringExtra(ChatActivity.MSG))
         }
     }
+    
     fun loadMessageFromDB() {
         val qb = msgDao.queryBuilder()
         val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()))
         val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id))
         qb.whereOr(condition1, condition2)
-        
+        val conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.FromId.eq(id)).unique()
+        if (conversation != null) {
+            conversation.msgcount = 0
+            conversationDao.insertOrReplace(conversation)
+        }
         val list = qb.list()
         view.addMessages(list)
     }
- 
+    
     fun sendMsg(msg: String) {
         ChatIM.instance.cmd(SendMessageRequest(id, msg))
 //清空输入框
@@ -68,10 +74,10 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         val conversation = Conversation()
         conversation.fromId = id
         conversation.lastcontent = msg
+        conversation.msgcount = 0
         conversation.time = System.currentTimeMillis()
         conversationDao.insertOrReplace(conversation)
-        //通知最近会话列表更新
-        EventBus.getDefault().post(RefreshConversationEvent())
+        
     }
     
     //收到后台推送过来的消息
@@ -108,8 +114,10 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
                 .setLargeIcon(BitmapFactory.decodeResource(view.resources, R.drawable.otherhead))
                 .setSmallIcon(R.drawable.otherhead)
                 .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
         if (notification == null)
             notification = view.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChanel()
         }
@@ -144,5 +152,11 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         }
+    }
+    
+    override fun destroy() {
+        //通知最近会话列表更新
+        EventBus.getDefault().post(RefreshConversationEvent())
+        super.destroy()
     }
 }

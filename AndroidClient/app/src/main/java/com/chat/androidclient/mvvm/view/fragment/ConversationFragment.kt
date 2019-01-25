@@ -3,11 +3,9 @@ package com.chat.androidclient.mvvm.view.fragment
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.RecycledViewPool
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
-import com.blankj.utilcode.util.BarUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.adapter.ConversationListAdapter
 import com.chat.androidclient.databinding.FragmentConversationBinding
@@ -32,10 +30,14 @@ class ConversationFragment : BaseFragment<FragmentConversationBinding, Conversat
         initRecyclerView()
         mDataBinding.vm = mVM
         mDataBinding.refreshlayout.setOnRefreshListener {
-            mVM.init()
-            EventBus.getDefault().post(ReConnectEvent())
+            refreshConvAndReConnect()
         }
         mVM.init()
+    }
+    
+    private fun refreshConvAndReConnect() {
+        mVM.init()
+        EventBus.getDefault().post(ReConnectEvent())
     }
     
     private fun initRecyclerView() {
