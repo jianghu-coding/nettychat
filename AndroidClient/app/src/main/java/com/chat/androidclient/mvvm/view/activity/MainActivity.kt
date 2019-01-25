@@ -19,6 +19,7 @@ import com.chat.androidclient.event.ThemeEvent
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.User
 import com.chat.androidclient.mvvm.viewmodel.MainVM
+import com.tencent.bugly.beta.Beta
 import org.greenrobot.eventbus.EventBus
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
@@ -97,6 +98,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
                 refreshUI()
                 EventBus.getDefault().post(ThemeEvent())
                 SPUtils.getInstance().put(Constant.daynightmode, nowMode)
+            }
+            R.id.draw_setting->{
+                Beta.checkUpgrade()
             }
         }
     }

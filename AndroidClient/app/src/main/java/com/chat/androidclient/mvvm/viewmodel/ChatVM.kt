@@ -24,6 +24,7 @@ import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by lps on 2018/12/28 14:00.
@@ -48,11 +49,6 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()))
         val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id))
         qb.whereOr(condition1, condition2)
-        val conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.FromId.eq(id)).unique()
-        if (conversation != null) {
-            conversation.msgcount = 0
-            conversationDao.insertOrReplace(conversation)
-        }
         val list = qb.list()
         view.addMessages(list)
     }
@@ -71,7 +67,10 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
 //         refresh list
         view.addMessage(message)
         // 最近会话列表DB 刷新这个好友
-        val conversation = Conversation()
+        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.FromId.eq(id)).unique()
+        if (conversation == null) {
+            conversation = Conversation()
+        }
         conversation.fromId = id
         conversation.lastcontent = msg
         conversation.msgcount = 0
@@ -81,7 +80,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     }
     
     //收到后台推送过来的消息
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun ReciveMessage(event: MessageEvent) {
         val response = event.msg as MessageResponse
         
@@ -156,7 +155,12 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     
     override fun destroy() {
         //通知最近会话列表更新
-        EventBus.getDefault().post(RefreshConversationEvent())
+        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.FromId.eq(id)).unique()
+        if (conversation != null) {
+            conversation.msgcount = 0
+            conversationDao.insertOrReplace(conversation)
+            EventBus.getDefault().post(RefreshConversationEvent())
+        }
         super.destroy()
     }
 }

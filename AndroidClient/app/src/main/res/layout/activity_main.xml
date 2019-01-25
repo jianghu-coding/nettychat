@@ -518,6 +518,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:id="@+id/draw_setting"
                     android:orientation="vertical">
 
                     <ImageView
@@ -531,7 +533,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20pt"
-                        android:text="设置"
+                        android:text="更新"
                         android:id="@+id/tv_draw_setting"
                         android:textColor="?attr/tv_color"
                         />

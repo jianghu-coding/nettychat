@@ -22,7 +22,7 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
     
     fun init() {
         // to do 从数据库加载联系人
-        loadFriendFromDB()
+        loadFriendListFromNetWork()
     }
     
      fun loadFriendListFromNetWork() {

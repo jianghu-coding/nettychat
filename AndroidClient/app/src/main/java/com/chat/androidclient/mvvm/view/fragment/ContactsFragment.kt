@@ -24,7 +24,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
         mDataBinding.refreshlayout.setOnRefreshListener {
             mVM.loadFriendListFromNetWork()
         }
-       
+       mVM.init()
     }
     
     private fun initFriendList() {

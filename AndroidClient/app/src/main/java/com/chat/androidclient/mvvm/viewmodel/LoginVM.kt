@@ -45,8 +45,6 @@ class LoginVM(var view: LoginActivity) : BaseViewModel() {
      */
     @Subscribe
     fun loginResponse(event: LoginResponseEvent) {
-        name = SPUtils.getInstance().getString(Constant.LoginUserName)
-        pass = SPUtils.getInstance().getString(Constant.LoginUserPass)
         if (event.msg.error) {
             view.showMsg("登陆失败了${event.msg.errorInfo}")
         }

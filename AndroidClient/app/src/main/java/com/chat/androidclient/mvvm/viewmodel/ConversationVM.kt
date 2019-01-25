@@ -31,6 +31,7 @@ import com.chat.androidclient.mvvm.view.activity.ChatActivity
 import com.chat.androidclient.mvvm.view.activity.MainActivity
 import com.chat.androidclient.mvvm.view.fragment.ConversationFragment
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by lps on 2018/12/24 15:23.
@@ -47,6 +48,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
     
     private fun loadConversationFormDB() {
         // load msg from db 以时间降序排序
+        session.clear()
         val conversationList = session.conversationDao.queryBuilder().orderDesc(ConversationDao.Properties.Time).list()
         view.refreshConversation(conversationList)
         isEmpty.set(conversationList.isEmpty())
@@ -70,7 +72,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         loadConversationFormDB()
     }
     //收到后台推送过来的消息
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun ReciveMessage(event: MessageEvent) {
         val response = event.msg as MessageResponse
         

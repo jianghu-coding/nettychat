@@ -61,7 +61,7 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
     fun loginResponse(event: LoginResponseEvent) {
         val response = event.msg as LoginResponse
         if (response.error) {
-            view.showMsg("" + response.errorInfo)
+            view.showMsg("" + response.errorInfo+"${SPUtils.getInstance().getString(Constant.LoginUserName)}"+"${SPUtils.getInstance().getString(Constant.LoginUserPass)}")
             view.showLoading()
         }
         else {

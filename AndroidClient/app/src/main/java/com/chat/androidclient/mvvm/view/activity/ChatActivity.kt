@@ -27,8 +27,10 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra(ID, chatId)
             context.startActivity(intent)
-        } @JvmStatic
-        fun startActivity(context: Context, chatId: Long,msg:String) {
+        }
+        
+        @JvmStatic
+        fun startActivity(context: Context, chatId: Long, msg: String) {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra(ID, chatId)
             intent.putExtra(MSG, msg)
@@ -40,7 +42,7 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
     override fun getViewModel() = ChatVM(this)
     
     override fun getLayoutRes() = R.layout.activity_conversation
-
+    
     
     override fun init() {
         mDataBinding.vm = mVM
@@ -76,11 +78,16 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
      * 滚动到底部
      */
     private fun scrollToDown() {
-        Handler().postDelayed({ mDataBinding.messageRecyclerView.smoothScrollToPosition(adapter.itemCount - 1) }, 100)
+        Handler().postDelayed({
+            if (adapter.itemCount > 0) {
+                mDataBinding.messageRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+            }
+        }, 300)
     }
     
     fun addMessages(msgs: List<MessageResponse>) {
         adapter.addMessages(msgs)
+        scrollToDown()
     }
     
     fun clearInput() {
