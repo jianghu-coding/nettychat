@@ -15,6 +15,7 @@ import com.chat.androidclient.event.MessageEvent
 import com.chat.androidclient.event.RefreshConversationEvent
 import com.chat.androidclient.greendao.ConversationDao
 import com.chat.androidclient.greendao.DaoMaster
+import com.chat.androidclient.greendao.FriendDao
 import com.chat.androidclient.greendao.MessageResponseDao
 import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
@@ -41,6 +42,13 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         loadMessageFromDB()
         if (!view.intent.getStringExtra(ChatActivity.MSG).isNullOrEmpty()) {
             sendMsg(view.intent.getStringExtra(ChatActivity.MSG))
+        }
+        val friend = devSession.friendDao.queryBuilder().where(FriendDao.Properties.UserId.eq(id)).unique()
+        if (friend==null){
+            view.setConversationTitle(id.toString())
+        }else{
+            view.setConversationTitle(friend.nickname)
+    
         }
     }
     

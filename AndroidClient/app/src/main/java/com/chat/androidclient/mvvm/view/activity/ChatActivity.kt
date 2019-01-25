@@ -46,14 +46,25 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
     
     override fun init() {
         mDataBinding.vm = mVM
+        initTitle()
+        initRecyclerView()
+        mVM.init()
+    }
+    
+    private fun initTitle() {
         mDataBinding.ivCall.setColorFilter(Color.WHITE)
         mDataBinding.ivInfo.setColorFilter(Color.WHITE)
+    }
+    fun setConversationTitle(info:String){
+        mDataBinding.converUser.text=info
+    }
+    
+    private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = true
         mDataBinding.messageRecyclerView.layoutManager = layoutManager
         adapter = ConversationAdapter(this)
         mDataBinding.messageRecyclerView.adapter = adapter
-        mVM.init()
     }
     
     fun canClickSendBtn(canSend: Boolean) {
