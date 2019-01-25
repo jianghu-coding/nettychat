@@ -122,13 +122,22 @@ public class UserServiceImpl extends BaseService implements UserService {
             exceptionResponse(ctx, ErrorCode.FRIEND_EXITS, response);
             return;
         }
-        SqlSession sqlSession = DBUtil.getSession(true);
+        SqlSession sqlSession = DBUtil.getSession(false);
         FriendMapper friendMapper = sqlSession.getMapper(FriendMapper.class);
+
         Friend friend = new Friend();
         friend.setFromUserId(userId);
         friend.setToUserId(friendUserId);
         friendMapper.save(friend);
+
+        Friend toFriend = new Friend();
+        toFriend.setFromUserId(friendUserId);
+        toFriend.setToUserId(userId);
+        friendMapper.save(toFriend);
+
         redisRepository.sAdd(CacheName.USER_FRIEND, String.valueOf(userId), String.valueOf(friendUserId));
+        redisRepository.sAdd(CacheName.USER_FRIEND, String.valueOf(friendUserId), String.valueOf(userId));
+        sqlSession.commit();
         ctx.writeAndFlush(response);
     }
 

@@ -17,3 +17,13 @@ CREATE TABLE `friend` (
 
 ALTER TABLE `friend`
 ADD UNIQUE INDEX `from_to_user_id` (`from_user_id`, `to_user_id`) ;
+
+-- add group  --
+CREATE TABLE `group` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `owner_id` bigint(20) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

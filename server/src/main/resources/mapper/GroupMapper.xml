@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.im.nettychat.domain.mapper.UserMapper">
+
+    <select id="findByLikeName" resultType="User">
+       <bind name="pattern" value="'%' + _parameter + '%'" />
+        select * from group where name like #{pattern}
+    </select>
+
+    <insert
+            id="save"
+            parameterType="Group"
+            flushCache="true"
+            statementType="PREPARED"
+            keyProperty="id"
+            keyColumn="id"
+            useGeneratedKeys="true"
+            timeout="20">
+        INSERT INTO USER (`name`, `owner_id`, `icon`, `desc`)
+        VALUES (#{name},#{ownerId},#{icon},#{desc})
+    </insert>
+</mapper>
