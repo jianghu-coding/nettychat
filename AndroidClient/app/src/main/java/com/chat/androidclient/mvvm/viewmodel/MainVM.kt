@@ -42,7 +42,7 @@ class MainVM(val view: MainActivity) : BaseViewModel() {
         //这里可以根据是否在线。在重连。不然从login进来。会重复调用登陆
         if (!App.CONNECT) {
             view.showLoading()
-            Handler().postDelayed({ ChatIM.instance.cmd(LoginRequest(SPUtils.getInstance().getString(Constant.LoginUserName), SPUtils.getInstance().getString(Constant.LoginUserName))) }, 500)
+            Handler().postDelayed({ ChatIM.instance.cmd(LoginRequest(SPUtils.getInstance().getString(Constant.LoginUserName), SPUtils.getInstance().getString(Constant.LoginUserPass))) }, 500)
         }
         else {
             view.hideLoading()
