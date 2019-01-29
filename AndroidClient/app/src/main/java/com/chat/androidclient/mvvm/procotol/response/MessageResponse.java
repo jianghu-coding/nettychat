@@ -14,8 +14,11 @@
 package com.chat.androidclient.mvvm.procotol.response;
 
 import com.chat.androidclient.mvvm.model.Command;
+import com.chat.androidclient.mvvm.model.Contact;
 import com.chat.androidclient.mvvm.model.PacketResponse;
+import com.chat.androidclient.mvvm.model.TYPE;
 
+import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
@@ -33,71 +36,60 @@ public class MessageResponse extends PacketResponse {
     private Long toUserId;
     private Long time;
     private String message;
-
-    public Long getTime() {
-        return time;
-    }
-
-    public MessageResponse setTime(Long mTime) {
-        time = mTime;
-        return this;
-    }
-
-    @Generated(hash = 1554578866)
+    @Convert(converter = Contact.TYPEConverter.class,columnType = Integer.class)
+private TYPE type;
+    @Generated(hash = 526109269)
     public MessageResponse(Long id, Long fromUserId, Long toUserId, Long time,
-            String message) {
+            String message, TYPE type) {
         this.id = id;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.time = time;
         this.message = message;
+        this.type = type;
     }
-
     @Generated(hash = 2003436558)
     public MessageResponse() {
     }
-
-
     @Override
     public byte getCommand() {
         return Command.SEND_MESSAGE_RESPONSE;
     }
-
-
     public Long getId() {
         return this.id;
     }
-
-
     public void setId(Long id) {
         this.id = id;
     }
-
-
     public Long getFromUserId() {
         return this.fromUserId;
     }
-
-
     public void setFromUserId(Long fromUserId) {
         this.fromUserId = fromUserId;
     }
-
-
+    public Long getToUserId() {
+        return this.toUserId;
+    }
+    public void setToUserId(Long toUserId) {
+        this.toUserId = toUserId;
+    }
+    public Long getTime() {
+        return this.time;
+    }
+    public void setTime(Long time) {
+        this.time = time;
+    }
     public String getMessage() {
         return this.message;
     }
-
-    public Long getToUserId() {
-        return toUserId;
-    }
-
-    public MessageResponse setToUserId(Long mToUserId) {
-        toUserId = mToUserId;
-        return this;
-    }
-
     public void setMessage(String message) {
         this.message = message;
     }
+    public TYPE getType() {
+        return this.type;
+    }
+    public void setType(TYPE type) {
+        this.type = type;
+    }
+
 }

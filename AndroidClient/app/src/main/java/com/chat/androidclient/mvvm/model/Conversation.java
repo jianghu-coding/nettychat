@@ -14,7 +14,6 @@ import org.greenrobot.greendao.annotation.Unique;
 public class Conversation {
     @Id
     private Long id;
-    @Unique
     private Long fromId;
     private String lastcontent;
     private Long time;

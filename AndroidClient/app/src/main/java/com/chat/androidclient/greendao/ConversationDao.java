@@ -50,7 +50,7 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"CONVERSATION\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"FROM_ID\" INTEGER UNIQUE ," + // 1: fromId
+                "\"FROM_ID\" INTEGER," + // 1: fromId
                 "\"LASTCONTENT\" TEXT," + // 2: lastcontent
                 "\"TIME\" INTEGER," + // 3: time
                 "\"MSGCOUNT\" INTEGER NOT NULL ," + // 4: msgcount

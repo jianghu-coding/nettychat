@@ -25,6 +25,7 @@ import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
 import com.chat.androidclient.mvvm.model.LoginRequest
+import com.chat.androidclient.mvvm.model.TYPE
 import com.chat.androidclient.mvvm.procotol.response.LoginResponse
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
@@ -84,6 +85,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
             val conversation = Conversation()
             conversation.fromId = response.fromUserId
             conversation.msgcount += 1
+            conversation.type=TYPE.PERSON
             conversation.lastcontent = response.message
             conversation.time = System.currentTimeMillis()
             session.conversationDao.insertOrReplace(conversation)
@@ -98,6 +100,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
             //写入聊天消息的db
             response.toUserId=SPUtils.getInstance().getLong(Constant.id)
             response.time=System.currentTimeMillis()
+            response.type=TYPE.PERSON
             session.messageResponseDao.insert(response)
             
         }

@@ -9,6 +9,7 @@ import com.chat.androidclient.mvvm.procotol.request.AddFriendRequest;
 import com.chat.androidclient.mvvm.procotol.request.CreateGroupRequest;
 import com.chat.androidclient.mvvm.procotol.request.GetUserGroupListRequest;
 import com.chat.androidclient.mvvm.procotol.request.SearchFriendRequest;
+import com.chat.androidclient.mvvm.procotol.request.SendGroupMessageRequest;
 import com.chat.androidclient.mvvm.procotol.request.SendMessageRequest;
 import com.chat.androidclient.mvvm.procotol.response.AddFriendResponse;
 import com.chat.androidclient.mvvm.procotol.response.CreateGroupResponse;
@@ -51,6 +52,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.ADD_FRIEND, AddFriendRequest.class);
         packetTypeMap.put(Command.CREATE_GROUP, CreateGroupRequest.class);
         packetTypeMap.put(Command.GET_USER_GROUP_LIST, GetUserGroupListRequest.class);
+        packetTypeMap.put(Command.SEND_GROUP_MESSAGE, SendGroupMessageRequest.class);
 //        packetTypeMap.put(Command.CREATE_GROUP, CreateGroupRequest.class);
 //        packetTypeMap.put(Command.JOIN_GROUP, JoinGroupRequest.class);
 //        packetTypeMap.put(Command.GET_USER_GROUP, GetUserGroupRequest.class);

@@ -52,7 +52,7 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
         session.groupDao.insertOrReplace(group)
         val groupId = group.id
         response.friends.forEach {
-            var con = session.contactDao.queryBuilder().where(ContactDao.Properties.Type.eq(TYPE.PERSON), ContactDao.Properties.UserId.eq(it.id)).unique()
+            var con = session.contactDao.queryBuilder().where(ContactDao.Properties.Type.eq(0), ContactDao.Properties.UserId.eq(it.id)).unique()
             if (con == null)
                 con = Contact()
             con.userId = it.id
@@ -79,7 +79,7 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
         val groupId = group.id
         
         response.userGroups.forEach {
-            var con = session.contactDao.queryBuilder().where(ContactDao.Properties.Type.eq(TYPE.GROUP), ContactDao.Properties.UserId.eq(it.groupId)).unique()
+            var con = session.contactDao.queryBuilder().where(ContactDao.Properties.Type.eq(1), ContactDao.Properties.UserId.eq(it.groupId)).unique()
             if (con == null)
                 con = Contact()
             con.userId = it.groupId

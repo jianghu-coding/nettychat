@@ -17,6 +17,8 @@ import com.chat.androidclient.greendao.*
 import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
+import com.chat.androidclient.mvvm.model.TYPE
+import com.chat.androidclient.mvvm.procotol.request.SendGroupMessageRequest
 import com.chat.androidclient.mvvm.procotol.request.SendMessageRequest
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
@@ -28,6 +30,8 @@ import org.greenrobot.eventbus.ThreadMode
  * Created by lps on 2018/12/28 14:00.
  */
 class ChatVM(var view: ChatActivity) : BaseViewModel() {
+    val type: TYPE = view.intent.getSerializableExtra(ChatActivity.TYPE) as TYPE
+    
     var id: Long = view.intent.getLongExtra(ChatActivity.ID, -1)
     val devSession = DaoMaster.newDevSession(view, Constant.DBNAME)
     val msgDao = devSession.messageResponseDao
@@ -40,26 +44,33 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         if (!view.intent.getStringExtra(ChatActivity.MSG).isNullOrEmpty()) {
             sendMsg(view.intent.getStringExtra(ChatActivity.MSG))
         }
-        val friend = devSession.contactDao.queryBuilder().where(ContactDao.Properties.UserId.eq(id)).unique()
-        if (friend==null){
+        val friend = devSession.contactDao.queryBuilder().where(ContactDao.Properties.Type.eq(type), ContactDao.Properties.UserId.eq(id)).unique()
+        if (friend == null) {
             view.setConversationTitle(id.toString())
-        }else{
+        }
+        else {
             view.setConversationTitle(friend.nickname)
-    
+            
         }
     }
     
     fun loadMessageFromDB() {
         val qb = msgDao.queryBuilder()
-        val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()))
-        val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id))
+        val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()), MessageResponseDao.Properties.Type.eq(type.ordinal))
+        val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(type.ordinal))
         qb.whereOr(condition1, condition2)
         val list = qb.list()
         view.addMessages(list)
     }
     
     fun sendMsg(msg: String) {
-        ChatIM.instance.cmd(SendMessageRequest(id, msg))
+        if (type == TYPE.PERSON)
+            ChatIM.instance.cmd(SendMessageRequest(id, msg))
+        else {
+//             发送群消息
+            ChatIM.instance.cmd(SendGroupMessageRequest(id, msg))
+            
+        }
 //清空输入框
         view.clearInput()
 //         insert db
@@ -67,18 +78,20 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         message.fromUserId = getMyId()
         message.message = msg
         message.toUserId = id
+        message.type = type
         message.time = System.currentTimeMillis()
-        msgDao.insertOrReplace(message)
+        msgDao.insert(message)
 //         refresh list
         view.addMessage(message)
         // 最近会话列表DB 刷新这个好友
-        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.FromId.eq(id)).unique()
+        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(type.ordinal), ConversationDao.Properties.FromId.eq(id)).unique()
         if (conversation == null) {
             conversation = Conversation()
         }
         conversation.fromId = id
         conversation.lastcontent = msg
         conversation.msgcount = 0
+        conversation.type = type
         conversation.time = System.currentTimeMillis()
         conversationDao.insertOrReplace(conversation)
         
@@ -94,6 +107,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         }
         else {
             //写入聊天消息的db
+            response.type = TYPE.PERSON
             response.toUserId = SPUtils.getInstance().getLong(Constant.id)
             response.time = System.currentTimeMillis()
             msgDao.insert(response)
@@ -160,7 +174,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     
     override fun destroy() {
         //通知最近会话列表更新
-        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.FromId.eq(id)).unique()
+        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(type.ordinal), ConversationDao.Properties.FromId.eq(id)).unique()
         if (conversation != null) {
             conversation.msgcount = 0
             conversationDao.insertOrReplace(conversation)

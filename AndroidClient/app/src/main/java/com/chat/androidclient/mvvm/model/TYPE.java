@@ -7,7 +7,7 @@ public enum TYPE {
          */
         PERSON(0), GROUP(1);
 
-        final int id;
+         int id;
 
         TYPE(int mId) {
             id = mId;
