@@ -36,7 +36,7 @@ class App:Application() {
         QueryBuilder.LOG_VALUES=true
         Bugly.init(this,"bfa8de2062",true)
         //下拉刷新样式配置
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout -> ClassicsHeader(context) }
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ -> ClassicsHeader(context) }
     }
     
     override fun attachBaseContext(base: Context?) {

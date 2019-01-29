@@ -9,6 +9,7 @@ import android.view.View
 import com.chat.androidclient.R
 import com.chat.androidclient.adapter.ConversationAdapter
 import com.chat.androidclient.databinding.ActivityConversationBinding
+import com.chat.androidclient.mvvm.model.TYPE
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.viewmodel.ChatVM
 
@@ -22,10 +23,12 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
     companion object {
         val ID = "id"
         val MSG = "msg"
+        val TYPE = "type"
         @JvmStatic
-        fun startActivity(context: Context, chatId: Long) {
+        fun startActivity(context: Context, chatId: Long,type:TYPE) {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra(ID, chatId)
+            intent.putExtra(TYPE, type)
             context.startActivity(intent)
         }
         

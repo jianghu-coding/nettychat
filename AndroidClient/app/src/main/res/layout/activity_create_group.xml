@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.chat.androidclient.mvvm.viewmodel.CreateGroupVM"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mvvm.view.activity.CreateGroupActivity">
+        <!--title-->
+        <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="140pt"
+            android:background="@color/color41c5f6"
+            android:paddingLeft="25pt"
+
+            >
+
+            <TextView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="95pt"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0pt"
+                android:drawableLeft="@drawable/back"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="返回"
+                android:textColor="@color/colorffffff"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="创建群组"
+                android:textColor="@color/colorffffff"
+                android:textSize="18sp"
+                />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/group_header"
+            android:layout_width="315pt"
+            android:layout_height="315pt"
+            android:layout_marginTop="345pt"
+            android:src="@drawable/ier"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            tools:ignore="ContentDescription"/>
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="110pt"
+            android:layout_marginRight="110pt"
+            android:layout_marginTop="100pt"
+            android:gravity="center"
+            android:hint="请填写群名称（2~32个字）"
+            app:layout_constraintTop_toBottomOf="@+id/group_header"
+            app:textWatcher="@{vm.inputWatcher}"
+            />
+
+        <ImageView
+            android:id="@+id/iv_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="300pt"
+            android:src="@drawable/gmp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_agree"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20pt"
+            android:text="我已阅读并同意"
+            android:textColor="@color/color000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_statement"
+            app:layout_constraintStart_toEndOf="@id/iv_agree"
+            app:layout_constraintTop_toTopOf="@id/iv_agree"
+            />
+
+        <TextView
+            android:id="@+id/tv_statement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15pt"
+            android:text="服务声明"
+            android:textColor="@color/color41c5f6"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_agree"
+            app:layout_constraintTop_toTopOf="@id/iv_agree"
+            />
+
+        <Button
+            android:id="@+id/commit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60pt"
+            android:layout_marginLeft="80pt"
+            android:layout_marginRight="80pt"
+            android:background="@drawable/shape_commit_gray"
+            android:clickable="false"
+            android:onClick="onClick"
+            android:text="提交"
+            android:textColor="@color/colorffffff"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/iv_agree"
+            />
+    </android.support.constraint.ConstraintLayout>
+</layout>

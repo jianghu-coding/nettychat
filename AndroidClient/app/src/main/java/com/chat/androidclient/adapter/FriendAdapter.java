@@ -1,8 +1,6 @@
 package com.chat.androidclient.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.DataSetObserver;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chat.androidclient.R;
-import com.chat.androidclient.mvvm.model.Friend;
+import com.chat.androidclient.mvvm.model.Contact;
 import com.chat.androidclient.mvvm.model.Group;
 import com.chat.androidclient.mvvm.view.activity.ChatActivity;
 
@@ -50,7 +48,7 @@ public class FriendAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Friend getChild(int groupPosition, int childPosition) {
+    public Contact getChild(int groupPosition, int childPosition) {
         return friendList.get(groupPosition).getMFriendList().get(childPosition);
     }
 
@@ -119,7 +117,7 @@ public class FriendAdapter extends BaseExpandableListAdapter {
         vh.rootview.setBackgroundResource(bgcolor.resourceId);
         vh.name.setText(getChild(groupPosition,childPosition).getNickname());
         convertView.setOnClickListener(v ->
-           ChatActivity.startActivity(parent.getContext(),getChild(groupPosition,childPosition).getUserId())
+           ChatActivity.startActivity(parent.getContext(),getChild(groupPosition,childPosition).getUserId(),getChild(groupPosition,childPosition).getType())
         );
         return convertView;
     }

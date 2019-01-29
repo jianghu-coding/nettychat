@@ -14,7 +14,7 @@ import com.trello.rxlifecycle2.components.RxFragment
 /**
  * Created by lps on 2018/12/24 15:15.
  */
-open abstract class BaseFragment<T:ViewDataBinding,D:BaseViewModel>:RxFragment() ,IView,View.OnClickListener{
+open abstract class BaseFragment<T:ViewDataBinding,D:BaseViewModel>:RxFragment() ,IView{
     lateinit var mVM: D
     
     abstract fun getViewModel(): D
@@ -32,7 +32,7 @@ open abstract class BaseFragment<T:ViewDataBinding,D:BaseViewModel>:RxFragment()
     }
     
     abstract fun getLayoutRes(): Int
-    override fun onClick(v: View) {
+   open  fun onClick(v: View) {
     
     }
     fun showDevMessage(){

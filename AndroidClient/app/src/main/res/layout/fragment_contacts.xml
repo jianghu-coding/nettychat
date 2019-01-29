@@ -2,6 +2,9 @@
 <layout>
 
     <data>
+        <variable
+            name="fragment"
+            type="com.chat.androidclient.mvvm.view.fragment.ContactsFragment"/>
 
     </data>
 
@@ -80,7 +83,7 @@
                     android:layout_marginRight="30pt"
                     android:layout_marginTop="30pt"
                     android:background="?attr/shape_5dp_bg"
-                    android:onClick="onClick">
+                    android:onClick="@{fragment::onClick}">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -124,7 +127,7 @@
                     android:layout_height="120pt"
                     android:background="?attr/view_bg"
                     android:gravity="center_vertical"
-                    android:onClick="onClick">
+                    android:onClick="@{fragment::onClick}">
 
 
                     <TextView
@@ -163,7 +166,7 @@
 
                     android:background="?attr/view_bg"
                     android:gravity="center_vertical"
-                    android:onClick="onClick">
+                    android:onClick="@{fragment::onClick}">
 
 
                     <TextView
@@ -173,6 +176,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="50pt"
                         android:text="创建群聊"
+                        android:onClick="@{fragment::onClick}"
                         android:textColor="?attr/tv_color"
                         android:textSize="18sp"
                         />

@@ -13,10 +13,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.event.MessageEvent
 import com.chat.androidclient.event.RefreshConversationEvent
-import com.chat.androidclient.greendao.ConversationDao
-import com.chat.androidclient.greendao.DaoMaster
-import com.chat.androidclient.greendao.FriendDao
-import com.chat.androidclient.greendao.MessageResponseDao
+import com.chat.androidclient.greendao.*
 import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
@@ -43,7 +40,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         if (!view.intent.getStringExtra(ChatActivity.MSG).isNullOrEmpty()) {
             sendMsg(view.intent.getStringExtra(ChatActivity.MSG))
         }
-        val friend = devSession.friendDao.queryBuilder().where(FriendDao.Properties.UserId.eq(id)).unique()
+        val friend = devSession.contactDao.queryBuilder().where(ContactDao.Properties.UserId.eq(id)).unique()
         if (friend==null){
             view.setConversationTitle(id.toString())
         }else{

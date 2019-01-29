@@ -1,17 +1,19 @@
 package com.chat.androidclient.mvvm.view.fragment
 
 
+import android.content.Intent
 import android.util.TypedValue
 import android.view.View
 import com.chat.androidclient.R
 import com.chat.androidclient.adapter.FriendAdapter
 import com.chat.androidclient.databinding.FragmentContactsBinding
 import com.chat.androidclient.mvvm.model.Group
+import com.chat.androidclient.mvvm.view.activity.CreateGroupActivity
 import com.chat.androidclient.mvvm.viewmodel.ContactsVM
 
 /**
  * @author lps
- * 会话Fragment
+ * 联系人Fragment
  *
  */
 class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
@@ -21,8 +23,10 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
     override fun getLayoutRes() = R.layout.fragment_contacts
     override fun init() {
         initFriendList()
+        mDataBinding.fragment=this
         mDataBinding.refreshlayout.setOnRefreshListener {
             mVM.loadFriendListFromNetWork()
+            mVM.loadGroupListFromNetWork()
         }
        mVM.init()
     }
@@ -39,9 +43,12 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsVM>() {
     
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.re_create_group -> showDevMessage()
             R.id.re_new_friend -> showDevMessage()
             R.id.re_tanbaishuo -> showDevMessage()
+            R.id.re_create_group->{
+//                去创建群聊
+                activity.startActivity(Intent(activity,CreateGroupActivity::class.java))
+            }
         }
     }
     

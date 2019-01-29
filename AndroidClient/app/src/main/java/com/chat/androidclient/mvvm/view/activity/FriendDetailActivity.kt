@@ -10,8 +10,6 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.databinding.ActivityFriendDetailBinding
-import com.chat.androidclient.greendao.DaoMaster
-import com.chat.androidclient.greendao.FriendDao
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.User
 import com.chat.androidclient.mvvm.viewmodel.FriendDetailVM

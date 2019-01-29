@@ -102,6 +102,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             R.id.draw_setting->{
                 Beta.checkUpgrade()
             }
+            else->{
+                showMsg("点击了${v.id}")
+            }
         }
     }
     

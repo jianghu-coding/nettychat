@@ -34,6 +34,14 @@ class ResponseHandler : SimpleChannelInboundHandler<PacketResponse>() {
             Command.ADD_FRIEND_RESPONSE -> {
                 EventBus.getDefault().post(AddFriendResponseEvent(msg))
             }
+            Command.CREATE_GROUP_RESPONSE->{
+                EventBus.getDefault().post(CreateGroupResponseEvent(msg))
+    
+            }
+            Command.GET_USER_GROUP_LIST_RESPONSE->{
+                EventBus.getDefault().post(GetGroupListResponseEvent(msg))
+    
+            }
             
         }
     }

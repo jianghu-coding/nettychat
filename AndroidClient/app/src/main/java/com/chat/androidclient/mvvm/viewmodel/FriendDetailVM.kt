@@ -2,15 +2,11 @@ package com.chat.androidclient.mvvm.viewmodel
 
 import android.databinding.ObservableField
 import com.chat.androidclient.event.AddFriendResponseEvent
+import com.chat.androidclient.greendao.ContactDao
 import com.chat.androidclient.greendao.DaoMaster
-import com.chat.androidclient.greendao.DaoSession
-import com.chat.androidclient.greendao.FriendDao
 import com.chat.androidclient.greendao.GroupDao
 import com.chat.androidclient.im.ChatIM
-import com.chat.androidclient.mvvm.model.Constant
-import com.chat.androidclient.mvvm.model.Friend
-import com.chat.androidclient.mvvm.model.Group
-import com.chat.androidclient.mvvm.model.User
+import com.chat.androidclient.mvvm.model.*
 import com.chat.androidclient.mvvm.procotol.request.AddFriendRequest
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
 import com.chat.androidclient.mvvm.view.activity.FriendDetailActivity
@@ -26,8 +22,8 @@ class FriendDetailVM(var view: FriendDetailActivity) : BaseViewModel() {
     fun init() {
        
         user.set( view.intent.getSerializableExtra(Constant.FRIENDDETAIL_USER_INFO) as User)
-        val dao = DaoMaster.newDevSession(view, Constant.DBNAME).friendDao
-        val friend = dao.queryBuilder().where(FriendDao.Properties.UserId.eq(user.get()!!.id)).unique()
+        val dao = DaoMaster.newDevSession(view, Constant.DBNAME).contactDao
+        val friend = dao.queryBuilder().where(ContactDao.Properties.UserId.eq(user.get()!!.id)).unique()
         if (friend==null){
             view.showAddFriend()
         }else{
@@ -63,7 +59,7 @@ class FriendDetailVM(var view: FriendDetailActivity) : BaseViewModel() {
      */
     private fun insertGroupFriendDB() {
         val session = DaoMaster.newDevSession(view, Constant.DBNAME)
-        val friend = Friend()
+        val friend = Contact()
         friend.userId = user.get()!!.id
         friend.nickname = user.get()?.username
         var group = session.groupDao.queryBuilder().where(GroupDao.Properties.Name.eq("好友")).unique()
@@ -74,11 +70,11 @@ class FriendDetailVM(var view: FriendDetailActivity) : BaseViewModel() {
         session.groupDao.insertOrReplace(group)
         val groupId = group.id
         friend.customid = groupId
-        session.friendDao.insertOrReplace(friend)
+        session.contactDao.insertOrReplace(friend)
     }
     
     
     fun toChat() {
-        ChatActivity.startActivity(view, user.get()!!.id!!)
+        ChatActivity.startActivity(view, user.get()!!.id!!,TYPE.PERSON)
     }
 }

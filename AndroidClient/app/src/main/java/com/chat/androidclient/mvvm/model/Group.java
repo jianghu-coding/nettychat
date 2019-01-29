@@ -1,15 +1,16 @@
 package com.chat.androidclient.mvvm.model;
 
+import com.chat.androidclient.greendao.ContactDao;
+import com.chat.androidclient.greendao.DaoSession;
+import com.chat.androidclient.greendao.GroupDao;
+
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
-import com.chat.androidclient.greendao.DaoSession;
-import com.chat.androidclient.greendao.FriendDao;
-import com.chat.androidclient.greendao.GroupDao;
 
 /**
  * Created by lps on 2018/12/29 15:36.
@@ -21,7 +22,7 @@ public class Group {
     private Long id;
     private Long groupId;
     @ToMany(referencedJoinProperty = "customid")
-    private List<Friend> mFriendList;
+    private List<Contact> mFriendList;
     private String name;
     private int totalcount;
     private int onlinecount;
@@ -77,15 +78,15 @@ public class Group {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 1309426559)
-    public List<Friend> getMFriendList() {
+    @Generated(hash = 1570319730)
+    public List<Contact> getMFriendList() {
         if (mFriendList == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            FriendDao targetDao = daoSession.getFriendDao();
-            List<Friend> mFriendListNew = targetDao._queryGroup_MFriendList(id);
+            ContactDao targetDao = daoSession.getContactDao();
+            List<Contact> mFriendListNew = targetDao._queryGroup_MFriendList(id);
             synchronized (this) {
                 if (mFriendList == null) {
                     mFriendList = mFriendListNew;
@@ -138,4 +139,5 @@ public class Group {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getGroupDao() : null;
     }
+
 }
