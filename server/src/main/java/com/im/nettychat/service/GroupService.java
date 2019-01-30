@@ -17,6 +17,7 @@ import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupListRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.request.group.SearchGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -36,4 +37,6 @@ public interface GroupService {
     void sendGroupMessage(ChannelHandlerContext ctx, SendGroupMessageRequest msg);
 
     void getUserGroupList(ChannelHandlerContext ctx, GetUserGroupListRequest msg);
+
+    void searchGroup(ChannelHandlerContext ctx, SearchGroupRequest msg);
 }

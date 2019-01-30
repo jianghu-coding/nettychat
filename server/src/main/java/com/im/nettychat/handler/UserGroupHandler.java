@@ -18,6 +18,7 @@ import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupListRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.request.group.SearchGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.request.group.UserGroupRequest;
 import io.netty.channel.ChannelHandler;
@@ -47,6 +48,8 @@ public class UserGroupHandler extends SimpleChannelInboundHandler<UserGroupReque
             groupService.sendGroupMessage(ctx, (SendGroupMessageRequest) msg);
         } else if (Command.GET_USER_GROUP_LIST.equals(msg.getCommand())) {
             groupService.getUserGroupList(ctx, (GetUserGroupListRequest) msg);
+        } else if (Command.SEARCH_GROUP.equals(msg.getCommand())) {
+            groupService.searchGroup(ctx, (SearchGroupRequest) msg);
         }
     }
 }

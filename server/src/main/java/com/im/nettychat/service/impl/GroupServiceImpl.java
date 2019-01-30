@@ -23,15 +23,18 @@ import com.im.nettychat.domain.mapper.GroupMapper;
 import com.im.nettychat.model.OfflineMessage;
 import com.im.nettychat.model.UserGroup;
 import com.im.nettychat.model.key.GroupKey;
+import com.im.nettychat.protocol.dto.GroupDTO;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupListRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.request.group.SearchGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.response.group.CreateGroupResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupListResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
 import com.im.nettychat.protocol.response.group.JoinGroupResponse;
+import com.im.nettychat.protocol.response.group.SearchGroupResponse;
 import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
 import com.im.nettychat.proxy.CglibServiceInterceptor;
 import com.im.nettychat.service.BaseService;
@@ -240,6 +243,26 @@ public class GroupServiceImpl extends BaseService implements GroupService {
             deleteUserGroup(userId, cancelGroupIds.toArray(cancelGroupIdArr));
         }
         response.setUserGroups(userGroups);
+        ctx.writeAndFlush(response);
+    }
+
+    @Override
+    public void searchGroup(ChannelHandlerContext ctx, SearchGroupRequest msg) {
+        SearchGroupResponse response = new SearchGroupResponse();
+        SqlSession sqlSession = DBUtil.getSession(true);
+        GroupMapper groupMapper = sqlSession.getMapper(GroupMapper.class);
+        List<Group> groups = groupMapper.findByLikeName(msg.getName());
+        List<GroupDTO> groupDTOS = groups.stream().map(g -> {
+            GroupDTO groupDTO = new GroupDTO();
+            BeanUtil.copyProperties(g, groupDTO);
+            // 群组人数
+            List<String> group = redisRepository.hMGet(CacheName.USER_GROUP, String.valueOf(g.getId()), GroupKey.USER_IDS);
+            if (CollectionUtils.isNotNullOrEmpty(group) && StringUtils.isNotEmpty(group.get(0))) {
+                groupDTO.setNum(group.get(0).split(GROUP_USER_ID_SPLIT).length);
+            }
+            return groupDTO;
+        }).collect(Collectors.toList());
+        response.setGroups(groupDTOS);
         ctx.writeAndFlush(response);
     }
 

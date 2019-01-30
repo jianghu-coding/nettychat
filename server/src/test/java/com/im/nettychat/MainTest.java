@@ -24,6 +24,7 @@ import com.im.nettychat.protocol.request.MessageRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupListRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.request.group.SearchGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
@@ -62,7 +63,7 @@ public class MainTest {
     private static final String TEST_B_USERNAME = "888888";
     private static final String TEST_B_PASSWORD = "999999";
     private static final String TEST_B_NAME = "宝六";
-    private static final String HOST = "132.232.151.6";
+    private static final String HOST = "127.0.0.1";
     private static final int PORT = 8888;
 
     public static void main(String[] args) throws InterruptedException {
@@ -95,6 +96,7 @@ public class MainTest {
                             try {
                                 System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组, f: 发送群组消息");
                                 System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表, i: 获取我的群组列表, j: 查找名称好友, k: 通过用户名查找好友");
+                                System.out.println("---输入指令 -> r: 通过群组名称查找群组");
                                 String command = scanner.nextLine();
                                 if (command.equals("a")) {
                                     System.out.println("开始登录");
@@ -149,6 +151,10 @@ public class MainTest {
                                     System.out.println("请输入用户名");
                                     String username = scanner.nextLine();
                                     searchFriendsByUsername(channel, username);
+                                } else if (command.equals("r")) {
+                                    System.out.println("请输入群组名称");
+                                    String groupName = scanner.nextLine();
+                                    searchGroupByName(channel, groupName);
                                 }
                             } catch (Exception e) {
                                 System.out.println("输入格式错误");
@@ -160,6 +166,12 @@ public class MainTest {
             }
         });
         channelFuture.sync().channel().closeFuture().sync();
+    }
+
+    private static void searchGroupByName(Channel channel, String name) {
+        SearchGroupRequest request = new SearchGroupRequest();
+        request.setName(name);
+        channel.writeAndFlush(request);
     }
 
     private static void searchFriendsByUsername(Channel channel, String username) {

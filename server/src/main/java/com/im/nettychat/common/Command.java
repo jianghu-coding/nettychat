@@ -29,6 +29,8 @@ public interface Command {
 
     Byte SEARCH_FRIEND = 20;
 
+    Byte SEARCH_GROUP = 22;
+
     // response
     Byte LOGIN_RESPONSE = 3;
 
@@ -59,4 +61,6 @@ public interface Command {
     Byte FORBIDDEN_RESPONSE = 29;
 
     Byte SEARCH_FRIEND_RESPONSE = 31;
+
+    Byte SEARCH_GROUP_RESPONSE = 33;
 }

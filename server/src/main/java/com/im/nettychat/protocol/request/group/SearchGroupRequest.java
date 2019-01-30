@@ -5,15 +5,15 @@ import lombok.Data;
 
 /**
  * @author hejianglong
- * @date 2018/12/24.
+ * @date 2019/1/30.
  */
 @Data
-public class GetUserGroupListRequest extends UserGroupRequest{
+public class SearchGroupRequest extends UserGroupRequest {
 
     private String name;
 
     @Override
     public Byte getCommand() {
-        return Command.GET_USER_GROUP_LIST;
+        return Command.SEARCH_GROUP;
     }
 }

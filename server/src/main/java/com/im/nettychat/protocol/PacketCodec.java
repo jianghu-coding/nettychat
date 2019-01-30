@@ -8,6 +8,7 @@ import com.im.nettychat.protocol.request.RegisterRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupListRequest;
 import com.im.nettychat.protocol.request.group.GetUserGroupRequest;
 import com.im.nettychat.protocol.request.group.JoinGroupRequest;
+import com.im.nettychat.protocol.request.group.SearchGroupRequest;
 import com.im.nettychat.protocol.request.group.SendGroupMessageRequest;
 import com.im.nettychat.protocol.request.user.AddFriendRequest;
 import com.im.nettychat.protocol.request.user.GetFriendRequest;
@@ -22,6 +23,7 @@ import com.im.nettychat.protocol.response.RegisterResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupListResponse;
 import com.im.nettychat.protocol.response.group.GetUserGroupResponse;
 import com.im.nettychat.protocol.response.group.JoinGroupResponse;
+import com.im.nettychat.protocol.response.group.SearchGroupResponse;
 import com.im.nettychat.protocol.response.group.SendGroupMessageResponse;
 import com.im.nettychat.protocol.response.offline.OfflineMessageResponse;
 import com.im.nettychat.protocol.response.user.AddFriendResponse;
@@ -58,6 +60,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.GET_FRIENDS, GetFriendRequest.class);
         packetTypeMap.put(Command.GET_USER_GROUP_LIST, GetUserGroupListRequest.class);
         packetTypeMap.put(Command.SEARCH_FRIEND, SearchFriendRequest.class);
+        packetTypeMap.put(Command.SEARCH_GROUP, SearchGroupRequest.class);
 
         test();
         serializerMap = new HashMap<>();
@@ -83,6 +86,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.WRITE_TIME_OUT, WriteTimeoutExceptionResponse.class);
         packetTypeMap.put(Command.FORBIDDEN_RESPONSE, ForbiddenResponse.class);
         packetTypeMap.put(Command.SEARCH_FRIEND_RESPONSE, SearchFriendResponse.class);
+        packetTypeMap.put(Command.SEARCH_GROUP_RESPONSE, SearchGroupResponse.class);
     }
 
     public void encode(ByteBuf byteBuf, Packet packet) {
