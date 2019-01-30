@@ -37,5 +37,6 @@
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/FriendMapper.xml"/>
+        <mapper resource="mapper/GroupMapper.xml"/>
     </mappers>
 </configuration>

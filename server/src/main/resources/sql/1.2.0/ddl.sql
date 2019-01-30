@@ -27,3 +27,6 @@ CREATE TABLE `group` (
   `desc` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `user`
+ADD UNIQUE INDEX `username_unique` (`username`) USING HASH ;

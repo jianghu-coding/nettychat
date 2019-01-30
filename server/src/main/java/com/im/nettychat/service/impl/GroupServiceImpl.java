@@ -17,6 +17,9 @@ import com.im.nettychat.cache.CacheName;
 import com.im.nettychat.common.ErrorCode;
 import com.im.nettychat.common.OfflineMessageType;
 import com.im.nettychat.common.Session;
+import com.im.nettychat.config.db.DBUtil;
+import com.im.nettychat.domain.Group;
+import com.im.nettychat.domain.mapper.GroupMapper;
 import com.im.nettychat.model.OfflineMessage;
 import com.im.nettychat.model.UserGroup;
 import com.im.nettychat.model.key.GroupKey;
@@ -42,6 +45,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+import org.apache.ibatis.session.SqlSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -70,6 +74,9 @@ public class GroupServiceImpl extends BaseService implements GroupService {
     public void createGroup(ChannelHandlerContext ctx, CreateGroupRequest request) {
         CreateGroupResponse response = new CreateGroupResponse();
         List<Long> groupUserIds = request.getUserIds();
+        if (groupUserIds == null) {
+            groupUserIds = new ArrayList<>();
+        }
         String filterUserIds = "";
         // 群组名称必填
         if (StringUtils.isEmpty(request.getGroupName())) {
@@ -84,8 +91,7 @@ public class GroupServiceImpl extends BaseService implements GroupService {
         groupUserIds = groupUserIds.stream().distinct().collect(Collectors.toList());
         String groupName = request.getGroupName();
         // 拉人创建群组的时候过滤掉无效的用户
-        if (CollectionUtils.isNotNullOrEmpty(groupUserIds)) {
-            filterUserIds = groupUserIds
+        filterUserIds = groupUserIds
                 .stream()
                 .filter(uid -> {
                     Boolean exits = redisRepository.keyExits(CacheName.USER_INFO, String.valueOf(uid));
@@ -94,8 +100,13 @@ public class GroupServiceImpl extends BaseService implements GroupService {
                 .map(v -> String.valueOf(v))
                 .reduce((u1, u2) -> u1.concat(GROUP_USER_ID_SPLIT).concat(u2))
                 .get();
-        }
-        Long userGroupId = redisRepository.vIncr(CacheName.USER_GROUP_ID);
+        SqlSession sqlSession = DBUtil.getSession(true);
+        GroupMapper groupMapper = sqlSession.getMapper(GroupMapper.class);
+        Group group = new Group();
+        group.setName(groupName);
+        group.setOwnerId(userId);
+        groupMapper.save(group);
+        Long userGroupId = group.getId();
         // 记录群组信息
         redisRepository.hMSet(CacheName.USER_GROUP, String.valueOf(userGroupId), getGroupInfo(groupName, filterUserIds, userId));
         Arrays.asList(filterUserIds.split(GROUP_USER_ID_SPLIT)).forEach(uID -> {

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.im.nettychat.domain.mapper.UserMapper">
+<mapper namespace="com.im.nettychat.domain.mapper.GroupMapper">
 
     <select id="findByLikeName" resultType="User">
        <bind name="pattern" value="'%' + _parameter + '%'" />
@@ -18,7 +18,7 @@
             keyColumn="id"
             useGeneratedKeys="true"
             timeout="20">
-        INSERT INTO USER (`name`, `owner_id`, `icon`, `desc`)
+        INSERT INTO `group` (`name`, `owner_id`, `icon`, `desc`)
         VALUES (#{name},#{ownerId},#{icon},#{desc})
     </insert>
 </mapper>
