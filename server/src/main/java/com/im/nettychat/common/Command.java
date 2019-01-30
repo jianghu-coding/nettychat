@@ -31,6 +31,8 @@ public interface Command {
 
     Byte SEARCH_GROUP = 22;
 
+    Byte SEARCH_RESOURCES = 24;
+
     // response
     Byte LOGIN_RESPONSE = 3;
 
@@ -63,4 +65,6 @@ public interface Command {
     Byte SEARCH_FRIEND_RESPONSE = 31;
 
     Byte SEARCH_GROUP_RESPONSE = 33;
+
+    Byte SEARCH_RESOURCES_RESPONSE = 35;
 }

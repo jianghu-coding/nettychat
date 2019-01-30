@@ -30,3 +30,12 @@ CREATE TABLE `group` (
 
 ALTER TABLE `user`
 ADD UNIQUE INDEX `username_unique` (`username`) USING HASH ;
+
+-- 2019/1/30 资源表
+CREATE TABLE `resource` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(4) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `parent_id` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

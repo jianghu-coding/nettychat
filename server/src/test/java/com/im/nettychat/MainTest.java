@@ -15,9 +15,11 @@ package com.im.nettychat;
 
 import com.im.nettychat.codec.PacketCodecHandler;
 import com.im.nettychat.common.Command;
+import com.im.nettychat.common.ResourceType;
 import com.im.nettychat.handler.VerifyHandler;
 import com.im.nettychat.protocol.PacketResponse;
 import com.im.nettychat.protocol.request.RegisterRequest;
+import com.im.nettychat.protocol.request.ResourceRequest;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
@@ -96,7 +98,7 @@ public class MainTest {
                             try {
                                 System.out.println("---输入指令 -> a: 登录, b: 发送消息, c: 创建群组, d: 获取群组信息, e: 加入群组, f: 发送群组消息");
                                 System.out.println("---输入指令 -> q: 注册, g: 添加好友, h: 获取好友信息列表, i: 获取我的群组列表, j: 查找名称好友, k: 通过用户名查找好友");
-                                System.out.println("---输入指令 -> r: 通过群组名称查找群组");
+                                System.out.println("---输入指令 -> r: 通过群组名称查找群组, m: 获取所有表情对应的编号");
                                 String command = scanner.nextLine();
                                 if (command.equals("a")) {
                                     System.out.println("开始登录");
@@ -155,6 +157,8 @@ public class MainTest {
                                     System.out.println("请输入群组名称");
                                     String groupName = scanner.nextLine();
                                     searchGroupByName(channel, groupName);
+                                } else if (command.equals("m")) {
+                                    searchEmoticon(channel);
                                 }
                             } catch (Exception e) {
                                 System.out.println("输入格式错误");
@@ -166,6 +170,12 @@ public class MainTest {
             }
         });
         channelFuture.sync().channel().closeFuture().sync();
+    }
+
+    private static void searchEmoticon(Channel channel) {
+        ResourceRequest resourceRequest = new ResourceRequest();
+        resourceRequest.setType(ResourceType.EMOTICON.getCode());
+        channel.writeAndFlush(resourceRequest);
     }
 
     private static void searchGroupByName(Channel channel, String name) {
