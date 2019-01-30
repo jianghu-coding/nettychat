@@ -47,6 +47,7 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
             readTimeOutExceptionResponse.setMessage(ServerConfig.getServerReadTimeout() + "秒没有进行读操作连接关闭, 请做心跳检测");
             ctx.writeAndFlush(readTimeOutExceptionResponse).addListener(future -> {
                 if (future.isSuccess()) {
+                    SessionUtil.unBindSession(ctx.channel());
                     ctx.channel().close();
                 }
             });
@@ -56,11 +57,13 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
             writeTimeoutExceptionResponse.setMessage(ServerConfig.getServerWriteTimeout() + "秒没有进行写操作连接关闭, 请做心跳检测");
             ctx.writeAndFlush(writeTimeoutExceptionResponse).addListener(future -> {
                 if (future.isSuccess()) {
+                    SessionUtil.unBindSession(ctx.channel());
                     ctx.channel().close();
                 }
             });
         } else {
             cause.printStackTrace();
+            SessionUtil.unBindSession(ctx.channel());
             ctx.channel().close();
         }
     }
