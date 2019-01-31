@@ -1,7 +1,7 @@
 package com.im.nettychat.protocol;
 
 import com.im.nettychat.common.Command;
-import com.im.nettychat.protocol.request.ResourceRequest;
+import com.im.nettychat.protocol.request.SearchResourceRequest;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
@@ -16,7 +16,7 @@ import com.im.nettychat.protocol.request.user.GetFriendRequest;
 import com.im.nettychat.protocol.request.user.SearchFriendRequest;
 import com.im.nettychat.protocol.response.ForbiddenResponse;
 import com.im.nettychat.protocol.response.ReadTimeoutExceptionResponse;
-import com.im.nettychat.protocol.response.ResourceResponse;
+import com.im.nettychat.protocol.response.SearchResourceResponse;
 import com.im.nettychat.protocol.response.WriteTimeoutExceptionResponse;
 import com.im.nettychat.protocol.response.group.CreateGroupResponse;
 import com.im.nettychat.protocol.response.LoginResponse;
@@ -63,7 +63,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.GET_USER_GROUP_LIST, GetUserGroupListRequest.class);
         packetTypeMap.put(Command.SEARCH_FRIEND, SearchFriendRequest.class);
         packetTypeMap.put(Command.SEARCH_GROUP, SearchGroupRequest.class);
-        packetTypeMap.put(Command.SEARCH_RESOURCES, ResourceRequest.class);
+        packetTypeMap.put(Command.SEARCH_RESOURCES, SearchResourceRequest.class);
 
         test();
         serializerMap = new HashMap<>();
@@ -90,7 +90,7 @@ public class PacketCodec {
         packetTypeMap.put(Command.FORBIDDEN_RESPONSE, ForbiddenResponse.class);
         packetTypeMap.put(Command.SEARCH_FRIEND_RESPONSE, SearchFriendResponse.class);
         packetTypeMap.put(Command.SEARCH_GROUP_RESPONSE, SearchGroupResponse.class);
-        packetTypeMap.put(Command.SEARCH_RESOURCES_RESPONSE, ResourceResponse.class);
+        packetTypeMap.put(Command.SEARCH_RESOURCES_RESPONSE, SearchResourceResponse.class);
     }
 
     public void encode(ByteBuf byteBuf, Packet packet) {

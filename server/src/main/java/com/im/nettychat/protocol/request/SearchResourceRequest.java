@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2019/1/30.
  */
 @Data
-public class ResourceRequest extends PacketRequest {
+public class SearchResourceRequest extends PacketRequest {
 
     private Integer type;
 

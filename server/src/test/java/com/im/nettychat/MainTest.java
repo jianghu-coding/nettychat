@@ -19,7 +19,7 @@ import com.im.nettychat.common.ResourceType;
 import com.im.nettychat.handler.VerifyHandler;
 import com.im.nettychat.protocol.PacketResponse;
 import com.im.nettychat.protocol.request.RegisterRequest;
-import com.im.nettychat.protocol.request.ResourceRequest;
+import com.im.nettychat.protocol.request.SearchResourceRequest;
 import com.im.nettychat.protocol.request.group.CreateGroupRequest;
 import com.im.nettychat.protocol.request.LoginRequest;
 import com.im.nettychat.protocol.request.MessageRequest;
@@ -173,7 +173,7 @@ public class MainTest {
     }
 
     private static void searchEmoticon(Channel channel) {
-        ResourceRequest resourceRequest = new ResourceRequest();
+        SearchResourceRequest resourceRequest = new SearchResourceRequest();
         resourceRequest.setType(ResourceType.EMOTICON.getCode());
         channel.writeAndFlush(resourceRequest);
     }

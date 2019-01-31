@@ -1,5 +1,6 @@
 package com.im.nettychat.domain.mapper;
 
+import com.im.nettychat.domain.Resource;
 import java.util.List;
 
 /**
@@ -8,5 +9,5 @@ import java.util.List;
  */
 public interface ResourceMapper {
 
-    List<String> findValuesByType(Integer type);
+    List<Resource> findValuesByType(Integer type);
 }

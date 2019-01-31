@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2019/1/30.
  */
 @Data
-public class ResourceResponse extends PacketResponse {
+public class SearchResourceResponse extends PacketResponse {
 
     private List<String> values;
 
