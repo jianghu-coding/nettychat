@@ -55,6 +55,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         isEmpty.set(conversationList.isEmpty())
         
     }
+    
     /**
      * 登陆的结果
      */
@@ -67,11 +68,13 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         
         }
     }
+    
     //更新这个列表的时候。比如和某人的会话。有新的消息发送或接收。
     @Subscribe
-    fun  refreshConversation(event:RefreshConversationEvent){
+    fun refreshConversation(event: RefreshConversationEvent) {
         loadConversationFormDB()
     }
+    
     //收到后台推送过来的消息
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun ReciveMessage(event: MessageEvent) {
@@ -82,32 +85,34 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         }
         else {
             //更新最近会话列表的DB
-            val conversation = Conversation()
+            var conversation = session.conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(0), ConversationDao.Properties.FromId.eq(response.fromUserId)).unique()
+            if (conversation == null)
+                conversation = Conversation()
             conversation.fromId = response.fromUserId
             conversation.msgcount += 1
-            conversation.type=TYPE.PERSON
+            conversation.type = response.type
             conversation.lastcontent = response.message
             conversation.time = System.currentTimeMillis()
             session.conversationDao.insertOrReplace(conversation)
             //更新RecyclerView
             loadConversationFormDB()
 //            如果在ChatActivity，发送通知 和 写入聊天消息的db将由[com.chat.androidclient.mvvm.viewmodel.ChatVM]处理
-            if (ActivityUtils.getTopActivity()::class.java.name==ChatActivity::class.java.name){
+            if (ActivityUtils.getTopActivity()::class.java.name == ChatActivity::class.java.name) {
                 return
             }
             //发送通知
             notification(response)
             //写入聊天消息的db
-            response.toUserId=SPUtils.getInstance().getLong(Constant.id)
-            response.time=System.currentTimeMillis()
-            response.type=TYPE.PERSON
+            response.toUserId = SPUtils.getInstance().getLong(Constant.id)
+            response.time = System.currentTimeMillis()
+            response.type = TYPE.PERSON
             session.messageResponseDao.insert(response)
             
         }
     }
     
     private fun notification(response: MessageResponse) {
-    
+        
         if (builder == null)
             builder = NotificationCompat.Builder(view.activity, "recivemessage")
         builder!!.setContentTitle("收到新的消息")
@@ -136,9 +141,10 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
     }
     
     @Subscribe
-    fun  themeChange(event:ThemeEvent){
+    fun themeChange(event: ThemeEvent) {
         view.refreshUI()
     }
+    
     override fun destroy() {
         super.destroy()
         //to do 关闭数据库

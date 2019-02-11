@@ -9,6 +9,7 @@ import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Contact
 import com.chat.androidclient.mvvm.model.Group
+import com.chat.androidclient.mvvm.model.TYPE
 import com.chat.androidclient.mvvm.procotol.request.CreateGroupRequest
 import com.chat.androidclient.mvvm.procotol.response.CreateGroupResponse
 import com.chat.androidclient.mvvm.view.activity.CreateGroupActivity
@@ -55,8 +56,9 @@ class CreateGroupVM(var view: CreateGroupActivity) : BaseViewModel() {
             val id = group.id
             val con = Contact()
             con.headprofile = response.icon
-            con.id = response.groupId
+            con.userId = response.groupId
             con.customid = id
+            con.type=TYPE.GROUP
             con.nickname = response.groupName
             session.contactDao.insert(con)
             view.finish()

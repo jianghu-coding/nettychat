@@ -25,6 +25,9 @@ class ResponseHandler : SimpleChannelInboundHandler<PacketResponse>() {
             Command.SEND_MESSAGE_RESPONSE -> {
                 EventBus.getDefault().post(MessageEvent(msg))
             }
+            Command.SEND_GROUP_MESSAGE_RESPONSE -> {
+                EventBus.getDefault().post(GroupMessageEvent(msg))
+            }
             Command.GET_FRIENDS_RESPONSE -> {
                 EventBus.getDefault().post(FriendResponseEvent(msg))
             }

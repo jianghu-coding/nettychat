@@ -23,7 +23,7 @@ class FriendDetailVM(var view: FriendDetailActivity) : BaseViewModel() {
        
         user.set( view.intent.getSerializableExtra(Constant.FRIENDDETAIL_USER_INFO) as User)
         val dao = DaoMaster.newDevSession(view, Constant.DBNAME).contactDao
-        val friend = dao.queryBuilder().where(ContactDao.Properties.UserId.eq(user.get()!!.id)).unique()
+        val friend = dao.queryBuilder().where(ContactDao.Properties.UserId.eq(user.get()!!.id),ContactDao.Properties.Type.eq(0)).unique()
         if (friend==null){
             view.showAddFriend()
         }else{
