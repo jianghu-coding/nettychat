@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/head"
+            android:layout_width="185pt"
+            android:layout_height="185pt"
+            android:layout_marginLeft="30pt"
+            android:layout_marginRight="30pt"
+            android:src="@drawable/fac"
+            android:layout_centerVertical="true"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/head"
+            android:orientation="vertical">
+
+            <TextView
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/groupname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50pt"
+                android:textColor="@color/color000000"
+                android:textSize="18sp"
+                tools:text="群组名称"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25pt"
+                android:layout_marginTop="25pt"
+                android:background="@color/color41c5f6"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:layout_marginTop="10pt"
+                    android:layout_marginBottom="10pt"
+                    android:layout_width="40pt"
+                    android:layout_height="40pt"
+                    android:src="@drawable/vza"
+                    />
+
+                <TextView
+                    android:id="@+id/group_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorffffff"
+                    android:textSize="12sp"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50pt"
+                android:text="群主很懒还没有群介绍哦"
+                android:textColor="@color/color333333"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1pt"
+                android:background="@color/color808080"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

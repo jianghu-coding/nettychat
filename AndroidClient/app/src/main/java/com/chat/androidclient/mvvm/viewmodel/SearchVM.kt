@@ -7,21 +7,25 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.blankj.utilcode.util.LogUtils
 import com.chat.androidclient.event.SearchFriendResponseEvent
+import com.chat.androidclient.event.SearchGroupResponseEvent
 import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.procotol.request.SearchFriendRequest
+import com.chat.androidclient.mvvm.procotol.request.SearchGroupRequest
 import com.chat.androidclient.mvvm.procotol.response.SearchFriendResponse
+import com.chat.androidclient.mvvm.procotol.response.SearchGroupResponse
 import com.chat.androidclient.mvvm.view.activity.FriendDetailActivity
 import com.chat.androidclient.mvvm.view.activity.SearchActivity
+import com.chat.androidclient.mvvm.view.activity.SearchGroupListActivity
 import com.chat.androidclient.mvvm.view.activity.SearchPersonActivity
 import com.chat.androidclient.mvvm.view.custom.LoadingDialog
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by lps on 2019/1/2 15:08.
  */
 class SearchVM(var view: SearchActivity) : BaseViewModel() {
-    var loadDialog: LoadingDialog? = null
     
     val text: ObservableField<String> = ObservableField("")
     fun getInputWatcher(): TextWatcher = object : TextWatcher {
@@ -39,10 +43,10 @@ class SearchVM(var view: SearchActivity) : BaseViewModel() {
     fun SearchPerson() {
         //        todo 发送搜索指令,在Response 如果是多结果跳转到[com.chat.androidclient.mvvm.view.activity.SearchPersonActivity]
 //        如果只有一个人符合。，就跳转到个人详情
-        if (loadDialog == null) {
-            loadDialog = LoadingDialog(view)
+        if (dialog == null) {
+            dialog = LoadingDialog(view)
         }
-        loadDialog!!.show()
+        dialog!!.show()
         try {
             text.get()!!.toInt()
             /**
@@ -77,9 +81,21 @@ class SearchVM(var view: SearchActivity) : BaseViewModel() {
         ChatIM.instance.cmd(request)
     }
     
+    /**
+     * 搜索群组
+     */
+    fun SearchGroup() {
+        val request = SearchGroupRequest(text.get())
+        ChatIM.instance.cmd(request)
+        if (dialog == null) {
+            dialog = LoadingDialog(view)
+        }
+        dialog!!.show()
+    }
+    
     @Subscribe
     fun searchEvent(event: SearchFriendResponseEvent) {
-        loadDialog?.dismiss()
+        dialog?.dismiss()
         val response = event.msg as SearchFriendResponse
         if (response.users.size > 1) {
             /**
@@ -94,18 +110,24 @@ class SearchVM(var view: SearchActivity) : BaseViewModel() {
             /**
              * 如果只有唯一的结果。进入他的详情页
              */
-         FriendDetailActivity.launchActivity(view,response.users[0])
+            FriendDetailActivity.launchActivity(view, response.users[0])
         }
         else {
             view.showMsg("没有搜索到你要找的人")
         }
     }
     
-    override fun destroy() {
-        super.destroy()
-        if (loadDialog != null && loadDialog!!.isShowing) {
-            loadDialog!!.dismiss()
-            loadDialog = null
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun searchGroupEvent(event: SearchGroupResponseEvent) {
+        dialog?.dismiss()
+        val response = event.msg as SearchGroupResponse
+        if (response.error) {
+            view.showMsg(response.errorInfo);return
         }
+        if (response.groups.isEmpty()) {
+            view.showMsg("没有搜索到“${text.get()}”的结果")
+        }
+//         跳转到搜索到的群组列表
+        SearchGroupListActivity.startActivity(view,response)
     }
 }

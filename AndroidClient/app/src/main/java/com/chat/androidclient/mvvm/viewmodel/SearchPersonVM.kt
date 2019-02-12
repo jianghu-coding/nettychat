@@ -26,10 +26,6 @@ class SearchPersonVM(var view: SearchPersonActivity) : BaseViewModel() {
         }
     }
     
-    fun search(str: String) {
-//        todo 发送搜索指令
-    }
-    
     fun init() {
         val inputText = view.intent.getStringExtra(Constant.SEARCH_PERSON_INPUT)
         view.addInputText(inputText)

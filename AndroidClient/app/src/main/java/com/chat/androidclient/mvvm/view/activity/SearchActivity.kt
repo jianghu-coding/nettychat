@@ -28,6 +28,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchVM>() {
             }
             R.id.re_se_person->{
             mVM.SearchPerson()
+            }R.id.re_se_group->{
+            mVM.SearchGroup()
             }
         }
     }

@@ -45,6 +45,10 @@ class ResponseHandler : SimpleChannelInboundHandler<PacketResponse>() {
                 EventBus.getDefault().post(GetGroupListResponseEvent(msg))
     
             }
+            Command.SEARCH_GROUP_RESPONSE->{
+                EventBus.getDefault().post(SearchGroupResponseEvent(msg))
+    
+            }
             
         }
     }
