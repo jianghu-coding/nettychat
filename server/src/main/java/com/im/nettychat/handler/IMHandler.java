@@ -38,6 +38,8 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
         handlerMap.put(Command.ADD_FRIEND, UserHandler.INSTANCE);
         handlerMap.put(Command.GET_FRIENDS, UserHandler.INSTANCE);
         handlerMap.put(Command.SEARCH_FRIEND, UserHandler.INSTANCE);
+
+        handlerMap.put(Command.SEARCH_RESOURCES, ResourceHandler.INSTANCE);
     }
 
     @Override
