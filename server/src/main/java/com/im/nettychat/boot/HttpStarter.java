@@ -31,7 +31,7 @@ import static com.im.nettychat.executor.AsyncTaskPool.TASK_POOL;
  */
 public class HttpStarter implements Runnable {
 
-    private static final InternalLogger logger = InternalLoggerFactory.getInstance(CustomStarter.class);
+    private static final InternalLogger logger = InternalLoggerFactory.getInstance(HttpStarter.class);
 
     private static volatile boolean exit = false;
 

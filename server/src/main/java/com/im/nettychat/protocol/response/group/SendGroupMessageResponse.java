@@ -25,6 +25,8 @@ import lombok.Data;
 @Data
 public class SendGroupMessageResponse extends PacketResponse {
 
+    private Long groupId;
+
     private Long sendUserId;
 
     private String message;
