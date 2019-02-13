@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+<data>
+    <variable
+        name="vm"
+        type="com.chat.androidclient.mvvm.viewmodel.GroupDetailVM"/>
+
+</data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:context=".mvvm.view.activity.GroupDetailActivity">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:contentScrim="#41c5f6"
+                    app:expandedTitleMarginEnd="64dp"
+
+                    app:expandedTitleMarginStart="20dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:statusBarScrim="@android:color/transparent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="550pt"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profile_music"
+                        app:layout_collapseMode="parallax"
+                        />
+
+                    <android.support.v7.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_collapseMode="pin">
+                        <!--title-->
+                        <RelativeLayout
+                            android:id="@+id/title_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="140pt"
+                            android:background="@android:color/transparent"
+                            android:paddingLeft="25pt"
+
+                            >
+
+                            <TextView
+                                android:id="@+id/back"
+                                android:layout_width="wrap_content"
+                                android:layout_height="95pt"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="0pt"
+                                android:drawableLeft="@drawable/back"
+                                android:gravity="center"
+                                android:onClick="onClick"
+                                android:text="返回"
+                                android:textColor="@color/colorffffff"
+                                android:textSize="18sp"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="群聊资料"
+                                android:textColor="@color/colorffffff"
+                                android:textSize="18sp"
+                                />
+
+
+                            <TextView
+                                android:id="@+id/tv_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="20pt"
+                                android:onClick="onClick"
+                                android:text="更多"
+                                android:textColor="@color/colorffffff"
+                                android:textSize="18sp"
+                                />
+
+                        </RelativeLayout>
+                    </android.support.v7.widget.Toolbar>
+                </android.support.design.widget.CollapsingToolbarLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="本群创建于公元前100年3月7日\n欢迎加入"
+                        />
+
+                </RelativeLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </android.support.design.widget.CoordinatorLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="40pt"
+            android:layout_marginRight="40pt"
+            android:background="@{vm.belongGroup?@drawable/shape_red:@drawable/shape_login_btn}"
+            android:text="@{vm.belongGroup?`离开该群`:`申请加入`}"
+            android:id="@+id/bottombtn"
+            android:onClick="onClick"
+            android:layout_marginBottom="40pt"
+            android:textColor="@color/colorffffff"
+            />
+    </RelativeLayout>
+</layout>

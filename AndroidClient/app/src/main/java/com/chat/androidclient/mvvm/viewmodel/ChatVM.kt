@@ -44,7 +44,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
         if (!view.intent.getStringExtra(ChatActivity.MSG).isNullOrEmpty()) {
             sendMsg(view.intent.getStringExtra(ChatActivity.MSG))
         }
-        val friend = devSession.contactDao.queryBuilder().where(ContactDao.Properties.Type.eq(type), ContactDao.Properties.UserId.eq(id)).unique()
+        val friend = devSession.contactDao.queryBuilder().where(ContactDao.Properties.Type.eq(type.id), ContactDao.Properties.UserId.eq(id)).unique()
         if (friend == null) {
             view.setConversationTitle(id.toString())
         }
@@ -56,8 +56,8 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     
     fun loadMessageFromDB() {
         val qb = msgDao.queryBuilder()
-        val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()), MessageResponseDao.Properties.Type.eq(type.ordinal))
-        val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(type.ordinal))
+        val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()), MessageResponseDao.Properties.Type.eq(type.id))
+        val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(type.id))
         qb.whereOr(condition1, condition2)
         val list = qb.list()
         view.addMessages(list)
@@ -84,7 +84,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
 //         refresh list
         view.addMessage(message)
         // 最近会话列表DB 刷新这个好友
-        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(type.ordinal), ConversationDao.Properties.FromId.eq(id)).unique()
+        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(type.id), ConversationDao.Properties.FromId.eq(id)).unique()
         if (conversation == null) {
             conversation = Conversation()
         }
@@ -102,7 +102,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     fun ReciveMessage(event: MessageEvent) {
         val response = event.msg as MessageResponse
         
-        if (response.fromUserId == SPUtils.getInstance().getLong(Constant.UserId)) {
+        if (response.fromUserId == SPUtils.getInstance().getLong(Constant.id)) {
         
         }
         else {
@@ -174,7 +174,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     
     override fun destroy() {
         //通知最近会话列表更新
-        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(type.ordinal), ConversationDao.Properties.FromId.eq(id)).unique()
+        var conversation = conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(type.id), ConversationDao.Properties.FromId.eq(id)).unique()
         if (conversation != null) {
             conversation.msgcount = 0
             conversationDao.insertOrReplace(conversation)

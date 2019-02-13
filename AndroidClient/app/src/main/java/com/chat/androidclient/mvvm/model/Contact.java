@@ -97,7 +97,7 @@ public static class TYPEConverter implements PropertyConverter<TYPE,Integer>{
           return null;
       }
       for (TYPE type:TYPE.values()){
-          if (type.id==databaseValue){
+          if (type.getId()==databaseValue){
               return type;
           }
       }
@@ -106,7 +106,7 @@ public static class TYPEConverter implements PropertyConverter<TYPE,Integer>{
 
     @Override
     public Integer convertToDatabaseValue(TYPE entityProperty) {
-        return entityProperty==null?null:entityProperty.id;
+        return entityProperty==null?null:entityProperty.getId();
     }
 }
 

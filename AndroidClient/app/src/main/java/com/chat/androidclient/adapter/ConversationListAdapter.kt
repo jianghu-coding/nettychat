@@ -27,14 +27,14 @@ class ConversationListAdapter(var context: Context) : RecyclerView.Adapter<VH<*>
         val binding = holder.binding as ItemConversationlistBinding
         val devSession = DaoMaster.newDevSession(context, Constant.DBNAME)
         val friendBuilder = devSession.contactDao.queryBuilder()
-        val friend = friendBuilder.where(ContactDao.Properties.UserId.eq(messageList[position].fromId),ContactDao.Properties.Type.eq(messageList[position].type)).unique()
+        val friend = friendBuilder.where(ContactDao.Properties.UserId.eq(messageList[position].fromId),ContactDao.Properties.Type.eq(messageList[position].type.id)).unique()
         val nickname = if (friend!=null){
             friend!!.nickname
         }else{
             messageList[position].fromId.toString()
         }
         val convBuilder = devSession.conversationDao.queryBuilder()
-        val conversation = convBuilder.where(ConversationDao.Properties.Type.eq(messageList[position].type.ordinal),ConversationDao.Properties.FromId.eq(messageList[position].fromId)).unique()
+        val conversation = convBuilder.where(ConversationDao.Properties.Type.eq(messageList[position].type.id),ConversationDao.Properties.FromId.eq(messageList[position].fromId)).unique()
         binding.name.text = nickname
         binding.content.text = conversation.lastcontent
         binding.time.text = TimeUtils.getTimeFriend(conversation.time)

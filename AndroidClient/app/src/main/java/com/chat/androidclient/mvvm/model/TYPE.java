@@ -7,9 +7,18 @@ public enum TYPE {
          */
         PERSON(0), GROUP(1);
 
-         int id;
+        private int id;
 
         TYPE(int mId) {
             id = mId;
         }
+
+    public int getId() {
+        return id;
     }
+
+    public TYPE setId(int mId) {
+        id = mId;
+        return this;
+    }
+}

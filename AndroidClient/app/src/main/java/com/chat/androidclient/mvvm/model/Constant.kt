@@ -5,20 +5,20 @@ package com.chat.androidclient.mvvm.model
  */
 object Constant {
     //夜间模式记录
-    val daynightmode="daynightmode"
+    val daynightmode = "daynightmode"
     //用户名
-    val LoginUserName="loginusername"
+    val LoginUserName = "loginusername"
     //密码
-    val LoginUserPass="loginuserpass"
-    val id="user_id"
+    val LoginUserPass = "loginuserpass"
+    //    用户id
+    val id = "user_id"
     //登陆状态
-    val LoginState="loginstate"
-    //用户id
-    val UserId="userid"
-    val DBNAME="chatDB"
+    val LoginState = "loginstate"
+    
+    val DBNAME = "chatDB"
     
     
-    val SEARCH_PERSON_INPUT="SEARCH_PERSON_INPUT"
-    val SEARCH_PERSON_LIST="SEARCH_PERSON_LIST"
-    val FRIENDDETAIL_USER_INFO="FRIENDDETAIL_USER_INFO"
+    val SEARCH_PERSON_INPUT = "SEARCH_PERSON_INPUT"
+    val SEARCH_PERSON_LIST = "SEARCH_PERSON_LIST"
+    val FRIENDDETAIL_USER_INFO = "FRIENDDETAIL_USER_INFO"
 }

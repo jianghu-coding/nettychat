@@ -29,6 +29,6 @@ class SearchGroupListActivity : BaseActivity<ActivitySearchGroupListBinding,Base
     override fun init() {
         val response = intent.getSerializableExtra(DATA) as SearchGroupResponse
        mDataBinding.simpleResultRecyclerView.layoutManager=LinearLayoutManager(this)
-       mDataBinding.simpleResultRecyclerView.adapter=GroupSearchAdapter(response.groups)
+       mDataBinding.simpleResultRecyclerView.adapter=GroupSearchAdapter(response.groups,this)
     }
 }

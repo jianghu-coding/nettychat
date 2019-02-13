@@ -85,6 +85,8 @@
         </activity>
         <activity android:name=".mvvm.view.activity.SearchGroupListActivity">
         </activity>
+        <activity android:name=".mvvm.view.activity.GroupDetailActivity">
+        </activity>
     </application>
 
 </manifest>

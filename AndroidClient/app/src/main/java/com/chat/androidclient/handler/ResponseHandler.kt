@@ -4,6 +4,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.chat.androidclient.event.*
 import com.chat.androidclient.mvvm.model.Command
 import com.chat.androidclient.mvvm.model.PacketResponse
+import com.chat.androidclient.mvvm.procotol.response.SendGroupMessageResponse
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
 import org.greenrobot.eventbus.EventBus
@@ -25,9 +26,6 @@ class ResponseHandler : SimpleChannelInboundHandler<PacketResponse>() {
             Command.SEND_MESSAGE_RESPONSE -> {
                 EventBus.getDefault().post(MessageEvent(msg))
             }
-            Command.SEND_GROUP_MESSAGE_RESPONSE -> {
-                EventBus.getDefault().post(GroupMessageEvent(msg))
-            }
             Command.GET_FRIENDS_RESPONSE -> {
                 EventBus.getDefault().post(FriendResponseEvent(msg))
             }
@@ -48,6 +46,13 @@ class ResponseHandler : SimpleChannelInboundHandler<PacketResponse>() {
             Command.SEARCH_GROUP_RESPONSE->{
                 EventBus.getDefault().post(SearchGroupResponseEvent(msg))
     
+            } Command.GET_USER_GROUP_RESPONSE->{
+                EventBus.getDefault().post(GetUserGroupResponseEvent(msg))
+            }Command.JOIN_GROUP_RESPONSE->{
+                EventBus.getDefault().post(JoinGroupResponseEvent(msg))
+            }
+            Command.SEND_GROUP_MESSAGE_RESPONSE->{
+                EventBus.getDefault().post(ReciveGroupMsgResponseEvent(msg))
             }
             
         }

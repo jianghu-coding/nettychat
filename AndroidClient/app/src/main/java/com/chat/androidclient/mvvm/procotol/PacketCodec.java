@@ -8,6 +8,8 @@ import com.chat.androidclient.mvvm.model.LoginRequest;
 import com.chat.androidclient.mvvm.procotol.request.AddFriendRequest;
 import com.chat.androidclient.mvvm.procotol.request.CreateGroupRequest;
 import com.chat.androidclient.mvvm.procotol.request.GetUserGroupListRequest;
+import com.chat.androidclient.mvvm.procotol.request.GetUserGroupRequest;
+import com.chat.androidclient.mvvm.procotol.request.JoinGroupRequest;
 import com.chat.androidclient.mvvm.procotol.request.SearchFriendRequest;
 import com.chat.androidclient.mvvm.procotol.request.SearchGroupRequest;
 import com.chat.androidclient.mvvm.procotol.request.SendGroupMessageRequest;
@@ -15,6 +17,8 @@ import com.chat.androidclient.mvvm.procotol.request.SendMessageRequest;
 import com.chat.androidclient.mvvm.procotol.response.AddFriendResponse;
 import com.chat.androidclient.mvvm.procotol.response.CreateGroupResponse;
 import com.chat.androidclient.mvvm.procotol.response.GetUserGroupListResponse;
+import com.chat.androidclient.mvvm.procotol.response.GetUserGroupResponse;
+import com.chat.androidclient.mvvm.procotol.response.JoinGroupResponse;
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse;
 import com.chat.androidclient.mvvm.model.RegisterRequest;
 import com.chat.androidclient.mvvm.procotol.response.RegisterResponse;
@@ -22,6 +26,7 @@ import com.chat.androidclient.mvvm.procotol.response.GetFriendResponse;
 import com.chat.androidclient.mvvm.procotol.response.LoginResponse;
 import com.chat.androidclient.mvvm.procotol.response.SearchFriendResponse;
 import com.chat.androidclient.mvvm.procotol.response.SearchGroupResponse;
+import com.chat.androidclient.mvvm.procotol.response.SendGroupMessageResponse;
 import com.chat.androidclient.serialize.Serializer;
 import com.chat.androidclient.serialize.impl.JSONSerializer;
 
@@ -56,6 +61,8 @@ public class PacketCodec {
         packetTypeMap.put(Command.GET_USER_GROUP_LIST, GetUserGroupListRequest.class);
         packetTypeMap.put(Command.SEND_GROUP_MESSAGE, SendGroupMessageRequest.class);
         packetTypeMap.put(Command.SEARCH_GROUP, SearchGroupRequest.class);
+        packetTypeMap.put(Command.GET_USER_GROUP, GetUserGroupRequest.class);
+        packetTypeMap.put(Command.JOIN_GROUP, JoinGroupRequest.class);
 //        packetTypeMap.put(Command.CREATE_GROUP, CreateGroupRequest.class);
 //        packetTypeMap.put(Command.JOIN_GROUP, JoinGroupRequest.class);
 //        packetTypeMap.put(Command.GET_USER_GROUP, GetUserGroupRequest.class);
@@ -68,6 +75,9 @@ public class PacketCodec {
         packetTypeMap.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponse.class);
         packetTypeMap.put(Command.GET_USER_GROUP_LIST_RESPONSE, GetUserGroupListResponse.class);
         packetTypeMap.put(Command.SEARCH_GROUP_RESPONSE, SearchGroupResponse.class);
+        packetTypeMap.put(Command.GET_USER_GROUP_RESPONSE, GetUserGroupResponse.class);
+        packetTypeMap.put(Command.JOIN_GROUP_RESPONSE, JoinGroupResponse.class);
+        packetTypeMap.put(Command.SEND_GROUP_MESSAGE_RESPONSE, SendGroupMessageResponse.class);
 //        packetTypeMap.put(Command.GET_USER_GROUP_LIST, GetUserGroupListRequest.class);
 
         serializerMap = new HashMap<>();
