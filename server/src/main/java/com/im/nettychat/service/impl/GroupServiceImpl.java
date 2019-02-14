@@ -173,6 +173,7 @@ public class GroupServiceImpl extends BaseService implements GroupService {
     @Override
     public void sendGroupMessage(ChannelHandlerContext ctx, SendGroupMessageRequest msg) {
         SendGroupMessageResponse response = new SendGroupMessageResponse();
+        response.setGroupId(msg.getGroupId());
         boolean exits = redisRepository.keyExits(CacheName.USER_GROUP, String.valueOf(msg.getGroupId()));
         // 没有找到群组
         if (!exits) {
