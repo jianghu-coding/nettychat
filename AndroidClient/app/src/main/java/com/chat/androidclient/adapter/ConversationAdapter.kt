@@ -22,7 +22,7 @@ class ConversationAdapter(var context: Context) : RecyclerView.Adapter<RecyclerV
     }
     
     private var messageList: MutableList<MessageResponse> = mutableListOf()
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
             TYPE_SEND_TEXT->{
                 val vH_SEND = holder as VH_SEND_Text
@@ -37,7 +37,7 @@ class ConversationAdapter(var context: Context) : RecyclerView.Adapter<RecyclerV
         }
     }
     
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
             TYPE_SEND_TEXT -> {
                 val inflate = LayoutInflater.from(context).inflate(R.layout.item_send_text_msg, null)

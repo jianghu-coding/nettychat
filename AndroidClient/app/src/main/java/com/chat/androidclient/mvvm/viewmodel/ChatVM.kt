@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.text.Editable
 import android.text.TextWatcher
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.event.MessageEvent
@@ -24,6 +25,18 @@ import com.chat.androidclient.mvvm.procotol.request.SendMessageRequest
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.procotol.response.SendGroupMessageResponse
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
+import com.chat.androidclient.util.Auth
+import com.chat.androidclient.util.ImageUtil
+import com.chat.androidclient.util.Qiniutoken
+import com.qiniu.android.storage.UpCompletionHandler
+import com.qiniu.android.storage.UploadManager
+import com.qiniu.android.storage.UploadOptions
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -44,7 +57,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     fun init() {
         loadMessageFromDB()
         if (!view.intent.getStringExtra(ChatActivity.MSG).isNullOrEmpty()) {
-            sendMsg(view.intent.getStringExtra(ChatActivity.MSG))
+            sendTextMsg(view.intent.getStringExtra(ChatActivity.MSG))
         }
         val friend = devSession.contactDao.queryBuilder().where(ContactDao.Properties.Type.eq(type.id), ContactDao.Properties.UserId.eq(id)).unique()
         if (friend == null) {
@@ -58,19 +71,20 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     
     fun loadMessageFromDB() {
         val qb = msgDao.queryBuilder()
-        if(type==TYPE.PERSON) {
+        if (type == TYPE.PERSON) {
             val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()), MessageResponseDao.Properties.Type.eq(TYPE.PERSON.id))
             val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(TYPE.PERSON.id))
             qb.whereOr(condition1, condition2)
-        }else {
+        }
+        else {
             val condition3 = qb.and(MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(TYPE.GROUP.id))
             qb.where(condition3)
         }
-            val list = qb.list()
+        val list = qb.list()
         view.addMessages(list)
     }
     
-    fun sendMsg(msg: String) {
+    fun sendTextMsg(msg: String) {
         if (type == TYPE.PERSON)
             ChatIM.instance.cmd(SendMessageRequest(id, msg))
         else {
@@ -130,6 +144,7 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
             
         }
     }
+    
     //收到后台推送过来的消息
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun ReciveGroupMessage(event: ReciveGroupMsgResponseEvent) {
@@ -142,9 +157,9 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
             val messageResponse = MessageResponse()
             //写入聊天消息的db
             messageResponse.type = TYPE.GROUP
-            messageResponse.message=response.message
+            messageResponse.message = response.message
             messageResponse.fromUserId = response.sendUserId
-            messageResponse.toUserId=response.groupId
+            messageResponse.toUserId = response.groupId
             messageResponse.time = System.currentTimeMillis()
             msgDao.insert(messageResponse)
             //如果是当前聊天对象发给当前群的
@@ -217,5 +232,61 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
             EventBus.getDefault().post(RefreshConversationEvent())
         }
         super.destroy()
+    }
+    
+    /**
+     * 选择图片
+     */
+    fun choosePic() {
+        Matisse.from(view)
+                .choose(MimeType.ofAll())
+                .imageEngine(GlideEngine())
+                .forResult(ChatActivity.REQUEST_CODE_IMAGE)
+    }
+    
+    
+    fun uploadImage(url: String) {
+        val upToken = getQinniuToken(url)
+        
+        
+        Observable.just(1)
+                .flatMap { it ->
+                    val bitmap = ImageUtil.compressBitmapToSize(ImageUtil.compressWH(url))
+                    val manager = UploadManager()
+                    val upCompletionHandler = UpCompletionHandler { key, info, response ->
+                        LogUtils.e("七牛上传回调key $key, info $info, response $response")
+                        sendImagemsg()
+                    }
+                    manager.put(bitmap, url.substringAfterLast("/"), upToken, upCompletionHandler
+                            , UploadOptions(null, "test-type", true, { key, percent ->
+                        LogUtils.e("七牛上传进度 $percent")
+    
+                    }, null)
+                    )
+                    Observable.just(upCompletionHandler)
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                }
+        
+        
+    }
+    
+    /**
+     * 发送图片信息
+     */
+    private fun sendImagemsg() {
+    
+    }
+    
+    private fun getQinniuToken(url: String): String? {
+        val accessKey = Qiniutoken.accessKey
+        val secretKey = Qiniutoken.secretKey
+        val bucket = Qiniutoken.bucket
+        val key = url.substringAfterLast("/")
+        val auth = Auth.create(accessKey, secretKey);
+        val upToken = auth.uploadToken(bucket, key);
+        return upToken
     }
 }

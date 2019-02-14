@@ -92,6 +92,8 @@ dependencies {
     implementation dependencies.bugly_upgrade
     implementation dependencies.bugly_crash_report
     implementation dependencies.bugly_tinker
+    implementation dependencies.matisse
+    implementation dependencies.qiniu
 
 }
 repositories {

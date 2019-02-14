@@ -12,6 +12,7 @@ import com.chat.androidclient.databinding.ActivityConversationBinding
 import com.chat.androidclient.mvvm.model.TYPE
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.viewmodel.ChatVM
+import com.zhihu.matisse.Matisse
 
 /**
  * @author lps
@@ -24,8 +25,9 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
         val ID = "id"
         val MSG = "msg"
         val TYPE = "type"
+        val REQUEST_CODE_IMAGE = 0x123
         @JvmStatic
-        fun startActivity(context: Context, chatId: Long,type:TYPE) {
+        fun startActivity(context: Context, chatId: Long, type: TYPE) {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra(ID, chatId)
             intent.putExtra(TYPE, type)
@@ -59,8 +61,9 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
         mDataBinding.ivCall.setColorFilter(Color.WHITE)
         mDataBinding.ivInfo.setColorFilter(Color.WHITE)
     }
-    fun setConversationTitle(info:String){
-        mDataBinding.converUser.text=info
+    
+    fun setConversationTitle(info: String) {
+        mDataBinding.converUser.text = info
     }
     
     private fun initRecyclerView() {
@@ -79,7 +82,10 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btn_send_msg -> {
-                mVM.sendMsg(mDataBinding.msgInput.text.toString())
+                mVM.sendTextMsg(mDataBinding.msgInput.text.toString())
+            }
+            R.id.type_image -> {
+                mVM.choosePic()
             }
         }
     }
@@ -107,5 +113,18 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
     
     fun clearInput() {
         mDataBinding.msgInput.setText("")
+    }
+    
+    
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_IMAGE) {
+            val pathResult = Matisse.obtainPathResult(data)
+            if (pathResult == null || pathResult.isEmpty()) {
+                showMsg("选择图片失败")
+                return
+            }
+            mVM.uploadImage(pathResult[0])
+        }
     }
 }

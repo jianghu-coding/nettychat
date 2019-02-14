@@ -1,3 +1,4 @@
 .idea
 *.iml
 target
+/AndroidClient/app/src/main/java/com/chat/androidclient/util/Qiniutoken.kt
