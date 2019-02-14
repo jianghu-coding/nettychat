@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.event.MessageEvent
+import com.chat.androidclient.event.ReciveGroupMsgResponseEvent
 import com.chat.androidclient.event.RefreshConversationEvent
 import com.chat.androidclient.greendao.*
 import com.chat.androidclient.im.ChatIM
@@ -21,6 +22,7 @@ import com.chat.androidclient.mvvm.model.TYPE
 import com.chat.androidclient.mvvm.procotol.request.SendGroupMessageRequest
 import com.chat.androidclient.mvvm.procotol.request.SendMessageRequest
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
+import com.chat.androidclient.mvvm.procotol.response.SendGroupMessageResponse
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -56,10 +58,15 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     
     fun loadMessageFromDB() {
         val qb = msgDao.queryBuilder()
-        val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()), MessageResponseDao.Properties.Type.eq(type.id))
-        val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(type.id))
-        qb.whereOr(condition1, condition2)
-        val list = qb.list()
+        if(type==TYPE.PERSON) {
+            val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()), MessageResponseDao.Properties.Type.eq(TYPE.PERSON.id))
+            val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(TYPE.PERSON.id))
+            qb.whereOr(condition1, condition2)
+        }else {
+            val condition3 = qb.and(MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(TYPE.GROUP.id))
+            qb.where(condition3)
+        }
+            val list = qb.list()
         view.addMessages(list)
     }
     
@@ -119,6 +126,35 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
             else {
                 //发送通知
                 notification(response)
+            }
+            
+        }
+    }
+    //收到后台推送过来的消息
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun ReciveGroupMessage(event: ReciveGroupMsgResponseEvent) {
+        val response = event.msg as SendGroupMessageResponse
+        
+        if (response.sendUserId == SPUtils.getInstance().getLong(Constant.id)) {
+        
+        }
+        else {
+            val messageResponse = MessageResponse()
+            //写入聊天消息的db
+            messageResponse.type = TYPE.GROUP
+            messageResponse.message=response.message
+            messageResponse.fromUserId = response.sendUserId
+            messageResponse.toUserId=response.groupId
+            messageResponse.time = System.currentTimeMillis()
+            msgDao.insert(messageResponse)
+            //如果是当前聊天对象发给当前群的
+            if (messageResponse.toUserId == id) {
+                //更新RecyclerView
+                view.addMessage(messageResponse)
+            }
+            else {
+                //发送通知
+                notification(messageResponse)
             }
             
         }

@@ -2,6 +2,7 @@ package com.chat.androidclient.mvvm.viewmodel
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.databinding.ObservableField
@@ -11,23 +12,17 @@ import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.SpanUtils
-import com.blankj.utilcode.util.TimeUtils
 import com.chat.androidclient.R
 import com.chat.androidclient.event.*
 import com.chat.androidclient.greendao.ConversationDao
 import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.DaoSession
-import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
-import com.chat.androidclient.mvvm.model.LoginRequest
 import com.chat.androidclient.mvvm.model.TYPE
-import com.chat.androidclient.mvvm.procotol.response.LoginResponse
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.procotol.response.SendGroupMessageResponse
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
-import com.chat.androidclient.mvvm.view.activity.MainActivity
 import com.chat.androidclient.mvvm.view.fragment.ConversationFragment
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -73,11 +68,10 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
         loadConversationFormDB()
     }
     
-    //收到后台推送过来的消息
+    //收到后台推送过来的单聊消息
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun ReciveMessage(event: MessageEvent) {
         val response = event.msg as MessageResponse
-        
         if (response.fromUserId == SPUtils.getInstance().getLong(Constant.id)) {
         
         }
@@ -99,7 +93,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
                 return
             }
             //发送通知
-            notification(response.message)
+            notification(response.message,response.fromUserId,TYPE.PERSON)
             //写入聊天消息的db
             response.toUserId = SPUtils.getInstance().getLong(Constant.id)
             response.time = System.currentTimeMillis()
@@ -112,19 +106,49 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
     //收到后台推送过来的群消息
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun reciveGroupMessage(event: ReciveGroupMsgResponseEvent) {
-        val sendGroupMessageResponse = event.msg as SendGroupMessageResponse
-        notification(sendGroupMessageResponse.message)
+        val response = event.msg as SendGroupMessageResponse
+        //更新最近会话列表的DB
+        var conversation = session.conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(TYPE.GROUP.id), ConversationDao.Properties.FromId.eq(response.groupId)).unique()
+        if (conversation == null)
+            conversation = Conversation()
+        conversation.fromId = response.groupId
+        conversation.msgcount += 1
+        conversation.type = TYPE.GROUP
+        conversation.lastcontent = response.message
+        conversation.time = System.currentTimeMillis()
+        session.conversationDao.insertOrReplace(conversation)
+        //更新RecyclerView
+        loadConversationFormDB()
+//            如果在ChatActivity，发送通知 和 写入聊天消息的db将由[com.chat.androidclient.mvvm.viewmodel.ChatVM]处理
+        if (ActivityUtils.getTopActivity()::class.java.name == ChatActivity::class.java.name) {
+            return
+        }
+        //发送通知
+        notification(response.message, response.groupId, TYPE.GROUP)
+        val messageResponse = MessageResponse()
+        //写入聊天消息的db
+        messageResponse.toUserId = response.groupId
+        messageResponse.time = System.currentTimeMillis()
+        messageResponse.type = TYPE.GROUP
+        messageResponse.message=response.message
+        messageResponse.fromUserId=response.sendUserId
+        session.messageResponseDao.insert(messageResponse)
     }
     
-    private fun notification(msg: String) {
+    private fun notification(msg: String, fromUserId: Long, type: TYPE) {
         
         if (builder == null)
             builder = NotificationCompat.Builder(view.activity, "recivemessage")
+        val intent = Intent(view.activity, ChatActivity::class.java)
+        intent.putExtra(ChatActivity.ID, fromUserId)
+        intent.putExtra(ChatActivity.TYPE, type)
+        val pendingIntent = PendingIntent.getActivity(view.activity, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         builder!!.setContentTitle("收到新的消息")
                 .setContentText(msg)
                 .setLargeIcon(BitmapFactory.decodeResource(view.resources, R.mipmap.fsf))
                 .setSmallIcon(R.mipmap.fsf)
                 .setWhen(System.currentTimeMillis())
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
         if (notification == null)
             notification = view.activity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.chat.androidclient.mvvm.view.IView
 import com.chat.androidclient.mvvm.viewmodel.BaseViewModel
 import com.trello.rxlifecycle2.components.RxFragment
@@ -36,6 +37,6 @@ open abstract class BaseFragment<T:ViewDataBinding,D:BaseViewModel>:RxFragment()
     
     }
     fun showDevMessage(){
-        Snackbar.make(mDataBinding.root,"功能正在开发，敬请期待",Snackbar.LENGTH_SHORT).show()
+        Toast.makeText(activity,"功能正在开发，敬请期待",Toast.LENGTH_SHORT).show()
     }
 }

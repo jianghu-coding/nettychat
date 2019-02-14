@@ -22,6 +22,7 @@ import com.chat.androidclient.mvvm.model.PacketResponse;
  */
 
 public class SendGroupMessageResponse extends PacketResponse {
+    private Long groupId;
 
     private Long sendUserId;
 
@@ -47,6 +48,15 @@ public class SendGroupMessageResponse extends PacketResponse {
 
     public SendGroupMessageResponse setMessage(String mMessage) {
         message = mMessage;
+        return this;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public SendGroupMessageResponse setGroupId(Long mGroupId) {
+        groupId = mGroupId;
         return this;
     }
 }

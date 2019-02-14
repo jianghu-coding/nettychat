@@ -71,6 +71,7 @@
         </activity>
         <activity
             android:name=".mvvm.view.activity.ChatActivity"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
         <activity android:name=".mvvm.view.activity.SearchActivity">

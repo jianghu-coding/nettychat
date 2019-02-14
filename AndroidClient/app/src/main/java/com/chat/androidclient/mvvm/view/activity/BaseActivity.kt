@@ -6,6 +6,7 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.View
+import android.widget.Toast
 import com.blankj.utilcode.util.AdaptScreenUtils
 import com.blankj.utilcode.util.SPUtils
 import com.chat.androidclient.R
@@ -50,11 +51,11 @@ open abstract class BaseActivity<T : ViewDataBinding, D : BaseViewModel> : RxApp
      * 统一显示提示消息
      */
     fun showMsg(msg: String?) {
-        Snackbar.make(mDataBinding.root,"$msg",Snackbar.LENGTH_SHORT).show()
+        Toast.makeText(this,"$msg",Toast.LENGTH_SHORT).show()
     }
     
     fun showDevloadingMsg() {
-        Snackbar.make(mDataBinding.root,"此功能正在开发",Snackbar.LENGTH_SHORT).show()
+        Toast.makeText(this,"此功能正在开发",Toast.LENGTH_SHORT).show()
     }
     override fun onDestroy() {
         mVM.destroy()

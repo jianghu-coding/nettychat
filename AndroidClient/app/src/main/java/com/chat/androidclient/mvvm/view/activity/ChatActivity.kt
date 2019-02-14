@@ -37,6 +37,7 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra(ID, chatId)
             intent.putExtra(MSG, msg)
+            intent.putExtra(TYPE, com.chat.androidclient.mvvm.model.TYPE.PERSON)
             context.startActivity(intent)
         }
         

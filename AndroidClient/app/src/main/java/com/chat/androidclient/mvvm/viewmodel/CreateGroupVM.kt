@@ -33,9 +33,10 @@ class CreateGroupVM(var view: CreateGroupActivity) : BaseViewModel() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         }
     }
-    
+    var groupname:String=""
     fun createGroup(groupName: String) {
 //     创建群组的
+        groupname= groupName
         val request = CreateGroupRequest(groupName)
         ChatIM.instance.cmd(request)
     }
@@ -55,11 +56,12 @@ class CreateGroupVM(var view: CreateGroupActivity) : BaseViewModel() {
             session.groupDao.insertOrReplace(group)
             val id = group.id
             val con = Contact()
-            con.headprofile = response.icon
+//            con.headprofile = response.icon
+//            后端只返回 group id 其他内容。可以直接本地写入。
             con.userId = response.groupId
             con.customid = id
             con.type=TYPE.GROUP
-            con.nickname = response.groupName
+            con.nickname = groupname
             session.contactDao.insert(con)
             view.finish()
         }
