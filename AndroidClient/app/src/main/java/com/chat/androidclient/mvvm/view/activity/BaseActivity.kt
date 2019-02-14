@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Toast
@@ -51,7 +52,14 @@ open abstract class BaseActivity<T : ViewDataBinding, D : BaseViewModel> : RxApp
      * 统一显示提示消息
      */
     fun showMsg(msg: String?) {
-        Toast.makeText(this,"$msg",Toast.LENGTH_SHORT).show()
+//        check thread 判断是否在主线程。子线程弹出Toast是不行的
+        if (Thread.currentThread()!=mainLooper.thread){
+            Handler().post {
+                Toast.makeText(this,"$msg",Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            Toast.makeText(this,"$msg",Toast.LENGTH_SHORT).show()
+        }
     }
     
     fun showDevloadingMsg() {

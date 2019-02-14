@@ -82,7 +82,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
                 conversation = Conversation()
             conversation.fromId = response.fromUserId
             conversation.msgcount += 1
-            conversation.type = response.type
+            conversation.type = TYPE.PERSON
             conversation.lastcontent = response.message
             conversation.time = System.currentTimeMillis()
             session.conversationDao.insertOrReplace(conversation)

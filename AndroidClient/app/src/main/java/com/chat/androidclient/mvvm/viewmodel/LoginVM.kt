@@ -15,6 +15,7 @@ import com.chat.androidclient.mvvm.view.activity.LoginActivity
 import com.chat.androidclient.mvvm.view.activity.MainActivity
 import com.chat.androidclient.mvvm.view.custom.LoadingDialog
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by 李培生 on 2018/12/21 10:34.
