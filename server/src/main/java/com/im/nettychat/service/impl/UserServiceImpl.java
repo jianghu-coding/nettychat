@@ -190,10 +190,12 @@ public class UserServiceImpl extends BaseService implements UserService {
             offlineMessage.setMessage(message);
             offlineMessage.setMessageType(OfflineMessageType.USER);
             offlineMessage.setUserId(toUserId);
+            offlineMessage.setContentType(request.getType());
             redisRepository
                     .lPush(CacheName.OFFLINE_MESSAGE, String.valueOf(toUserId), offlineMessage);
             return;
         }
+        response.setType(request.getType());
         response.setMessage(message);
         response.setFromUserId(fromUserId);
         toChannel.writeAndFlush(response);

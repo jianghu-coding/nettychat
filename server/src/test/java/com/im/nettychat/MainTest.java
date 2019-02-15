@@ -108,10 +108,10 @@ public class MainTest {
                                     // 发起登录
                                     login(channel, userInfoArr[0], userInfoArr[1]);
                                 } else if (command.equals("b")) {
-                                    System.out.println("请输入对方的id和发送的消息用,隔开: ");
+                                    System.out.println("请输入对方的id和发送的消息和消息的类型(1:文本;2:图片)用,隔开: ");
                                     String userAndMessage = scanner.nextLine();
                                     String[] us = userAndMessage.split(",");
-                                    sendMessage(channel, Long.valueOf(us[0]), us[1]);
+                                    sendMessage(channel, Long.valueOf(us[0]), us[1], Integer.parseInt(us[2]));
                                 } else if (command.equals("c")) {
                                     System.out.println("请输入群组名称");
                                     String groupName = scanner.nextLine();
@@ -253,10 +253,11 @@ public class MainTest {
         channel.writeAndFlush(request);
     }
 
-    private static void sendMessage(Channel channel, Long userId, String message) {
+    private static void sendMessage(Channel channel, Long userId, String message, int type) {
         MessageRequest request = new MessageRequest();
         request.setToUserId(userId);
         request.setMessage(message);
+        request.setType(type);
         channel.writeAndFlush(request);
     }
 
