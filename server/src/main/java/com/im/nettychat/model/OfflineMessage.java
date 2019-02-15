@@ -25,4 +25,6 @@ public class OfflineMessage {
     private Long userId;
 
     private Long groupId;
+
+    private int contentType;
 }

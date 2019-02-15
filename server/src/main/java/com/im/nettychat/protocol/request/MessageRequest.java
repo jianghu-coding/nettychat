@@ -15,6 +15,8 @@ public class MessageRequest extends PacketRequest {
 
     private String message;
 
+    private int type;
+
     @Override
     public Byte getCommand() {
         return SEND_MESSAGE;

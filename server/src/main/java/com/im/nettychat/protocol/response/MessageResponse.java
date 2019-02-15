@@ -29,6 +29,8 @@ public class MessageResponse extends PacketResponse {
 
     private String message;
 
+    private int type;
+
     @Override
     public Byte getCommand() {
         return Command.SEND_MESSAGE_RESPONSE;
