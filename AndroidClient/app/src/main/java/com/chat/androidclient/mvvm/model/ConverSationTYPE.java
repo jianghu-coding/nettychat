@@ -1,6 +1,6 @@
 package com.chat.androidclient.mvvm.model;
 
-public enum TYPE {
+public enum ConverSationTYPE {
         /**
          * PERSON 好友
          * GROUP 群组
@@ -9,7 +9,7 @@ public enum TYPE {
 
         private int id;
 
-        TYPE(int mId) {
+        ConverSationTYPE(int mId) {
             id = mId;
         }
 
@@ -17,7 +17,7 @@ public enum TYPE {
         return id;
     }
 
-    public TYPE setId(int mId) {
+    public ConverSationTYPE setId(int mId) {
         id = mId;
         return this;
     }

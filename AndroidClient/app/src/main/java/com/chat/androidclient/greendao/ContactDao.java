@@ -12,8 +12,8 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 
-import com.chat.androidclient.mvvm.model.Contact.TYPEConverter;
-import com.chat.androidclient.mvvm.model.TYPE;
+import com.chat.androidclient.mvvm.model.Contact.ConversationTYPEConverter;
+import com.chat.androidclient.mvvm.model.ConverSationTYPE;
 
 import com.chat.androidclient.mvvm.model.Contact;
 
@@ -40,7 +40,7 @@ public class ContactDao extends AbstractDao<Contact, Long> {
         public final static Property Type = new Property(7, Integer.class, "type", false, "TYPE");
     }
 
-    private final TYPEConverter typeConverter = new TYPEConverter();
+    private final ConversationTYPEConverter typeConverter = new ConversationTYPEConverter();
     private Query<Contact> group_MFriendListQuery;
 
     public ContactDao(DaoConfig config) {
@@ -110,7 +110,7 @@ public class ContactDao extends AbstractDao<Contact, Long> {
             stmt.bindString(7, sign);
         }
  
-        TYPE type = entity.getType();
+        ConverSationTYPE type = entity.getType();
         if (type != null) {
             stmt.bindLong(8, typeConverter.convertToDatabaseValue(type));
         }
@@ -155,7 +155,7 @@ public class ContactDao extends AbstractDao<Contact, Long> {
             stmt.bindString(7, sign);
         }
  
-        TYPE type = entity.getType();
+        ConverSationTYPE type = entity.getType();
         if (type != null) {
             stmt.bindLong(8, typeConverter.convertToDatabaseValue(type));
         }

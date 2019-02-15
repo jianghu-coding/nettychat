@@ -4,7 +4,6 @@ import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * Created by lps on 2018/12/29 13:47.
@@ -18,11 +17,11 @@ public class Conversation {
     private String lastcontent;
     private Long time;
     private int msgcount;
-    @Convert(converter = Contact.TYPEConverter.class,columnType = Integer.class)
-    private TYPE type;
+    @Convert(converter = Contact.ConversationTYPEConverter.class,columnType = Integer.class)
+    private ConverSationTYPE type;
     @Generated(hash = 7089094)
     public Conversation(Long id, Long fromId, String lastcontent, Long time,
-            int msgcount, TYPE type) {
+            int msgcount, ConverSationTYPE type) {
         this.id = id;
         this.fromId = fromId;
         this.lastcontent = lastcontent;
@@ -63,10 +62,10 @@ public class Conversation {
     public void setMsgcount(int msgcount) {
         this.msgcount = msgcount;
     }
-    public TYPE getType() {
+    public ConverSationTYPE getType() {
         return this.type;
     }
-    public void setType(TYPE type) {
+    public void setType(ConverSationTYPE type) {
         this.type = type;
     }
 

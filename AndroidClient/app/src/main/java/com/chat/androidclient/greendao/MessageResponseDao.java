@@ -9,8 +9,8 @@ import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
 
-import com.chat.androidclient.mvvm.model.Contact.TYPEConverter;
-import com.chat.androidclient.mvvm.model.TYPE;
+import com.chat.androidclient.mvvm.model.Contact.ConversationTYPEConverter;
+import com.chat.androidclient.mvvm.model.ConverSationTYPE;
 
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse;
 
@@ -35,7 +35,7 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
         public final static Property Type = new Property(5, Integer.class, "type", false, "TYPE");
     }
 
-    private final TYPEConverter typeConverter = new TYPEConverter();
+    private final ConversationTYPEConverter typeConverter = new ConversationTYPEConverter();
 
     public MessageResponseDao(DaoConfig config) {
         super(config);
@@ -92,7 +92,7 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             stmt.bindString(5, message);
         }
  
-        TYPE type = entity.getType();
+        ConverSationTYPE type = entity.getConversationType();
         if (type != null) {
             stmt.bindLong(6, typeConverter.convertToDatabaseValue(type));
         }
@@ -127,7 +127,7 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             stmt.bindString(5, message);
         }
  
-        TYPE type = entity.getType();
+        ConverSationTYPE type = entity.getConversationType();
         if (type != null) {
             stmt.bindLong(6, typeConverter.convertToDatabaseValue(type));
         }
@@ -158,7 +158,7 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
         entity.setToUserId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
         entity.setTime(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
         entity.setMessage(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setType(cursor.isNull(offset + 5) ? null : typeConverter.convertToEntityProperty(cursor.getInt(offset + 5)));
+        entity.setConversationType(cursor.isNull(offset + 5) ? null : typeConverter.convertToEntityProperty(cursor.getInt(offset + 5)));
      }
     
     @Override

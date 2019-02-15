@@ -10,7 +10,7 @@ import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Contact
 import com.chat.androidclient.mvvm.model.Group
-import com.chat.androidclient.mvvm.model.TYPE
+import com.chat.androidclient.mvvm.model.ConverSationTYPE
 import com.chat.androidclient.mvvm.procotol.GetFriendRequest
 import com.chat.androidclient.mvvm.procotol.request.GetUserGroupListRequest
 import com.chat.androidclient.mvvm.procotol.response.GetFriendResponse
@@ -87,7 +87,7 @@ class ContactsVM(var view: ContactsFragment) : BaseViewModel() {
             con.nickname = it.groupName
             con.headprofile = it.icon
             con.sign = it.desc
-            con.type = TYPE.GROUP
+            con.type = ConverSationTYPE.GROUP
             session.contactDao.insertOrReplace(con)
         }
         loadFriendFromDB()

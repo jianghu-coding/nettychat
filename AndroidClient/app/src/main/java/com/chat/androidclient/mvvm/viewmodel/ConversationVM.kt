@@ -19,7 +19,7 @@ import com.chat.androidclient.greendao.DaoMaster
 import com.chat.androidclient.greendao.DaoSession
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Conversation
-import com.chat.androidclient.mvvm.model.TYPE
+import com.chat.androidclient.mvvm.model.ConverSationTYPE
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.procotol.response.SendGroupMessageResponse
 import com.chat.androidclient.mvvm.view.activity.ChatActivity
@@ -82,7 +82,7 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
                 conversation = Conversation()
             conversation.fromId = response.fromUserId
             conversation.msgcount += 1
-            conversation.type = TYPE.PERSON
+            conversation.type = ConverSationTYPE.PERSON
             conversation.lastcontent = response.message
             conversation.time = System.currentTimeMillis()
             session.conversationDao.insertOrReplace(conversation)
@@ -93,11 +93,11 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
                 return
             }
             //发送通知
-            notification(response.message,response.fromUserId,TYPE.PERSON)
+            notification(response.message,response.fromUserId, ConverSationTYPE.PERSON)
             //写入聊天消息的db
             response.toUserId = SPUtils.getInstance().getLong(Constant.id)
             response.time = System.currentTimeMillis()
-            response.type = TYPE.PERSON
+            response.conversationType = ConverSationTYPE.PERSON
             session.messageResponseDao.insert(response)
             
         }
@@ -108,12 +108,12 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
     fun reciveGroupMessage(event: ReciveGroupMsgResponseEvent) {
         val response = event.msg as SendGroupMessageResponse
         //更新最近会话列表的DB
-        var conversation = session.conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(TYPE.GROUP.id), ConversationDao.Properties.FromId.eq(response.groupId)).unique()
+        var conversation = session.conversationDao.queryBuilder().where(ConversationDao.Properties.Type.eq(ConverSationTYPE.GROUP.id), ConversationDao.Properties.FromId.eq(response.groupId)).unique()
         if (conversation == null)
             conversation = Conversation()
         conversation.fromId = response.groupId
         conversation.msgcount += 1
-        conversation.type = TYPE.GROUP
+        conversation.type = ConverSationTYPE.GROUP
         conversation.lastcontent = response.message
         conversation.time = System.currentTimeMillis()
         session.conversationDao.insertOrReplace(conversation)
@@ -124,24 +124,24 @@ class ConversationVM(var view: ConversationFragment) : BaseViewModel() {
             return
         }
         //发送通知
-        notification(response.message, response.groupId, TYPE.GROUP)
+        notification(response.message, response.groupId, ConverSationTYPE.GROUP)
         val messageResponse = MessageResponse()
         //写入聊天消息的db
         messageResponse.toUserId = response.groupId
         messageResponse.time = System.currentTimeMillis()
-        messageResponse.type = TYPE.GROUP
+        messageResponse.conversationType = ConverSationTYPE.GROUP
         messageResponse.message=response.message
         messageResponse.fromUserId=response.sendUserId
         session.messageResponseDao.insert(messageResponse)
     }
     
-    private fun notification(msg: String, fromUserId: Long, type: TYPE) {
+    private fun notification(msg: String, fromUserId: Long, mConverSationType: ConverSationTYPE) {
         
         if (builder == null)
             builder = NotificationCompat.Builder(view.activity, "recivemessage")
         val intent = Intent(view.activity, ChatActivity::class.java)
         intent.putExtra(ChatActivity.ID, fromUserId)
-        intent.putExtra(ChatActivity.TYPE, type)
+        intent.putExtra(ChatActivity.TYPE, mConverSationType)
         val pendingIntent = PendingIntent.getActivity(view.activity, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         builder!!.setContentTitle("收到新的消息")
                 .setContentText(msg)

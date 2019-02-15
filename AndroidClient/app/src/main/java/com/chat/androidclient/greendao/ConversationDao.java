@@ -9,8 +9,8 @@ import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
 
-import com.chat.androidclient.mvvm.model.Contact.TYPEConverter;
-import com.chat.androidclient.mvvm.model.TYPE;
+import com.chat.androidclient.mvvm.model.Contact.ConversationTYPEConverter;
+import com.chat.androidclient.mvvm.model.ConverSationTYPE;
 
 import com.chat.androidclient.mvvm.model.Conversation;
 
@@ -35,7 +35,7 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
         public final static Property Type = new Property(5, Integer.class, "type", false, "TYPE");
     }
 
-    private final TYPEConverter typeConverter = new TYPEConverter();
+    private final ConversationTYPEConverter typeConverter = new ConversationTYPEConverter();
 
     public ConversationDao(DaoConfig config) {
         super(config);
@@ -88,7 +88,7 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
         }
         stmt.bindLong(5, entity.getMsgcount());
  
-        TYPE type = entity.getType();
+        ConverSationTYPE type = entity.getType();
         if (type != null) {
             stmt.bindLong(6, typeConverter.convertToDatabaseValue(type));
         }
@@ -119,7 +119,7 @@ public class ConversationDao extends AbstractDao<Conversation, Long> {
         }
         stmt.bindLong(5, entity.getMsgcount());
  
-        TYPE type = entity.getType();
+        ConverSationTYPE type = entity.getType();
         if (type != null) {
             stmt.bindLong(6, typeConverter.convertToDatabaseValue(type));
         }

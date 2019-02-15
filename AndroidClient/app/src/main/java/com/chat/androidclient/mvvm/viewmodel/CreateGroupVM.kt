@@ -9,7 +9,7 @@ import com.chat.androidclient.im.ChatIM
 import com.chat.androidclient.mvvm.model.Constant
 import com.chat.androidclient.mvvm.model.Contact
 import com.chat.androidclient.mvvm.model.Group
-import com.chat.androidclient.mvvm.model.TYPE
+import com.chat.androidclient.mvvm.model.ConverSationTYPE
 import com.chat.androidclient.mvvm.procotol.request.CreateGroupRequest
 import com.chat.androidclient.mvvm.procotol.response.CreateGroupResponse
 import com.chat.androidclient.mvvm.view.activity.CreateGroupActivity
@@ -60,7 +60,7 @@ class CreateGroupVM(var view: CreateGroupActivity) : BaseViewModel() {
 //            后端只返回 group id 其他内容。可以直接本地写入。
             con.userId = response.groupId
             con.customid = id
-            con.type=TYPE.GROUP
+            con.type= ConverSationTYPE.GROUP
             con.nickname = groupname
             session.contactDao.insert(con)
             view.finish()

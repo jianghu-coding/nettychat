@@ -9,7 +9,7 @@ import android.view.View
 import com.chat.androidclient.R
 import com.chat.androidclient.adapter.ConversationAdapter
 import com.chat.androidclient.databinding.ActivityConversationBinding
-import com.chat.androidclient.mvvm.model.TYPE
+import com.chat.androidclient.mvvm.model.ConverSationTYPE
 import com.chat.androidclient.mvvm.procotol.response.MessageResponse
 import com.chat.androidclient.mvvm.viewmodel.ChatVM
 import com.zhihu.matisse.Matisse
@@ -27,10 +27,10 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
         val TYPE = "type"
         val REQUEST_CODE_IMAGE = 0x123
         @JvmStatic
-        fun startActivity(context: Context, chatId: Long, type: TYPE) {
+        fun startActivity(context: Context, chatId: Long, mConverSationType: ConverSationTYPE) {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra(ID, chatId)
-            intent.putExtra(TYPE, type)
+            intent.putExtra(TYPE, mConverSationType)
             context.startActivity(intent)
         }
         
@@ -39,7 +39,7 @@ class ChatActivity : BaseActivity<ActivityConversationBinding, ChatVM>() {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra(ID, chatId)
             intent.putExtra(MSG, msg)
-            intent.putExtra(TYPE, com.chat.androidclient.mvvm.model.TYPE.PERSON)
+            intent.putExtra(TYPE, ConverSationTYPE.PERSON)
             context.startActivity(intent)
         }
         

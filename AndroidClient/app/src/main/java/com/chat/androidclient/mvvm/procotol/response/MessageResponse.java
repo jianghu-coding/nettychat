@@ -16,7 +16,7 @@ package com.chat.androidclient.mvvm.procotol.response;
 import com.chat.androidclient.mvvm.model.Command;
 import com.chat.androidclient.mvvm.model.Contact;
 import com.chat.androidclient.mvvm.model.PacketResponse;
-import com.chat.androidclient.mvvm.model.TYPE;
+import com.chat.androidclient.mvvm.model.ConverSationTYPE;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
@@ -36,17 +36,17 @@ public class MessageResponse extends PacketResponse {
     private Long toUserId;
     private Long time;
     private String message;
-    @Convert(converter = Contact.TYPEConverter.class,columnType = Integer.class)
-private TYPE type;
+    @Convert(converter = Contact.ConversationTYPEConverter.class,columnType = Integer.class)
+private ConverSationTYPE conversationType;
     @Generated(hash = 526109269)
     public MessageResponse(Long id, Long fromUserId, Long toUserId, Long time,
-            String message, TYPE type) {
+            String message, ConverSationTYPE type) {
         this.id = id;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.time = time;
         this.message = message;
-        this.type = type;
+        this.conversationType = type;
     }
     @Generated(hash = 2003436558)
     public MessageResponse() {
@@ -85,11 +85,11 @@ private TYPE type;
     public void setMessage(String message) {
         this.message = message;
     }
-    public TYPE getType() {
-        return this.type;
+    public ConverSationTYPE getConversationType() {
+        return this.conversationType;
     }
-    public void setType(TYPE type) {
-        this.type = type;
+    public void setConversationType(ConverSationTYPE type) {
+        this.conversationType = type;
     }
 
 }

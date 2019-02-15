@@ -75,6 +75,6 @@ class FriendDetailVM(var view: FriendDetailActivity) : BaseViewModel() {
     
     
     fun toChat() {
-        ChatActivity.startActivity(view, user.get()!!.id!!,TYPE.PERSON)
+        ChatActivity.startActivity(view, user.get()!!.id!!, ConverSationTYPE.PERSON)
     }
 }

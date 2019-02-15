@@ -3,7 +3,6 @@ package com.chat.androidclient.mvvm.model;
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.converter.PropertyConverter;
 import org.greenrobot.greendao.annotation.Generated;
 
@@ -22,11 +21,11 @@ public class Contact {
     private String nickname;
     private String devicesAndState;
     private String sign;
-    @Convert(converter = TYPEConverter.class,columnType = Integer.class)
-    private TYPE type=TYPE.PERSON;
+    @Convert(converter = ConversationTYPEConverter.class,columnType = Integer.class)
+    private ConverSationTYPE type= ConverSationTYPE.PERSON;
     @Generated(hash = 821222579)
     public Contact(Long id, Long userId, Long customid, String headprofile,
-            String nickname, String devicesAndState, String sign, TYPE type) {
+            String nickname, String devicesAndState, String sign, ConverSationTYPE type) {
         this.id = id;
         this.userId = userId;
         this.customid = customid;
@@ -81,22 +80,22 @@ public class Contact {
     public void setSign(String sign) {
         this.sign = sign;
     }
-    public TYPE getType() {
+    public ConverSationTYPE getType() {
         return this.type;
     }
-    public void setType(TYPE type) {
+    public void setType(ConverSationTYPE type) {
         this.type = type;
     }
 
 
-public static class TYPEConverter implements PropertyConverter<TYPE,Integer>{
+public static class ConversationTYPEConverter implements PropertyConverter<ConverSationTYPE,Integer>{
 
     @Override
-    public TYPE convertToEntityProperty(Integer databaseValue) {
+    public ConverSationTYPE convertToEntityProperty(Integer databaseValue) {
       if (databaseValue==null) {
           return null;
       }
-      for (TYPE type:TYPE.values()){
+      for (ConverSationTYPE type: ConverSationTYPE.values()){
           if (type.getId()==databaseValue){
               return type;
           }
@@ -105,7 +104,7 @@ public static class TYPEConverter implements PropertyConverter<TYPE,Integer>{
     }
 
     @Override
-    public Integer convertToDatabaseValue(TYPE entityProperty) {
+    public Integer convertToDatabaseValue(ConverSationTYPE entityProperty) {
         return entityProperty==null?null:entityProperty.getId();
     }
 }
