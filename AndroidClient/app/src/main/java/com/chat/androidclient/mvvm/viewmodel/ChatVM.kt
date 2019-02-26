@@ -72,12 +72,12 @@ class ChatVM(var view: ChatActivity) : BaseViewModel() {
     fun loadMessageFromDB() {
         val qb = msgDao.queryBuilder()
         if (mConverSationType == ConverSationTYPE.PERSON) {
-            val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()), MessageResponseDao.Properties.Type.eq(ConverSationTYPE.PERSON.id))
-            val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(ConverSationTYPE.PERSON.id))
+            val condition1 = qb.and(MessageResponseDao.Properties.FromUserId.eq(id), MessageResponseDao.Properties.ToUserId.eq(getMyId()), MessageResponseDao.Properties.ConversationType.eq(ConverSationTYPE.PERSON.id))
+            val condition2 = qb.and(MessageResponseDao.Properties.FromUserId.eq(getMyId()), MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.ConversationType.eq(ConverSationTYPE.PERSON.id))
             qb.whereOr(condition1, condition2)
         }
         else {
-            val condition3 = qb.and(MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.Type.eq(ConverSationTYPE.GROUP.id))
+            val condition3 = qb.and(MessageResponseDao.Properties.ToUserId.eq(id), MessageResponseDao.Properties.ConversationType.eq(ConverSationTYPE.GROUP.id))
             qb.where(condition3)
         }
         val list = qb.list()

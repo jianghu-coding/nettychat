@@ -19,9 +19,9 @@ public class Conversation {
     private int msgcount;
     @Convert(converter = Contact.ConversationTYPEConverter.class,columnType = Integer.class)
     private ConverSationTYPE type;
-    @Generated(hash = 7089094)
-    public Conversation(Long id, Long fromId, String lastcontent, Long time,
-            int msgcount, ConverSationTYPE type) {
+    @Generated(hash = 2108084932)
+    public Conversation(Long id, Long fromId, String lastcontent, Long time, int msgcount,
+            ConverSationTYPE type) {
         this.id = id;
         this.fromId = fromId;
         this.lastcontent = lastcontent;
@@ -68,6 +68,7 @@ public class Conversation {
     public void setType(ConverSationTYPE type) {
         this.type = type;
     }
+
 
 
 }

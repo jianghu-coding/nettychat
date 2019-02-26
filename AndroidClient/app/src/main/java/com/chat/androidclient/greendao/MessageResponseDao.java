@@ -32,10 +32,10 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
         public final static Property ToUserId = new Property(2, Long.class, "toUserId", false, "TO_USER_ID");
         public final static Property Time = new Property(3, Long.class, "time", false, "TIME");
         public final static Property Message = new Property(4, String.class, "message", false, "MESSAGE");
-        public final static Property Type = new Property(5, Integer.class, "type", false, "TYPE");
+        public final static Property ConversationType = new Property(5, Integer.class, "conversationType", false, "CONVERSATION_TYPE");
     }
 
-    private final ConversationTYPEConverter typeConverter = new ConversationTYPEConverter();
+    private final ConversationTYPEConverter conversationTypeConverter = new ConversationTYPEConverter();
 
     public MessageResponseDao(DaoConfig config) {
         super(config);
@@ -54,7 +54,7 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
                 "\"TO_USER_ID\" INTEGER," + // 2: toUserId
                 "\"TIME\" INTEGER," + // 3: time
                 "\"MESSAGE\" TEXT," + // 4: message
-                "\"TYPE\" INTEGER);"); // 5: type
+                "\"CONVERSATION_TYPE\" INTEGER);"); // 5: conversationType
     }
 
     /** Drops the underlying database table. */
@@ -92,9 +92,9 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             stmt.bindString(5, message);
         }
  
-        ConverSationTYPE type = entity.getConversationType();
-        if (type != null) {
-            stmt.bindLong(6, typeConverter.convertToDatabaseValue(type));
+        ConverSationTYPE conversationType = entity.getConversationType();
+        if (conversationType != null) {
+            stmt.bindLong(6, conversationTypeConverter.convertToDatabaseValue(conversationType));
         }
     }
 
@@ -127,9 +127,9 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             stmt.bindString(5, message);
         }
  
-        ConverSationTYPE type = entity.getConversationType();
-        if (type != null) {
-            stmt.bindLong(6, typeConverter.convertToDatabaseValue(type));
+        ConverSationTYPE conversationType = entity.getConversationType();
+        if (conversationType != null) {
+            stmt.bindLong(6, conversationTypeConverter.convertToDatabaseValue(conversationType));
         }
     }
 
@@ -146,7 +146,7 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // toUserId
             cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // time
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // message
-            cursor.isNull(offset + 5) ? null : typeConverter.convertToEntityProperty(cursor.getInt(offset + 5)) // type
+            cursor.isNull(offset + 5) ? null : conversationTypeConverter.convertToEntityProperty(cursor.getInt(offset + 5)) // conversationType
         );
         return entity;
     }
@@ -158,7 +158,7 @@ public class MessageResponseDao extends AbstractDao<MessageResponse, Long> {
         entity.setToUserId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
         entity.setTime(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
         entity.setMessage(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setConversationType(cursor.isNull(offset + 5) ? null : typeConverter.convertToEntityProperty(cursor.getInt(offset + 5)));
+        entity.setConversationType(cursor.isNull(offset + 5) ? null : conversationTypeConverter.convertToEntityProperty(cursor.getInt(offset + 5)));
      }
     
     @Override

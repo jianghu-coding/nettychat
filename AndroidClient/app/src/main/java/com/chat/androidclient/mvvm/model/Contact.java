@@ -23,9 +23,12 @@ public class Contact {
     private String sign;
     @Convert(converter = ConversationTYPEConverter.class,columnType = Integer.class)
     private ConverSationTYPE type= ConverSationTYPE.PERSON;
-    @Generated(hash = 821222579)
-    public Contact(Long id, Long userId, Long customid, String headprofile,
-            String nickname, String devicesAndState, String sign, ConverSationTYPE type) {
+
+
+
+    @Generated(hash = 1894991471)
+    public Contact(Long id, Long userId, Long customid, String headprofile, String nickname,
+            String devicesAndState, String sign, ConverSationTYPE type) {
         this.id = id;
         this.userId = userId;
         this.customid = customid;
@@ -35,57 +38,109 @@ public class Contact {
         this.sign = sign;
         this.type = type;
     }
+
+
+
     @Generated(hash = 672515148)
     public Contact() {
     }
+
+
+
     public Long getId() {
         return this.id;
     }
+
+
+
     public void setId(Long id) {
         this.id = id;
     }
+
+
+
     public Long getUserId() {
         return this.userId;
     }
+
+
+
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+
+
     public Long getCustomid() {
         return this.customid;
     }
+
+
+
     public void setCustomid(Long customid) {
         this.customid = customid;
     }
+
+
+
     public String getHeadprofile() {
         return this.headprofile;
     }
+
+
+
     public void setHeadprofile(String headprofile) {
         this.headprofile = headprofile;
     }
+
+
+
     public String getNickname() {
         return this.nickname;
     }
+
+
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+
+
     public String getDevicesAndState() {
         return this.devicesAndState;
     }
+
+
+
     public void setDevicesAndState(String devicesAndState) {
         this.devicesAndState = devicesAndState;
     }
+
+
+
     public String getSign() {
         return this.sign;
     }
+
+
+
     public void setSign(String sign) {
         this.sign = sign;
     }
+
+
+
     public ConverSationTYPE getType() {
         return this.type;
     }
+
+
+
     public void setType(ConverSationTYPE type) {
         this.type = type;
     }
+
 
 
 public static class ConversationTYPEConverter implements PropertyConverter<ConverSationTYPE,Integer>{

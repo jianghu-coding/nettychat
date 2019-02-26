@@ -38,15 +38,15 @@ public class MessageResponse extends PacketResponse {
     private String message;
     @Convert(converter = Contact.ConversationTYPEConverter.class,columnType = Integer.class)
 private ConverSationTYPE conversationType;
-    @Generated(hash = 526109269)
-    public MessageResponse(Long id, Long fromUserId, Long toUserId, Long time,
-            String message, ConverSationTYPE type) {
+    @Generated(hash = 1463103762)
+    public MessageResponse(Long id, Long fromUserId, Long toUserId, Long time, String message,
+            ConverSationTYPE conversationType) {
         this.id = id;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.time = time;
         this.message = message;
-        this.conversationType = type;
+        this.conversationType = conversationType;
     }
     @Generated(hash = 2003436558)
     public MessageResponse() {
@@ -88,8 +88,9 @@ private ConverSationTYPE conversationType;
     public ConverSationTYPE getConversationType() {
         return this.conversationType;
     }
-    public void setConversationType(ConverSationTYPE type) {
-        this.conversationType = type;
+    public void setConversationType(ConverSationTYPE conversationType) {
+        this.conversationType = conversationType;
     }
+
 
 }

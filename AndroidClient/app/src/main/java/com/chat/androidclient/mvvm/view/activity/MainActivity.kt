@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -26,6 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
     override fun getLayoutRes() = R.layout.activity_main
     override fun getViewModel() = MainVM(this)
     override fun onCreate(savedInstanceState: Bundle?) {
+        
         //恢复上次保存的夜间模式效果
         if (SPUtils.getInstance().getBoolean(Constant.daynightmode)) {
             setTheme(R.style.NightTheme)
